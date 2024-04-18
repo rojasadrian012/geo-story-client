@@ -10,6 +10,9 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
 
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { LessonComponent } from './pages/lesson/lesson.component';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -20,8 +23,13 @@ import { DashboardsRoutingModule } from './dashboard-routing.module';
         StyleClassModule,
         PanelMenuModule,
         ButtonModule,
-        DashboardsRoutingModule
+        DashboardsRoutingModule,
+
+        
     ],
-    declarations: [DashboardComponent]
+    declarations: [
+        DashboardComponent,
+        
+    ]
 })
 export class DashboardModule { }
