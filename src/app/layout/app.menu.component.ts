@@ -1,6 +1,7 @@
-import { OnInit } from '@angular/core';
+import { OnInit, inject } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
+import { AuthService } from '../demo/components/auth/services/auth.service';
 
 @Component({
     selector: 'app-menu',
@@ -12,12 +13,15 @@ export class AppMenuComponent implements OnInit {
 
     constructor(public layoutService: LayoutService) { }
 
+    private authService = inject(AuthService)
+
     ngOnInit() {
         this.model = [
             {
-                label: 'Inicio',
+                label: 'Menu',
                 items: [
-                    { label: 'Ruta', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+                    { label: 'Ruta', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+                    { label: 'Cerrar Sesión', icon: 'pi pi-fw pi-sign-out', command: () => this.authService.logout() }
                 ]
             },
             {
