@@ -23,9 +23,9 @@ export class LoginComponent {
 
     valCheck: string[] = ['remember'];
 
-    password!: string;
+    password: string = 'admin123';
 
-    nickname: string = ''
+    nickname: string = 'admin'
 
     private messageService = inject(MessageService)
 
