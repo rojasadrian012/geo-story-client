@@ -20,7 +20,12 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Menu',
                 items: [
-                    { label: 'Ruta', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+                    { label: 'Aprender', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+                    { label: 'Ranking', icon: 'pi pi-fw pi-chart-line', routerLink: ['/ranking'] },
+                    { label: 'Agregar Contenido', icon: 'pi pi-fw pi-plus', routerLink: ['/agregar-contenido'] },
+                    { label: 'Perfil', icon: 'pi pi-fw pi-user', routerLink: ['/perfil'] },
+                    { label: 'Logros', icon: 'pi pi-fw pi-star', routerLink: ['/logros'] },
+                    { label: 'Configuración', icon: 'pi pi-fw pi-cog', routerLink: ['/configuracion'] },
                     { label: 'Cerrar Sesión', icon: 'pi pi-fw pi-sign-out', command: () => this.authService.logout() }
                 ]
             },
