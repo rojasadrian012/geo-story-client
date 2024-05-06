@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Product } from '../../api/product';
 import { ProductService } from '../../service/product.service';
 import { Subscription, debounceTime } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { QuizListResponse } from './interfaces/quiz-list-response.interface';
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -20,16 +22,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    levels = [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8'
-    ];
+    levels: QuizListResponse[] = []
+
+    private readonly http = inject(HttpClient);
 
     constructor(
         private productService: ProductService,
@@ -52,6 +47,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' },
         ];
+
+        this.getQuizzes()
     }
 
     initChart() {
@@ -131,5 +128,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+    }
+
+    getQuizzes() {
+        this.http.get<QuizListResponse[]>(environment.baseUrl + '/quiz')
+            .subscribe((data) => {
+                this.levels = data
+            });
     }
 }
