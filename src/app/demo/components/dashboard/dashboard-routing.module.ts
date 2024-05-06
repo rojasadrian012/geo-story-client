@@ -6,7 +6,7 @@ import { LessonComponent } from './pages/lesson/lesson.component';
 @NgModule({
     imports: [RouterModule.forChild([
         { path: '', component: DashboardComponent },
-        {path:'lesson/:level', component: LessonComponent}
+        { path: 'lesson/:level', component: LessonComponent }
     ])],
     exports: [RouterModule]
 })
