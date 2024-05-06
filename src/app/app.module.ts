@@ -11,15 +11,27 @@ import { EventService } from './demo/service/event.service';
 import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { bearerTokenInterceptor } from './demo/interceptor/bearer-token.interceptor';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
     imports: [AppRoutingModule, AppLayoutModule],
     providers: [
-        { provide: LocationStrategy, useClass: PathLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService
+        {
+            provide: LocationStrategy,
+            useClass: PathLocationStrategy
+        },
+        CountryService,
+        CustomerService,
+        EventService,
+        IconService,
+        NodeService,
+        PhotoService,
+        ProductService,
+
+        [provideHttpClient(withInterceptors([bearerTokenInterceptor]))]
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
