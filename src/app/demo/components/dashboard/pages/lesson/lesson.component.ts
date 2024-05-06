@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-lesson',
@@ -7,5 +8,13 @@ import { Component } from '@angular/core';
     styleUrl: './lesson.component.scss',
 })
 export class LessonComponent {
-    titulo: string = 'Historia';
+    title: string
+
+    private readonly route = inject(ActivatedRoute)
+
+    ngOnInit() {
+       this.route.paramMap.subscribe((params) => {
+            this.title = params.get('level')
+        })
+    }
 }
