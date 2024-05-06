@@ -1,6 +1,7 @@
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="">
-        <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="logo">
+        <!-- <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="logo"> -->
+        <img src="assets/layout/images/geografia.png" alt="logo">
         <span>GEO STORY</span>
     </a>
 
@@ -12,7 +13,7 @@
         <i class="pi pi-ellipsis-v"></i>
     </button>
 
-    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+    <!-- <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
         <button class="p-link layout-topbar-button">
             <i class="pi pi-calendar"></i>
             <span>Calendar</span>
@@ -25,5 +26,5 @@
             <i class="pi pi-cog"></i>
             <span>Settings</span>
         </button>
-    </div>
+    </div> -->
 </div>
