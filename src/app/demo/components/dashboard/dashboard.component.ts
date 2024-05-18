@@ -10,6 +10,7 @@ import { QuizListResponse } from './interfaces/quiz-list-response.interface';
 
 @Component({
     templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     items!: MenuItem[];
