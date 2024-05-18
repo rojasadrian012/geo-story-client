@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
             case AuthStatus.checking:
                 return
             case AuthStatus.authenticated: //todo: ver como afectar a las otras rutas
-                this.router.navigateByUrl('/')
+                this.router.navigateByUrl(localStorage.getItem('currentUrl'))
                 return
             case AuthStatus.notAuthenticated:
                 this.router.navigateByUrl('/auth/login')
