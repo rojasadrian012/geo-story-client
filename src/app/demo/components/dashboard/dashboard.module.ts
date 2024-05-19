@@ -10,6 +10,8 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
 
+
+
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { LessonComponent } from './pages/lesson/lesson.component';
 
@@ -25,11 +27,11 @@ import { LessonComponent } from './pages/lesson/lesson.component';
         ButtonModule,
         DashboardsRoutingModule,
 
-        
+
     ],
     declarations: [
         DashboardComponent,
-        
+        LessonComponent
     ]
 })
 export class DashboardModule { }

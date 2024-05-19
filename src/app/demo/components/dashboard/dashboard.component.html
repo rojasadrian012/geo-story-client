@@ -9,10 +9,13 @@
                     @for (level of levels; track level; let i = $index) {
                         <div class="path-step">
                             <p-button
-                                routerLink="lesson/{{ level.title }}"
+                                routerLink="lesson/{{ level.title }}/{{ level.id }}"
                                 size="large"
                                 [rounded]="true"
-                                class="step-button">{{ level.title }}</p-button>
+                                class="step-button"
+                                >
+                                {{ level.title }}
+                            </p-button>
                             @if (i < levels.length - 1) {
                                 <div class="path-line"></div>
                             }
