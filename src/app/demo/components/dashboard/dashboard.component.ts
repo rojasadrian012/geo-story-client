@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
         '../../../../assets/images/options-images/cultura.svg',
         '../../../../assets/images/options-images/turismo.svg',
     ]
+    blocked: boolean = false
 
     ngOnInit() {
         this.getQuizzes()
@@ -38,7 +39,8 @@ export class DashboardComponent implements OnInit {
             });
     }
 
-    changePath(level: QuizListResponse) {
+    changePath(level: QuizListResponse, blocked: boolean) {
+        if(blocked) return
         this.router.navigateByUrl(`lesson/${level.title}/${level.id}`)
     }
 }

@@ -1,15 +1,20 @@
 <div class="grid">
     <div class="col-12 lg:col-12 xl:col-12">
         <div class="card mb-0">
-            <div class="flex justify-content-between mb-3">
-                <div class="text-3xl">Caminos del Aprendizaje</div>
+            <div class="flex justify-content-center mb-3">
+                <h2 class="text-center">Caminos del Aprendizaje</h2>
             </div>
+
             <div class="flex flex-column align-items-center">
                 <div class="path-container">
                     @for (level of levels; track level; let i = $index) {
-                    <div class="path-step" (click)="changePath(level)">
-                        <img class="image mt-3" src="{{images[i]}}" alt="imagen del nivel">
-                        <h3>{{ level.title }}</h3>
+                    <div [ngClass]="blocked ? 'blocked' : 'path-step'" (click)="changePath(level, blocked)">
+                        @if(blocked){
+                        <img class="image-padlock" src="assets/images/bloqueado.svg" alt="nivel bloqueado">
+                        }
+                        <img [ngClass]="blocked?'image-normal-blocked':'image-normal'" class="mt-3" src="{{images[i]}}"
+                            alt="imagen del nivel">
+                        <h4 [ngClass]="{ 'blocked-title': blocked }">{{ level.title }}</h4>
                     </div>
                     @if (i < levels.length - 1) { <div class="path-line">
                 </div>
