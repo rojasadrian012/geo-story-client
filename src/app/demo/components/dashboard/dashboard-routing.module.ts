@@ -6,8 +6,8 @@ import { isAuthenticatedGuard } from '../auth/guards/is-authenticated.guard';
 
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: '', component: DashboardComponent },
-        { path: 'lesson/:level/:id',canActivate: [isAuthenticatedGuard], component: LessonComponent }
+        { path: '', canActivate: [isAuthenticatedGuard], component: DashboardComponent },
+        { path: 'lesson/:level/:id', canActivate: [isAuthenticatedGuard], component: LessonComponent }
     ])],
     exports: [RouterModule]
 })
