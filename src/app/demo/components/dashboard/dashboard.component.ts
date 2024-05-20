@@ -19,12 +19,12 @@ export class DashboardComponent implements OnInit {
 
     levels: QuizListResponse[] = []
     images: string[] = [
-        '../../../../assets/images/curiosidades.svg',
-        '../../../../assets/images/historia.svg',
-        '../../../../assets/images/geografia.svg',
-        '../../../../assets/images/economia.svg',
-        '../../../../assets/images/cultura.svg',
-        '../../../../assets/images/turismo.svg',
+        '../../../../assets/images/options-images/curiosidades.svg',
+        '../../../../assets/images/options-images/historia.svg',
+        '../../../../assets/images/options-images/geografia.svg',
+        '../../../../assets/images/options-images/economia.svg',
+        '../../../../assets/images/options-images/cultura.svg',
+        '../../../../assets/images/options-images/turismo.svg',
     ]
 
     ngOnInit() {
