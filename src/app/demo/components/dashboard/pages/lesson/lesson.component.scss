@@ -38,17 +38,6 @@ button:disabled {
     opacity: 0.5;
 }
 
-.box-content-1 {
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.box-content-2 {
-    height: 67vh
-}
-
 .correct-answer {
     font-size: 1.5rem;
 }
@@ -63,4 +52,3 @@ button {
     border-radius: 50px;
     border: 1px solid #ccc;
 }
-

@@ -5,7 +5,7 @@
         </div>
 
         <div class="card mt-2">
-            <div class="box-content-2">
+
                 <h3 class="title-question">{{ questions[currentQuestionIndex]?.title }}</h3>
 
                 <div class="list-box">
@@ -32,7 +32,6 @@
                     <button class="ml-2 bg-teal-500" severity="success" rounded="true" (click)="nextQuestion()" [disabled]="currentQuestionIndex === questions.length - 1">Siguiente</button>
 
                 </div>
-            </div>
         </div>
     </div>
 </div>
