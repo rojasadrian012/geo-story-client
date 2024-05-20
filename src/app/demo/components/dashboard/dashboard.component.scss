@@ -9,24 +9,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.step-button {
-    z-index: 1;
-    border: none;
     border: 5px dashed #ccc;
     border-top-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    width: 80%;
 }
 
 .path-line {
     height: 50px;
-    /* Adjust the height of the connecting line */
     width: 5px;
-    /* Line thickness */
     background-color: transparent;
-    /* Line color */
     z-index: 0;
     border-style: dashed;
     border-color: #ccc;
+}
+
+.image {
+    width: 35%;
+    height: 35%;
 }

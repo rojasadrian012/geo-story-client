@@ -7,25 +7,19 @@
             <div class="flex flex-column align-items-center">
                 <div class="path-container">
                     @for (level of levels; track level; let i = $index) {
-                        <div class="path-step">
-                            <p-button
-                                routerLink="lesson/{{ level.title }}/{{ level.id }}"
-                                size="large"
-                                [rounded]="true"
-                                class="step-button"
-                                >
-                                {{ level.title }}
-                            </p-button>
-                            @if (i < levels.length - 1) {
-                                <div class="path-line"></div>
-                            }
-                        </div>
-                    }
+                    <div class="path-step" (click)="changePath(level)">
+                        <img class="image mt-3" src="{{images[i]}}" alt="imagen del nivel">
+                        <h3>{{ level.title }}</h3>
+                    </div>
+                    @if (i < levels.length - 1) { <div class="path-line">
                 </div>
+                }
+                }
             </div>
         </div>
+    </div>
 
-        <!-- <div class="col-12 lg:col-6 xl:col-3">
+    <!-- <div class="col-12 lg:col-6 xl:col-3">
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
@@ -43,5 +37,5 @@
             <span class="text-500">since last visit</span>
         </div>
     </div> -->
-    </div>
+</div>
 </div>
