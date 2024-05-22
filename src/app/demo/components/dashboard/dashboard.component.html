@@ -6,6 +6,7 @@
             </div>
 
             <div class="flex flex-column align-items-center">
+                <p-toggleButton class="my-3" [(ngModel)]="blocked" onLabel="Bloqueado" offLabel="Desbloqueado" styleClass="w-9rem" />
                 <div class="path-container">
                     @for (level of levels; track level; let i = $index) {
                     <div [ngClass]="blocked ? 'blocked' : 'path-step'" (click)="changePath(level, blocked)">

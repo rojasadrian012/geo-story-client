@@ -9,10 +9,8 @@ import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
-
-
-import { SelectButtonModule } from 'primeng/selectbutton';
 import { LessonComponent } from './pages/lesson/lesson.component';
 
 @NgModule({
@@ -26,7 +24,7 @@ import { LessonComponent } from './pages/lesson/lesson.component';
         PanelMenuModule,
         ButtonModule,
         DashboardsRoutingModule,
-
+        ToggleButtonModule
 
     ],
     declarations: [
