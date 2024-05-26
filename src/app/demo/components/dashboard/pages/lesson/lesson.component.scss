@@ -28,10 +28,13 @@
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 20px 44%;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    border: 1px solid #ccc;
     cursor: pointer;
 }
+
 
 button:disabled {
     cursor: not-allowed;
@@ -44,11 +47,4 @@ button:disabled {
 
 .correct-answer-text {
     font-weight: bolder;
-}
-
-button {
-    padding: 20px 50px;
-    font-size: 1.5rem;
-    border-radius: 50px;
-    border: 1px solid #ccc;
 }

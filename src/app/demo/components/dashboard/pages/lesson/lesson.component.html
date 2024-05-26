@@ -6,12 +6,11 @@
 
         <div class="card mt-2">
 
-                <h3 class="title-question">{{ questions[currentQuestionIndex]?.title }}</h3>
+            <h3 class="title-question">{{ questions[currentQuestionIndex]?.title }}</h3>
 
-                <div class="list-box">
-                    <div *ngFor="let answer of questions[currentQuestionIndex]?.answers" class="list-content"
-                        (click)="selectOption(questions[currentQuestionIndex].id, answer.id, answer.isCorrect)"
-                        [ngStyle]="{
+            <div class="list-box">
+                <div *ngFor="let answer of questions[currentQuestionIndex]?.answers" class="list-content"
+                    (click)="selectOption(questions[currentQuestionIndex].id, answer.id, answer.isCorrect)" [ngStyle]="{
                              'background-color': selectedAnswers[questions[currentQuestionIndex]?.id]?.id === answer.id
                                                  ? (selectedAnswers[questions[currentQuestionIndex]?.id]?.isCorrect ? '#3f35' : '#f335')
                                                  : selectedAnswers[questions[currentQuestionIndex]?.id] && answer.isCorrect
@@ -19,19 +18,19 @@
                              'pointer-events': selectedAnswers[questions[currentQuestionIndex]?.id] ? 'none' : 'auto',
                              'font-weight': selectedAnswers[questions[currentQuestionIndex]?.id]?.id === answer.id || (selectedAnswers[questions[currentQuestionIndex]?.id] && answer.isCorrect) ? 'bold' : 'normal'
                          }">
-                        {{answer.text}}
-                    </div>
+                    {{answer.text}}
                 </div>
+            </div>
 
-                <div *ngIf="viewResponse[questions[currentQuestionIndex]?.id]">
-                    <p class="correct-answer">La respuesta correcta es: <span class="correct-answer-text"> {{ correctAnswers[questions[currentQuestionIndex]?.id] }}</span></p>
-                </div>
+            <div *ngIf="viewResponse[questions[currentQuestionIndex]?.id]">
+                <p class="correct-answer">La respuesta correcta es: <span class="correct-answer-text"> {{
+                        correctAnswers[questions[currentQuestionIndex]?.id] }}</span></p>
+            </div>
 
-                <div class="navigation-buttons">
-                    <button class="bg-yellow-500" severity="warning" rounded="true" (click)="prevQuestion()" [disabled]="currentQuestionIndex === 0">Anterior</button>
-                    <button class="ml-2 bg-teal-500" severity="success" rounded="true" (click)="nextQuestion()" [disabled]="currentQuestionIndex === questions.length - 1">Siguiente</button>
-
-                </div>
+            <div class="flex flex-wrap md:justify-content-between justify-content-center">
+                <button class="bg-primary font-bold m-2 flex align-items-center justify-content-center" (click)="nextQuestion()"
+                    [disabled]="currentQuestionIndex === questions.length - 1">Siguiente</button>
+            </div>
         </div>
     </div>
 </div>
