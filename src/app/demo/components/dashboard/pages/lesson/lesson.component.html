@@ -5,19 +5,61 @@
         </div>
 
         <div class="card mt-2">
-
             <h3 class="title-question">{{ questions[currentQuestionIndex]?.title }}</h3>
+
+            <div class="hint my-5 hint-container">
+                <p-button label="Mostrar Pista" [outlined]="true" severity="secondary" class="hint-button"
+                    (click)="toggleHint()">
+                    <div class="mr-2">
+                        <svg id="fi_3088852" enable-background="new 0 0 497 497" height="25" viewBox="0 0 497 497"
+                            width="25" xmlns="http://www.w3.org/2000/svg" class="block mx-auto">
+                            <g>
+                                <g>
+                                    <path d="m115.144 472.544 88.479-131.309v-47.86h-47.86l-109.828 109.828z"
+                                        fill="#d6948c"></path>
+                                    <path
+                                        d="m155.763 293.375-131.14 88.356c-.174.117-.343.241-.506.373-15.327 12.332-24.117 30.676-24.117 50.329 0 35.602 28.965 64.567 64.567 64.567 19.654 0 38.246-9.128 50.577-24.456-17.258-62.635-1.876-130.031 40.619-179.169z"
+                                        fill="#ce857a"></path>
+                                </g>
+                                <g>
+                                    <path
+                                        d="m340.186 2.46h-59l-158.486 184.69 158.486 184.69h59c88.931-14.497 156.814-91.66 156.814-184.69s-67.883-170.192-156.814-184.69z"
+                                        fill="#9ea2e3"></path>
+                                    <path
+                                        d="m182.686 187.134c0-93.03 68.568-170.176 157.5-184.674-9.876-1.609-20.006-2.46-30.336-2.46-103.36 0-187.15 83.79-187.15 187.15s83.79 187.15 187.15 187.15c10.33 0 20.46-.851 30.335-2.46-88.932-14.497-157.499-91.676-157.499-184.706z"
+                                        fill="#8288cb"></path>
+                                </g>
+                                <g>
+                                    <path
+                                        d="m432.667 154.242c-12.475-46.559-49.204-80.138-93.066-90.703h-22.189l-82.38 116.52 82.862 130.639h22c69.427-16.907 111.177-87.774 92.773-156.456z"
+                                        fill="#b9f0ff"></path>
+                                    <path
+                                        d="m289.738 194.055c7.831 1.26 14.41-1.159 19.404-6.199 2.368-2.39 5.268-4.295 8.536-5.552 16.989-6.528 27.643-23.151 26.512-41.364-1.158-18.649-15.41-34.435-33.433-38.037 1.93-3.581 3.982-7.113 6.176-10.582 6.427-10.161 13.976-19.818 22.669-28.782-20.046-4.895-41.362-4.914-62.661.793-67.722 18.146-108.054 88.005-89.908 155.727 17.89 66.768 86.046 106.911 152.862 90.639-8.181-8.396-15.358-17.405-21.544-26.871-17.832-27.284-27.366-58.393-28.613-89.772z"
+                                        fill="#7ce3ff"></path>
+                                </g>
+                                <g fill="#ea5b70">
+                                    <path
+                                        d="m356.655 142.65c-1.68-27.071-23.361-48.752-50.432-50.432-31.725-1.994-57.371 23.339-57.371 53.849 0 8.008 6.492 14.499 14.499 14.499 8.008 0 14.499-6.492 14.499-14.499 0-14.397 12.091-25.81 26.575-24.906 12.295.763 22.524 10.991 23.288 23.287.682 10.98-5.731 20.997-15.957 24.926-14.244 5.475-23.449 18.781-23.449 33.899v14.299c0 8.008 6.492 14.499 14.499 14.499 8.008 0 14.499-6.492 14.499-14.499v-14.299c0-3.016 1.905-5.697 4.853-6.83 22.105-8.494 35.968-30.112 34.497-53.793z">
+                                    </path>
+                                    <circle cx="302.813" cy="267.608" r="14.499"></circle>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                </p-button>
+                <p class="hint-text bg-primary-reverse text-xl" *ngIf="showHint">{{questions[currentQuestionIndex]?.hint}}</p>
+            </div>
 
             <div class="list-box">
                 <div *ngFor="let answer of questions[currentQuestionIndex]?.answers" class="list-content"
                     (click)="selectOption(questions[currentQuestionIndex].id, answer.id, answer.isCorrect)" [ngStyle]="{
-                             'background-color': selectedAnswers[questions[currentQuestionIndex]?.id]?.id === answer.id
-                                                 ? (selectedAnswers[questions[currentQuestionIndex]?.id]?.isCorrect ? '#3f35' : '#f335')
-                                                 : selectedAnswers[questions[currentQuestionIndex]?.id] && answer.isCorrect
-                                                 ? '#3f35' : 'transparent',
-                             'pointer-events': selectedAnswers[questions[currentQuestionIndex]?.id] ? 'none' : 'auto',
-                             'font-weight': selectedAnswers[questions[currentQuestionIndex]?.id]?.id === answer.id || (selectedAnswers[questions[currentQuestionIndex]?.id] && answer.isCorrect) ? 'bold' : 'normal'
-                         }">
+                                'background-color': selectedAnswers[questions[currentQuestionIndex]?.id]?.id === answer.id
+                                                    ? (selectedAnswers[questions[currentQuestionIndex]?.id]?.isCorrect ? '#3f35' : '#f335')
+                                                    : selectedAnswers[questions[currentQuestionIndex]?.id] && answer.isCorrect
+                                                    ? '#3f35' : 'transparent',
+                                'pointer-events': selectedAnswers[questions[currentQuestionIndex]?.id] ? 'none' : 'auto',
+                                'font-weight': selectedAnswers[questions[currentQuestionIndex]?.id]?.id === answer.id || (selectedAnswers[questions[currentQuestionIndex]?.id] && answer.isCorrect) ? 'bold' : 'normal'
+                            }">
                     {{answer.text}}
                 </div>
             </div>
@@ -28,9 +70,11 @@
             </div>
 
             <div class="flex flex-wrap md:justify-content-between justify-content-center">
-                <button class="bg-primary font-bold m-2 flex align-items-center justify-content-center" (click)="nextQuestion()"
+                <button class="bg-primary font-bold m-2 flex align-items-center justify-content-center"
+                    (click)="nextQuestion()"
                     [disabled]="currentQuestionIndex === questions.length - 1">Siguiente</button>
             </div>
         </div>
+
     </div>
 </div>

@@ -22,6 +22,7 @@ export class LessonComponent {
     correctAnswers: { [key: string]: string } = {};
     viewResponse: { [key: string]: boolean } = {};
     currentQuestionIndex: number = 0;
+    showHint: boolean = false;
 
     ngOnInit() {
         this.route.paramMap.subscribe((params) => {
@@ -42,6 +43,7 @@ export class LessonComponent {
                         }
                     });
                 });
+                console.log(this.questions);
             });
     }
 
@@ -55,12 +57,18 @@ export class LessonComponent {
     nextQuestion() {
         if (this.currentQuestionIndex < this.questions.length - 1) {
             this.currentQuestionIndex++;
+            this.showHint = false; // Reset hint visibility for next question
         }
     }
 
     prevQuestion() {
         if (this.currentQuestionIndex > 0) {
             this.currentQuestionIndex--;
+            this.showHint = false; // Reset hint visibility for previous question
         }
+    }
+
+    toggleHint() {
+        this.showHint = !this.showHint;
     }
 }

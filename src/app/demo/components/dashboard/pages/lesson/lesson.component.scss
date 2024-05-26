@@ -43,8 +43,22 @@ button:disabled {
 
 .correct-answer {
     font-size: 1.5rem;
+    margin-bottom: 3rem;
 }
 
 .correct-answer-text {
     font-weight: bolder;
+}
+
+.hint-container {
+    display: flex;
+    align-items: center;
+}
+
+.hint-button {
+    margin-right: 10px;
+}
+
+.hint-text {
+    margin: 0;
 }
