@@ -62,7 +62,7 @@
                 </p-button>
                 <p class="ml-2 text-primary text-xl" *ngIf="showHint">{{questions[currentQuestionIndex]?.hint}}</p>
             </div>
-            <p-toast  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" [life]="10000"/>
+            <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" [life]="10000" />
             <div class="list-box">
                 <div *ngFor="let answer of questions[currentQuestionIndex]?.answers" class="list-content"
                     (click)="selectOption(questions[currentQuestionIndex].id, answer.id, answer.isCorrect)" [ngStyle]="{
@@ -86,7 +86,11 @@
                 <button
                     class="text-primary border-2 border-primary font-bold m-2 flex align-items-center justify-content-center"
                     (click)="nextQuestion()"
-                    [disabled]="currentQuestionIndex === questions.length - 1">Siguiente</button>
+                    [disabled]="currentQuestionIndex === questions.length - 1">
+                    {{currentQuestionIndex === questions.length - 1?
+                    'Repasar preguntas' :
+                    'Siguiente'}}
+                    </button>
             </div>
         </div>
 
