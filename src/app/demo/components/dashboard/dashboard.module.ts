@@ -10,8 +10,10 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ToastModule } from 'primeng/toast';
 
 import { LessonComponent } from './pages/lesson/lesson.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     imports: [
@@ -24,12 +26,14 @@ import { LessonComponent } from './pages/lesson/lesson.component';
         PanelMenuModule,
         ButtonModule,
         DashboardsRoutingModule,
-        ToggleButtonModule
+        ToggleButtonModule,
+        ToastModule
 
     ],
     declarations: [
         DashboardComponent,
         LessonComponent
-    ]
+    ],
+    providers: [MessageService],
 })
 export class DashboardModule { }

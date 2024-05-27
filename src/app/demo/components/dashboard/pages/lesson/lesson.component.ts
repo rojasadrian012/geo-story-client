@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+import { MessageService } from 'primeng/api';
+
 import { QuestionListResponse } from '../../interfaces/question-list-response.interface';
 import { environment } from 'src/environments/environment';
 
@@ -14,6 +16,7 @@ export class LessonComponent {
 
     private readonly route = inject(ActivatedRoute);
     private readonly http = inject(HttpClient);
+    private readonly messageService = inject(MessageService);
 
     title: string;
     id: string;
@@ -48,16 +51,27 @@ export class LessonComponent {
     }
 
     selectOption(questionId: string, answerId: string, isCorrect: boolean) {
-        this.selectedAnswers[questionId] = { id: answerId, isCorrect };
+
+        this.selectedAnswers[questionId] = { id: answerId, isCorrect };//esto tiene todas las respuestas
+
         if (!isCorrect) {
-            this.viewResponse[questionId] = true;
+            this.viewResponse[questionId] = true; //esto tiene la lista de preguntas incorrectas
+            return
         }
+
+        if(this.showHint){
+            this.showMessage('success', 'Ganaste', '3 puntos');
+            return
+        }
+
+        this.showMessage('success', 'Ganaste', '4 puntos');
     }
 
     nextQuestion() {
         if (this.currentQuestionIndex < this.questions.length - 1) {
             this.currentQuestionIndex++;
             this.showHint = false; // Reset hint visibility for next question
+            this.messageService.clear();
         }
     }
 
@@ -70,5 +84,9 @@ export class LessonComponent {
 
     toggleHint() {
         this.showHint = !this.showHint;
+    }
+
+    showMessage(severity: string, title: string, detail: string) {
+        this.messageService.add({ severity: severity, summary: title, detail: detail });
     }
 }

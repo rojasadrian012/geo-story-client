@@ -62,7 +62,7 @@
                 </p-button>
                 <p class="ml-2 text-primary text-xl" *ngIf="showHint">{{questions[currentQuestionIndex]?.hint}}</p>
             </div>
-
+            <p-toast  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" [life]="10000"/>
             <div class="list-box">
                 <div *ngFor="let answer of questions[currentQuestionIndex]?.answers" class="list-content"
                     (click)="selectOption(questions[currentQuestionIndex].id, answer.id, answer.isCorrect)" [ngStyle]="{
