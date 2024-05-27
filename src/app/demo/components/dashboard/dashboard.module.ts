@@ -9,7 +9,6 @@ import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
-import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToastModule } from 'primeng/toast';
 
 import { LessonComponent } from './pages/lesson/lesson.component';
@@ -26,7 +25,6 @@ import { MessageService } from 'primeng/api';
         PanelMenuModule,
         ButtonModule,
         DashboardsRoutingModule,
-        ToggleButtonModule,
         ToastModule
 
     ],
