@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, effect } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Product } from '../../api/product';
 import { ProductService } from '../../service/product.service';
@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { QuizListResponse } from './interfaces/quiz-list-response.interface';
 import { Router } from '@angular/router';
+import { DashboardService } from './services/dashboard.service';
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -16,6 +17,8 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
     private readonly http = inject(HttpClient);
     private readonly router = inject(Router);
+    public dashboardService = inject(DashboardService);
+
 
     images: string[] = [
         '../../../../assets/images/options-images/curiosidades.svg',
@@ -24,27 +27,33 @@ export class DashboardComponent implements OnInit {
         '../../../../assets/images/options-images/economia.svg',
         '../../../../assets/images/options-images/cultura.svg',
         '../../../../assets/images/options-images/turismo.svg',
-      ];
-      isBlocked: boolean = true;
-      levels: QuizListResponse[] = [];
+    ];
+    isBlocked: boolean = true;
+    levels: QuizListResponse[] = [];
 
-      ngOnInit() {
+    ngOnInit() {
         this.getQuizzes();
-      }
 
-      getQuizzes() {
+    }
+
+    getQuizzes() {
         this.http.get<QuizListResponse[]>(environment.baseUrl + '/quiz')
-          .subscribe((data) => {
-            this.levels = data;
-          });
-      }
+            .subscribe((data) => {
+                this.levels = data;
+            });
+    }
 
-      changePath(level: QuizListResponse, blocked: boolean) {
+    changePath(level: QuizListResponse, blocked: boolean) {
         if (blocked) return;
         this.router.navigateByUrl(`lesson/${level.title}/${level.id}`);
-      }
+    }
 
-      unlockAllLevels() {
+    unlockAllLevels() {
         this.isBlocked = !this.isBlocked;
-      }
+    }
+
+    bloqueckEffect = effect(() => {
+        console.log(`Se modifico: ${this.dashboardService.isBlockedSingal()}`);
+    });
+
 }

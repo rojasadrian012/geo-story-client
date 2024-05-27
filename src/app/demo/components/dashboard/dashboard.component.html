@@ -6,21 +6,15 @@
             </div>
 
             <div class="flex flex-column align-items-center">
-                <p-button
-                    class="my-3"
-                    label="Desbloquear todos"
-                    styleClass="w-9rem"
-                    (onClick)="unlockAllLevels()"
-                ></p-button>
                 <div class="path-container">
                     @for (level of levels; track level; let i = $index; let first = $first) {
-                        <div [ngClass]="(isBlocked && !first) ? 'blocked' : 'path-step'" (click)="changePath(level, isBlocked && !first)">
-                            @if(isBlocked && !first){
+                        <div [ngClass]="(dashboardService.isBlockedSingal() && !first) ? 'blocked' : 'path-step'" (click)="changePath(level, dashboardService.isBlockedSingal() && !first)">
+                            @if(dashboardService.isBlockedSingal() && !first){
                                 <img class="image-padlock" src="assets/images/bloqueado.svg" alt="nivel bloqueado">
                             }
-                            <img [ngClass]="(isBlocked && !first) ? 'image-normal-blocked' : 'image-normal'" class="mt-3"
+                            <img [ngClass]="(dashboardService.isBlockedSingal() && !first) ? 'image-normal-blocked' : 'image-normal'" class="mt-3"
                                 src="{{images[i]}}" alt="nivel desbloqueado">
-                            <h4 [ngClass]="{ 'blocked-title': (isBlocked && !first) }">{{ level.title }}</h4>
+                            <h4 [ngClass]="{ 'blocked-title': (dashboardService.isBlockedSingal() && !first) }">{{ level.title }}</h4>
                         </div>
                         @if (i < levels.length - 1) {
                             <div class="path-line"></div>
