@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
     }
 
     bloqueckEffect = effect(() => {
-        console.log(`Se modifico: ${this.dashboardService.isBlockedSingal()}`);
+        // console.log(`Se modifico: ${this.dashboardService.isBlockedSingal()}`);
     });
 
 }
