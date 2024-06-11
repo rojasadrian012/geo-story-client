@@ -8,8 +8,10 @@
             <h3 class="font-bold text-2xl">{{ questions[currentQuestionIndex]?.title }}</h3>
 
             <div class="hint my-3 hint-container">
-                <p-button label="Mostrar Pista" [outlined]="true" severity="secondary" class="hint-button"
-                    (click)="toggleHint()">
+                <p-button label="Mostrar Pista"
+                    [outlined]="true" severity="secondary" class="hint-button"
+                    (click)="toggleHint()"
+                    [disabled]="isOptionSelected() || showHintSignal()">
                     <div class="mr-2">
                         <svg id="fi_5301461" enable-background="new 0 0 512 512" height="25" viewBox="0 0 512 512"
                             width="25" xmlns="http://www.w3.org/2000/svg">
@@ -86,13 +88,10 @@
                 <button
                     class="text-2x1 text-primary border-2 border-primary font-bold m-2 flex align-items-center justify-content-center"
                     (click)="nextQuestion()"
-                    [disabled]="currentQuestionIndex === questions.length - 1">
-                    {{currentQuestionIndex === questions.length - 1?
-                    'Repasar preguntas' :
-                    'Siguiente'}}
-                    </button>
+                    [disabled]="!isOptionSelected() && currentQuestionIndex !== questions.length - 1">
+                    {{currentQuestionIndex === questions.length - 1 && incorrectAnswers.length > 0 ? 'Repasar preguntas' : 'Siguiente'}}
+                </button>
             </div>
         </div>
-
     </div>
 </div>
