@@ -1,27 +1,22 @@
-# Sakai
+<p align="center">
+  <a href="http://angular.io/" target="blank">
+<svg _ngcontent-ng-c249881476="" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 223 236" width="200" class="angular-logo"><g _ngcontent-ng-c249881476="" clip-path="url(#a)"><path _ngcontent-ng-c249881476="" fill="url(#b)" d="m222.077 39.192-8.019 125.923L137.387 0l84.69 39.192Zm-53.105 162.825-57.933 33.056-57.934-33.056 11.783-28.556h92.301l11.783 28.556ZM111.039 62.675l30.357 73.803H80.681l30.358-73.803ZM7.937 165.115 0 39.192 84.69 0 7.937 165.115Z"></path><path _ngcontent-ng-c249881476="" fill="url(#c)" d="m222.077 39.192-8.019 125.923L137.387 0l84.69 39.192Zm-53.105 162.825-57.933 33.056-57.934-33.056 11.783-28.556h92.301l11.783 28.556ZM111.039 62.675l30.357 73.803H80.681l30.358-73.803ZM7.937 165.115 0 39.192 84.69 0 7.937 165.115Z"></path></g><defs _ngcontent-ng-c249881476=""><linearGradient _ngcontent-ng-c249881476="" id="b" x1="49.009" x2="225.829" y1="213.75" y2="129.722" gradientUnits="userSpaceOnUse"><stop _ngcontent-ng-c249881476="" stop-color="#E40035"></stop><stop _ngcontent-ng-c249881476="" offset=".24" stop-color="#F60A48"></stop><stop _ngcontent-ng-c249881476="" offset=".352" stop-color="#F20755"></stop><stop _ngcontent-ng-c249881476="" offset=".494" stop-color="#DC087D"></stop><stop _ngcontent-ng-c249881476="" offset=".745" stop-color="#9717E7"></stop><stop _ngcontent-ng-c249881476="" offset="1" stop-color="#6C00F5"></stop></linearGradient><linearGradient _ngcontent-ng-c249881476="" id="c" x1="41.025" x2="156.741" y1="28.344" y2="160.344" gradientUnits="userSpaceOnUse"><stop _ngcontent-ng-c249881476="" stop-color="#FF31D9"></stop><stop _ngcontent-ng-c249881476="" offset="1" stop-color="#FF5BE1" stop-opacity="0"></stop></linearGradient><clipPath _ngcontent-ng-c249881476="" id="a"><path _ngcontent-ng-c249881476="" fill="#fff" d="M0 0h223v236H0z"></path></clipPath></defs></svg>
+</a>
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.4.
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Geo-Story Client
+## Frontend
+1. Clonar repositorio
+2. Acceder al directorio
+```
+cd geo-story-client
+```
+3. Ejecutar
+```
+yarn install
+```
+4. Levantar el modo de desarrollo
+```
+ng s -0
+```
