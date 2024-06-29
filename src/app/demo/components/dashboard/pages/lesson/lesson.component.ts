@@ -29,6 +29,7 @@ export class LessonComponent {
     viewResponse: { [key: string]: boolean } = {};
     incorrectAnswers: string[] = []; // Para almacenar preguntas incorrectas
     currentQuestionIndex: number = 0;
+    showReviewModal: boolean = false;
 
     showHintSignal = signal(false);
     showHintEffecft = effect(() => {
@@ -97,8 +98,11 @@ export class LessonComponent {
             this.currentQuestionIndex = 0;
             this.showHintSignal.set(false);
             this.messageService.clear();
+            console.log(this.questions);
+            this.showReviewModal = true; // Mostrar el modal al finalizar las preguntas
         }
     }
+
 
 
     prevQuestion() {

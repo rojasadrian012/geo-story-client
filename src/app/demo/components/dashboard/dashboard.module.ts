@@ -10,6 +10,7 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
 import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
 
 import { LessonComponent } from './pages/lesson/lesson.component';
 import { MessageService } from 'primeng/api';
@@ -25,8 +26,8 @@ import { MessageService } from 'primeng/api';
         PanelMenuModule,
         ButtonModule,
         DashboardsRoutingModule,
-        ToastModule
-
+        ToastModule,
+        DialogModule,
     ],
     declarations: [
         DashboardComponent,

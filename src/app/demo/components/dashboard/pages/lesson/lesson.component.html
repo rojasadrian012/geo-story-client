@@ -8,61 +8,14 @@
             <h3 class="font-bold text-2xl">{{ questions[currentQuestionIndex]?.title }}</h3>
 
             <div class="hint my-3 hint-container">
-                <p-button label="Mostrar Pista"
-                    [outlined]="true" severity="secondary" class="hint-button"
-                    (click)="toggleHint()"
-                    [disabled]="isOptionSelected() || showHintSignal()">
+                <p-button label="Mostrar Pista" [outlined]="true" severity="secondary" class="hint-button"
+                    (click)="toggleHint()" [disabled]="isOptionSelected() || showHintSignal()">
                     <div class="mr-2">
-                        <svg id="fi_5301461" enable-background="new 0 0 512 512" height="25" viewBox="0 0 512 512"
-                            width="25" xmlns="http://www.w3.org/2000/svg">
-                            <g>
-                                <path
-                                    d="m400.675 403.863c-2.849 0-5.619-1.478-7.146-4.122l-27.379-47.429c-2.276-3.943-.925-8.983 3.017-11.259 3.944-2.274 8.983-.924 11.259 3.017l27.379 47.429c2.276 3.943.925 8.983-3.017 11.259-1.298.749-2.716 1.105-4.113 1.105z"
-                                    fill="#fed2a4"></path>
-                                <g>
-                                    <path
-                                        d="m129.984 408.285-18.573 32.62c-12.995 22.824-5.027 51.862 17.797 64.857s51.862 5.027 64.857-17.797l18.573-32.62c1.057-1.857.409-4.22-1.448-5.278l-75.928-43.23c-1.858-1.058-4.221-.409-5.278 1.448z"
-                                        fill="#d77f4a"></path>
-                                    <path
-                                        d="m297.971 223.974-12.481-7.106c-28.499-16.226-83.275 18.348-102.3 51.763s-19.3 80.315-23.057 86.915l-11.353 19.937c-1.289 2.264.249 5.117 2.851 5.25 31.566 1.62 56.146 15.619 73.743 42.001 1.445 2.166 4.676 2.028 5.964-.234l11.359-19.947c3.757-6.599 43.945-30.773 62.97-64.188s20.802-98.165-7.696-114.391z"
-                                        fill="#d77f4a"></path>
-                                    <path
-                                        d="m211.19 450.067-21.222-12.083c1.763 1.004 2.334 3.323 1.277 5.18l-18.573 32.621c-11.053 19.413-33.026 28.458-52.673 23.144 2.727 2.585 5.799 4.892 9.21 6.834 22.825 12.995 51.862 5.027 64.857-17.797l18.573-32.62c1.057-1.859.408-4.221-1.449-5.279z"
-                                        fill="#ac5e2e"></path>
-                                    <path
-                                        d="m297.971 223.974-12.481-7.106c-1.223-.696-2.497-1.292-3.811-1.805 23.429 18.587 19.784 78.559 1.575 110.54-19.025 33.415-58.195 58.17-61.952 64.769l-9.184 16.13c4.787 4.759 9.208 10.164 13.256 16.232 1.445 2.165 4.675 2.028 5.964-.234l11.359-19.947c3.758-6.599 43.945-30.773 62.97-64.188s20.802-98.165-7.696-114.391z"
-                                        fill="#ac5e2e"></path>
-                                    <path
-                                        d="m61.002 195.547-18.573 32.62c-12.995 22.824-5.027 51.862 17.797 64.857s51.862 5.027 64.857-17.797l18.573-32.62c1.057-1.857.409-4.22-1.448-5.278l-75.928-43.23c-1.858-1.058-4.221-.41-5.278 1.448z"
-                                        fill="#d77f4a"></path>
-                                    <path
-                                        d="m142.208 237.329-21.222-12.083c1.763 1.004 2.334 3.323 1.277 5.18l-18.573 32.621c-11.053 19.413-33.026 28.458-52.673 23.144 2.727 2.585 5.799 4.892 9.21 6.834 22.825 12.995 51.862 5.027 64.857-17.797l18.573-32.62c1.057-1.859.408-4.222-1.449-5.279z"
-                                        fill="#ac5e2e"></path>
-                                    <path
-                                        d="m228.988 11.236-12.481-7.106c-28.499-16.226-83.273 18.349-102.298 51.764s-19.301 80.314-23.058 86.913l-11.353 19.939c-1.289 2.264.247 5.113 2.849 5.247 31.566 1.62 56.148 15.62 73.745 42.002 1.445 2.166 4.675 2.03 5.963-.232l11.358-19.949c3.757-6.599 43.947-30.773 62.972-64.188s20.802-98.164-7.697-114.39z"
-                                        fill="#d77f4a"></path>
-                                    <path
-                                        d="m228.988 11.236-12.481-7.106c-1.223-.696-2.497-1.292-3.811-1.805 23.429 18.587 19.784 78.559 1.575 110.54-19.025 33.416-58.195 58.17-61.952 64.769l-9.184 16.13c4.787 4.759 9.209 10.163 13.257 16.232 1.445 2.165 4.675 2.03 5.963-.232l11.358-19.949c3.758-6.599 43.947-30.773 62.972-64.188 19.025-33.416 20.802-98.165-7.697-114.391z"
-                                        fill="#ac5e2e"></path>
-                                    <path
-                                        d="m377.969 404.854 52.535 90.993c6.704 11.611 21.551 15.59 33.162 8.886s15.59-21.551 8.886-33.162l-52.535-90.993c-1.469-2.544-4.721-3.415-7.265-1.947l-32.837 18.958c-2.543 1.469-3.415 4.722-1.946 7.265z"
-                                        fill="#528fd8"></path>
-                                    <path
-                                        d="m472.552 471.571-52.535-90.993c-1.469-2.544-4.721-3.415-7.265-1.947l-17.425 10.06c2.605-1.504 5.908-.661 7.376 1.883l52.535 90.993c4.888 8.467 3.97 18.72-1.493 26.316 3.393-.309 6.776-1.335 9.921-3.15 11.611-6.703 15.59-21.551 8.886-33.162z"
-                                        fill="#0573ce"></path>
-                                    <ellipse cx="333.137" cy="278.65" fill="#017297" rx="88.914" ry="88.914"
-                                        transform="matrix(.873 -.487 .487 .873 -93.55 197.629)"></ellipse>
-                                    <path
-                                        d="m410.139 234.194c-18.493-32.03-53.905-48.192-88.429-43.733 26.584 3.407 51.33 18.731 65.765 43.733 24.553 42.527 9.982 96.906-32.545 121.459-10.497 6.06-21.716 9.727-33.03 11.188 18.634 2.388 38.168-1.071 55.694-11.189 42.527-24.553 57.098-78.932 32.545-121.458z"
-                                        fill="#025f80"></path>
-                                    <ellipse cx="333.643" cy="278.358" fill="#01d0fb" rx="57.075" ry="57.075"
-                                        transform="matrix(.707 -.707 .707 .707 -99.107 317.451)"></ellipse>
-                                </g>
-                            </g>
-                        </svg>
+                        <img src="assets/layout/images/mostrar-pista.svg" alt="mostrar pista">
                     </div>
                 </p-button>
-                <p class="ml-2 text-color-secondary text-xl" *ngIf="showHintSignal()">{{questions[currentQuestionIndex]?.hint}}</p>
+                <p class="ml-2 text-color-secondary text-xl" *ngIf="showHintSignal()">
+                    {{questions[currentQuestionIndex]?.hint}}</p>
             </div>
             <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" [life]="10000" />
             <div class="list-box">
@@ -89,9 +42,17 @@
                     class="text-2x1 text-primary border-2 border-primary font-bold m-2 flex align-items-center justify-content-center"
                     (click)="nextQuestion()"
                     [disabled]="!isOptionSelected() && currentQuestionIndex !== questions.length - 1">
-                    {{currentQuestionIndex === questions.length - 1 && incorrectAnswers.length > 0 ? 'Repasar preguntas' : 'Siguiente'}}
+                    {{currentQuestionIndex === questions.length - 1 && incorrectAnswers.length > 0 ? 'Repasar preguntas'
+                    : 'Siguiente'}}
                 </button>
             </div>
+            <p-dialog header="Primera oportunidad finalizada" [(visible)]="showReviewModal" [modal]="true"
+                [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+                [resizable]="false">
+                <p>
+                    Cometiste algunos errores, hagamos un ultimo repaso.
+                </p>
+            </p-dialog>
         </div>
     </div>
 </div>
