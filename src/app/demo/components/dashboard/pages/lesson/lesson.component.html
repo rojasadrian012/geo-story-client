@@ -6,18 +6,15 @@
 
         <div class="card mt-2">
 
-            <app-title [title]="questions[currentQuestionIndex]?.title" />
+            <app-title [title]="questions[currentQuestionIndex]?.title"/>
 
-            <div class="hint my-3 hint-container">
-                <p-button label="Mostrar Pista" [outlined]="true" severity="secondary" class="hint-button"
-                    (click)="toggleHint()" [disabled]="isOptionSelected() || showHintSignal()">
-                    <div class="mr-2">
-                        <img src="assets/layout/images/mostrar-pista.svg" alt="mostrar pista">
-                    </div>
-                </p-button>
-                <p class="ml-2 text-color-secondary text-xl" *ngIf="showHintSignal()">
-                    {{questions[currentQuestionIndex]?.hint}}</p>
-            </div>
+            <app-hint
+                (changeHint)="toggleHint($event)"
+                [textHint]="questions[currentQuestionIndex]?.hint"
+                [showHint]="showHintSignal()"
+                [disable]="isOptionSelected() || showHintSignal()"
+            />
+
             <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" [life]="10000" />
             <div class="list-box">
                 <div *ngFor="let answer of questions[currentQuestionIndex]?.answers" class="list-content"

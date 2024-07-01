@@ -112,8 +112,8 @@ export class LessonComponent {
         }
     }
 
-    toggleHint() {
-        this.showHintSignal.set(!this.showHintSignal());
+    toggleHint(value: boolean) {
+        this.showHintSignal.set(value);
     }
 
     showMessage(severity: string, title: string, detail: string) {
