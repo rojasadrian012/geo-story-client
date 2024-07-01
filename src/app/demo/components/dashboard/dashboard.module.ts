@@ -14,6 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 
 import { LessonComponent } from './pages/lesson/lesson.component';
 import { MessageService } from 'primeng/api';
+import { TitleComponent } from './components/title/title.component';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { MessageService } from 'primeng/api';
         DashboardsRoutingModule,
         ToastModule,
         DialogModule,
+        TitleComponent
     ],
     declarations: [
         DashboardComponent,

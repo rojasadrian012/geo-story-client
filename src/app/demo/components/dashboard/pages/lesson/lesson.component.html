@@ -5,7 +5,8 @@
         </div>
 
         <div class="card mt-2">
-            <h3 class="font-bold text-2xl">{{ questions[currentQuestionIndex]?.title }}</h3>
+
+            <app-title [title]="questions[currentQuestionIndex]?.title" />
 
             <div class="hint my-3 hint-container">
                 <p-button label="Mostrar Pista" [outlined]="true" severity="secondary" class="hint-button"
