@@ -6,6 +6,8 @@
 
         <div class="card mt-2">
 
+            <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" [life]="10000" />
+
             <app-title [title]="questions[currentQuestionIndex]?.title"/>
 
             <app-hint
@@ -15,7 +17,6 @@
                 [disable]="isOptionSelected() || showHintSignal()"
             />
 
-            <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" [life]="10000" />
             <div class="list-box">
                 <div *ngFor="let answer of questions[currentQuestionIndex]?.answers" class="list-content"
                     (click)="selectOption(questions[currentQuestionIndex].id, answer.id, answer.isCorrect)" [ngStyle]="{
@@ -44,13 +45,13 @@
                     : 'Siguiente'}}
                 </button>
             </div>
-            <p-dialog header="Primera oportunidad finalizada" [(visible)]="showReviewModal" [modal]="true"
-                [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-                [resizable]="false">
-                <p>
-                    Cometiste algunos errores, hagamos un ultimo repaso.
-                </p>
-            </p-dialog>
+
+            <app-finish-message
+                titleMessage="Primera oportunidad finalizada"
+                textMessage="Cometiste algunos errores, hagamos un ultimo repaso."
+                [showMessage]="showReviewModal"
+            />
+
         </div>
     </div>
 </div>

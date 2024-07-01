@@ -16,6 +16,7 @@ import { LessonComponent } from './pages/lesson/lesson.component';
 import { MessageService } from 'primeng/api';
 import { TitleComponent } from './components/title/title.component';
 import { HintComponent } from './components/hint/hint.component';
+import { FinishMessageComponent } from './components/finish-message/finish-message.component';
 
 @NgModule({
     imports: [
@@ -28,9 +29,9 @@ import { HintComponent } from './components/hint/hint.component';
         PanelMenuModule,
         DashboardsRoutingModule,
         ToastModule,
-        DialogModule,
         TitleComponent,
-        HintComponent
+        HintComponent,
+        FinishMessageComponent
     ],
     declarations: [
         DashboardComponent,
