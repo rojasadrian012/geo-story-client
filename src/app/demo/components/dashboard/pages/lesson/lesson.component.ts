@@ -21,7 +21,6 @@ export class LessonComponent {
     private readonly soundsService = inject(SoundsService);
 
     title: string;
-    id: string;
     questions: QuestionListResponse[] = [];
     originalQuestions: QuestionListResponse[] = []; // Para guardar las preguntas originales
     selectedAnswers: { [key: string]: { id: string; isCorrect: boolean } } = {};
@@ -39,15 +38,14 @@ export class LessonComponent {
     ngOnInit() {
         this.route.paramMap.subscribe((params) => {
             this.title = params.get('level');
-            this.id = params.get('id');
-            this.getQuestions();
+            this.getQuestions(params.get('id'));
         });
     }
 
-    getQuestions() {
+    getQuestions(id: string) {
         this.http
             .get<QuestionListResponse[]>(
-                environment.baseUrl + '/quiz/questions/' + this.id
+                environment.baseUrl + '/quiz/questions/' + id
             )
             .subscribe((data) => {
                 this.questions = data;
@@ -59,6 +57,7 @@ export class LessonComponent {
                         }
                     });
                 });
+                console.log({ questions: this.questions, original: this.originalQuestions });
             });
     }
 
@@ -98,7 +97,6 @@ export class LessonComponent {
             this.currentQuestionIndex = 0;
             this.showHintSignal.set(false);
             this.messageService.clear();
-            console.log(this.questions);
             this.showReviewModal = true; // Mostrar el modal al finalizar las preguntas
         }
     }
