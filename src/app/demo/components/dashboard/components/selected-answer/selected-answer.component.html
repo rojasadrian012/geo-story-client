@@ -1,0 +1,12 @@
+
+ <div
+    [ngClass]="currentClass()"
+>
+    <label
+        for="option-answer"
+        class="option"
+        (click)="selectedOption(answer())"
+    >
+        {{answer().text}}
+    </label>
+</div>

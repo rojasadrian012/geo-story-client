@@ -1,0 +1,46 @@
+.option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 2rem;
+    font-weight: 500;
+    cursor: pointer;
+    gap: 1rem;
+    font-size: 1.125rem;
+}
+
+.option_container {
+    display: flex;
+    align-items: center;
+    border-radius: 0.25rem;
+    border-width: 2px;
+    border-style: dashed solid;
+    border-color: transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.option_container:hover {
+    background-color: var(--primary-50);
+    border-color: var(--primary-500);
+}
+
+
+.option_container_correct {
+    display: flex;
+    align-items: center;
+    border-left: 3px solid var(--green-500);
+    background-color: var(--green-200);
+
+}
+
+.option_container_incorrect{
+    display: flex;
+    align-items: center;
+    border-left: 3px solid var(--red-500);
+    background-color: var(--red-200);
+
+}

@@ -1,0 +1,16 @@
+
+@for (question of questionsAndAnswers(); track question.id) {
+
+    <app-title [title]="question.title"/>
+
+    @for (answer of question.answers; track answer.id) {
+        <app-selected-answer
+            [answer]="answer"
+            [isDisable]="isAnswerSelectedMap[question.id]"
+            (selected)="onAnswerSelected(answer.id, $event)"
+        />
+    }
+
+}@empty{
+    <pre>Cargando...</pre>
+}

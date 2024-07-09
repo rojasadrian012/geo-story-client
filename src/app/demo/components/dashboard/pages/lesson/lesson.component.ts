@@ -21,13 +21,8 @@ export class LessonComponent {
     private readonly soundsService = inject(SoundsService);
 
     title: string;
-    questions: QuestionListResponse[] = [];
-    originalQuestions: QuestionListResponse[] = []; // Para guardar las preguntas originales
-    selectedAnswers: { [key: string]: { id: string; isCorrect: boolean } } = {};
-    correctAnswers: { [key: string]: string } = {};
-    viewResponse: { [key: string]: boolean } = {};
-    incorrectAnswers: string[] = []; // Para almacenar preguntas incorrectas
-    currentQuestionIndex: number = 0;
+    questions = signal<QuestionListResponse[]>([])
+
     showReviewModal: boolean = false;
 
     showHintSignal = signal(false);
@@ -48,66 +43,8 @@ export class LessonComponent {
                 environment.baseUrl + '/quiz/questions/' + id
             )
             .subscribe((data) => {
-                this.questions = data;
-                this.originalQuestions = [...data]; // Guarda las preguntas originales
-                this.questions.forEach((question) => {
-                    question.answers.forEach((answer) => {
-                        if (answer.isCorrect) {
-                            this.correctAnswers[question.id] = answer.text;
-                        }
-                    });
-                });
-                console.log({ questions: this.questions, original: this.originalQuestions });
+                this.questions.set(data);
             });
-    }
-
-    selectOption(questionId: string, answerId: string, isCorrect: boolean) {
-        this.selectedAnswers[questionId] = { id: answerId, isCorrect };
-
-        if (!isCorrect) {
-            this.soundsService.playIncorrectSound();
-            this.viewResponse[questionId] = true;
-            if (!this.incorrectAnswers.includes(questionId)) {
-                this.incorrectAnswers.push(questionId);
-            }
-            return;
-        }
-
-        this.soundsService.playCorrectSound();
-
-        if (this.showHintSignal()) {
-            this.showMessage('success', 'Ganaste', '3 puntos');
-            return;
-        }
-
-        this.showMessage('success', 'Ganaste', '4 puntos');
-    }
-
-    nextQuestion() {
-        if (this.currentQuestionIndex < this.questions.length - 1) {
-            this.currentQuestionIndex++;
-            this.showHintSignal.set(false); // Reset hint visibility for next question
-            this.messageService.clear();
-        } else if (this.currentQuestionIndex === this.questions.length - 1 && this.incorrectAnswers.length > 0) {
-            // Filtra las preguntas incorrectas y resetea los estados
-            this.questions = this.originalQuestions.filter(question => this.incorrectAnswers.includes(question.id));
-            this.incorrectAnswers = [];
-            this.selectedAnswers = {};
-            this.viewResponse = {};
-            this.currentQuestionIndex = 0;
-            this.showHintSignal.set(false);
-            this.messageService.clear();
-            this.showReviewModal = true; // Mostrar el modal al finalizar las preguntas
-        }
-    }
-
-
-
-    prevQuestion() {
-        if (this.currentQuestionIndex > 0) {
-            this.currentQuestionIndex--;
-            this.showHintSignal.set(false); // Reset hint visibility for previous question
-        }
     }
 
     toggleHint(value: boolean) {
@@ -120,10 +57,6 @@ export class LessonComponent {
             summary: title,
             detail: detail,
         });
-    }
-
-    isOptionSelected(): boolean {
-        return !!this.selectedAnswers[this.questions[this.currentQuestionIndex]?.id];
     }
 
 }

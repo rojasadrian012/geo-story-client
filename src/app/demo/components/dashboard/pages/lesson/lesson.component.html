@@ -8,43 +8,9 @@
 
             <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" [life]="10000" />
 
-            <app-title [title]="questions[currentQuestionIndex]?.title"/>
-
-            <app-hint
-                (changeHint)="toggleHint($event)"
-                [textHint]="questions[currentQuestionIndex]?.hint"
-                [showHint]="showHintSignal()"
-                [disable]="isOptionSelected() || showHintSignal()"
+            <app-questions-and-answers
+                    [questionsAndAnswers]="questions()"
             />
-
-            <div class="list-box">
-                <div *ngFor="let answer of questions[currentQuestionIndex]?.answers" class="list-content"
-                    (click)="selectOption(questions[currentQuestionIndex].id, answer.id, answer.isCorrect)" [ngStyle]="{
-                                'background-color': selectedAnswers[questions[currentQuestionIndex]?.id]?.id === answer.id
-                                                    ? (selectedAnswers[questions[currentQuestionIndex]?.id]?.isCorrect ? '#3f35' : '#f335')
-                                                    : selectedAnswers[questions[currentQuestionIndex]?.id] && answer.isCorrect
-                                                    ? '#3f35' : 'transparent',
-                                'pointer-events': selectedAnswers[questions[currentQuestionIndex]?.id] ? 'none' : 'auto',
-                                'font-weight': selectedAnswers[questions[currentQuestionIndex]?.id]?.id === answer.id || (selectedAnswers[questions[currentQuestionIndex]?.id] && answer.isCorrect) ? 'bold' : 'normal'
-                            }">
-                    {{answer.text}}
-                </div>
-            </div>
-
-            <div *ngIf="viewResponse[questions[currentQuestionIndex]?.id]">
-                <p class="correct-answer">La respuesta correcta es: <span class="correct-answer-text"> {{
-                        correctAnswers[questions[currentQuestionIndex]?.id] }}</span></p>
-            </div>
-
-            <div class="flex flex-wrap md:justify-content-between justify-content-center">
-                <button
-                    class="text-2x1 text-primary border-2 border-primary font-bold m-2 flex align-items-center justify-content-center"
-                    (click)="nextQuestion()"
-                    [disabled]="!isOptionSelected() && currentQuestionIndex !== questions.length - 1">
-                    {{currentQuestionIndex === questions.length - 1 && incorrectAnswers.length > 0 ? 'Repasar preguntas'
-                    : 'Siguiente'}}
-                </button>
-            </div>
 
             <app-finish-message
                 titleMessage="Primera oportunidad finalizada"
