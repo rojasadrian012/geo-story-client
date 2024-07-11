@@ -45,6 +45,11 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         this.questionService.initializeMap(questionIds);
     }
 
+    getCorrectAnswerText(answers: Answer[]): string {
+        const correctAnswer = answers.find((answer) => answer.isCorrect);
+        return correctAnswer ? correctAnswer.text : '';
+    }
+
     // Manejar la selección de una respuesta
     onQuestionSelected(questionId: string, response: Answer) {
         this.questionService.setQuestionSelectedStatus(questionId, true); // Actualizar el estado en el servicio

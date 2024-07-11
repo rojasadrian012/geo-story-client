@@ -8,6 +8,7 @@
             [answer]="answer"
             [isDisable]="questionService.getQuestionSelectedStatus(question.id)"
             (selected)="onQuestionSelected(question.id, $event)"
+            [correctResponse]="getCorrectAnswerText(question.answers)"
         />
     }
 

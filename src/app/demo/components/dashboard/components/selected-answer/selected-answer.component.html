@@ -1,12 +1,14 @@
-
- <div
-    [ngClass]="currentClass()"
->
+<div [ngClass]="currentClass()">
     <label
         for="option-answer"
-        class="option"
+        class="option-label"
         (click)="selectedOption(answer())"
     >
-        {{answer().text}}
+        {{ answer().text }}
     </label>
+    @if (showResponse()) {
+        <small class="option-small">
+            {{textIntro()}} @if (!answer().isCorrect) {<strong>{{ correctResponse() }}</strong>}
+        </small>
+    }
 </div>

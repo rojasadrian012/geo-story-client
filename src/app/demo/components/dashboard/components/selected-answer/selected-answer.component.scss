@@ -1,4 +1,4 @@
-.option {
+.option-label {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -15,7 +15,8 @@
 
 .option_container {
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Cambiado de row a column */
+    align-items: flex-start; /* Cambiado de center a flex-start */
     border-radius: 0.25rem;
     border-width: 2px;
     border-style: dashed solid;
@@ -28,19 +29,23 @@
     border-color: var(--primary-500);
 }
 
-
 .option_container_correct {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     border-left: 3px solid var(--green-500);
     background-color: var(--green-200);
-
 }
 
-.option_container_incorrect{
+.option_container_incorrect {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     border-left: 3px solid var(--red-500);
     background-color: var(--red-200);
+}
 
+.option-small{
+    padding-left: 1rem;
+    padding-bottom: 1rem;
 }
