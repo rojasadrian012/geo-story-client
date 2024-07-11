@@ -10,6 +10,7 @@ import {
 
 import { Answer } from '../../interfaces/question-list-response.interface';
 import { SoundsService } from '../../services/sounds.service';
+import { QuestionService } from '../../services/question.service';
 
 @Component({
     selector: 'app-selected-answer',

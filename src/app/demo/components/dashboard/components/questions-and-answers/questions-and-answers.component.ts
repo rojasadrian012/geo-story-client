@@ -6,6 +6,7 @@ import {
     SimpleChanges,
     input,
     inject,
+    signal,
 } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 
@@ -36,8 +37,6 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['questionsAndAnswers']) {
             this.initializeMap();
-            console.log(this.questionsAndAnswers());
-            
         }
     }
 
@@ -45,7 +44,8 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         const questionIds = this.questionsAndAnswers().map(
             (question) => question.id
         );
-        this.questionService.initializeMap(questionIds);
+        this.questionService.initializeQuestionStatusInFalse(questionIds);
+        this.questionService.initializePointInZero(questionIds);
     }
 
     getCorrectAnswerText(answers: Answer[]): string {
@@ -55,6 +55,11 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     // Manejar la selección de una respuesta
     onQuestionSelected(questionId: string, response: Answer) {
+        console.log(questionId ,response);
         this.questionService.setQuestionSelectedStatus(questionId, true); // Actualizar el estado en el servicio
+    }
+
+    onUsedHintEvent(isUsedHint: boolean) {
+        console.log(isUsedHint);
     }
 }

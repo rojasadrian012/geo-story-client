@@ -8,9 +8,12 @@ export class QuestionService {
     private isQuestionSelectedMap = signal<Map<string, boolean>>(
         new Map<string, boolean>()
     );
+    private pointsTheUser = signal<Map<string, number>>(
+        new Map<string, number>()
+    );
 
     // Inicializa el mapa con los IDs de las preguntas
-    initializeMap(questionIds: string[]): void {
+    initializeQuestionStatusInFalse(questionIds: string[]): void {
         questionIds.forEach((id) => {
             this.isQuestionSelectedMap().set(id, false);
         });
@@ -28,5 +31,15 @@ export class QuestionService {
 
     getAllQuestionResponse() {
         return this.isQuestionSelectedMap();
+    }
+
+    initializePointInZero(questionIds: string[]): void {
+        questionIds.forEach((id) => {
+            this.pointsTheUser().set(id, 0);
+        });
+    }
+
+    setPointInQuestion(questionId:string, points:number){
+        this.pointsTheUser().set(questionId, points)
     }
 }
