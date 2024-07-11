@@ -2,6 +2,10 @@
 @for (question of questionsAndAnswers(); track question.id) {
 
     <app-title [title]="question.title"/>
+    
+    <app-hint
+        [textHint]="question.hint"
+    />
 
     @for (answer of question.answers; track answer.id) {
         <app-selected-answer

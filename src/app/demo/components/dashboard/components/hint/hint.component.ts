@@ -11,32 +11,43 @@ import { ButtonModule } from "primeng/button";
     ],
     template: `
         <div class="hint my-3 hint-container">
-                <p-button label="Mostrar Pista" [outlined]="true" severity="secondary" class="hint-button"
-                    (click)="toggleHint()" [disabled]="disable()">
+                <p-button 
+                    label="Mostrar Pista" 
+                    [outlined]="true" 
+                    severity="secondary" 
+                    class="hint-button"
+                    (click)="onShowHint()" 
+                    [disabled]="showHint()"
+                >
                     <div class="mr-2">
-                        <img src="assets/layout/images/mostrar-pista.svg" alt="mostrar pista">
+                        <img 
+                            src="assets/layout/images/mostrar-pista.svg" 
+                            alt="mostrar pista"
+                        >
                     </div>
                 </p-button>
                 @if (showHint()) {
-                    <p class="ml-2 text-color-secondary text-xl">
+                    <small class="ml-3">
                         {{textHint()}}
-                    </p>
+                    </small>
                 }
             </div>
+    `,
+    styles:`
+        .hint-container {
+            display: flex;
+            align-items: center;
+        }
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HintComponent {
 
     public textHint = input.required<string>();
-    public changeHint = output<boolean>();
-    public showHint = input.required<boolean>();
-    public disable = input.required<boolean>();
 
+    public showHint = signal<boolean>(false)
 
-    private valueTogglee = signal(false);
-
-    toggleHint() {
-        this.changeHint.emit(!this.valueTogglee())
+    public onShowHint(){
+        this.showHint.set(true)
     }
 }

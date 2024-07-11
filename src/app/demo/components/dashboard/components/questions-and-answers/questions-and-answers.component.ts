@@ -16,11 +16,12 @@ import {
 import { TitleComponent } from '../title/title.component';
 import { SelectedAnswerComponent } from '../selected-answer/selected-answer.component';
 import { QuestionService } from '../../services/question.service';
+import { HintComponent } from '../hint/hint.component';
 
 @Component({
     selector: 'app-questions-and-answers',
     standalone: true,
-    imports: [TitleComponent, SelectedAnswerComponent],
+    imports: [TitleComponent, SelectedAnswerComponent, HintComponent],
     templateUrl: './questions-and-answers.component.html',
     styles: `
 
@@ -35,6 +36,8 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['questionsAndAnswers']) {
             this.initializeMap();
+            console.log(this.questionsAndAnswers());
+            
         }
     }
 
