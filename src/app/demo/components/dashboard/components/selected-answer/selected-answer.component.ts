@@ -2,12 +2,14 @@ import { CommonModule } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
+    inject,
     input,
     output,
     signal,
 } from '@angular/core';
 
 import { Answer } from '../../interfaces/question-list-response.interface';
+import { SoundsService } from '../../services/sounds.service';
 
 @Component({
     selector: 'app-selected-answer',
@@ -22,6 +24,8 @@ export class SelectedAnswerComponent {
     public isDisable = input<boolean>(false);
     public selected = output<Answer>();
 
+    private soundService = inject(SoundsService);
+
     public currentClass = signal({
         option_container: true,
         option_container_correct: false,
@@ -29,7 +33,11 @@ export class SelectedAnswerComponent {
     });
 
     selectedOption(response: Answer) {
+        
         if (this.isDisable()) return;
+
+        if (response.isCorrect) this.soundService.playCorrectSound();
+        else this.soundService.playIncorrectSound();
 
         if (response.isCorrect) {
             this.currentClass.update((value) => ({
