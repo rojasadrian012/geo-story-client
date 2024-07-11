@@ -5,6 +5,8 @@
     
     <app-hint
         [textHint]="question.hint"
+        (usedHint)="onUsedHintEvent($event)"
+        [disable]="questionService.getQuestionSelectedStatus(question.id)"
     />
 
     @for (answer of question.answers; track answer.id) {

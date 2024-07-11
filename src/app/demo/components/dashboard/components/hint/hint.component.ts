@@ -17,7 +17,7 @@ import { ButtonModule } from "primeng/button";
                     severity="secondary" 
                     class="hint-button"
                     (click)="onShowHint()" 
-                    [disabled]="showHint()"
+                    [disabled]="disable() || showHint()"
                 >
                     <div class="mr-2">
                         <img 
@@ -44,10 +44,13 @@ import { ButtonModule } from "primeng/button";
 export class HintComponent {
 
     public textHint = input.required<string>();
+    public disable = input.required<boolean>();
+    public usedHint = output<boolean>();
 
-    public showHint = signal<boolean>(false)
+    public showHint = signal<boolean>(false);
 
     public onShowHint(){
         this.showHint.set(true)
+        this.usedHint.emit(true)
     }
 }
