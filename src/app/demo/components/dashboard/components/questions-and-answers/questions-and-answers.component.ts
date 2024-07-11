@@ -1,18 +1,26 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, SimpleChanges, input } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnChanges,
+    SimpleChanges,
+    input,
+    inject,
+} from '@angular/core';
 import { JsonPipe } from '@angular/common';
 
-import { Answer, QuestionListResponse } from "../../interfaces/question-list-response.interface";
+import {
+    Answer,
+    QuestionListResponse,
+} from '../../interfaces/question-list-response.interface';
 import { TitleComponent } from '../title/title.component';
 import { SelectedAnswerComponent } from '../selected-answer/selected-answer.component';
+import { QuestionService } from '../../services/question.service';
 
 @Component({
     selector: 'app-questions-and-answers',
     standalone: true,
-    imports: [
-        JsonPipe,
-        TitleComponent,
-        SelectedAnswerComponent
-    ],
+    imports: [TitleComponent, SelectedAnswerComponent],
     templateUrl: './questions-and-answers.component.html',
     styles: `
 
@@ -20,9 +28,9 @@ import { SelectedAnswerComponent } from '../selected-answer/selected-answer.comp
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuestionsAndAnswersComponent implements OnChanges {
-    public questionsAndAnswers = input.required<QuestionListResponse[]>()
+    public questionsAndAnswers = input.required<QuestionListResponse[]>();
 
-    public isAnswerSelectedMap: { [questionId: string]: boolean } = {}; //ojo es si ya respondió, true no implica que haya respondido de manera correcta
+    public questionService = inject(QuestionService);
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['questionsAndAnswers']) {
@@ -31,16 +39,14 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     }
 
     initializeMap() {
-        this.isAnswerSelectedMap = {};
-        this.questionsAndAnswers().forEach(question => {
-            this.isAnswerSelectedMap[question.id] = false;
-        });
-        console.log({ initial: this.isAnswerSelectedMap });
+        const questionIds = this.questionsAndAnswers().map(
+            (question) => question.id
+        );
+        this.questionService.initializeMap(questionIds);
     }
 
-
-    onAnswerSelected(questionId: string, response: Answer) {
-        this.isAnswerSelectedMap[questionId] = true; // Marcar que ya se seleccionó una respuesta para esta pregunta
+    // Manejar la selección de una respuesta
+    onQuestionSelected(questionId: string, response: Answer) {
+        this.questionService.setQuestionSelectedStatus(questionId, true); // Actualizar el estado en el servicio
     }
-
 }

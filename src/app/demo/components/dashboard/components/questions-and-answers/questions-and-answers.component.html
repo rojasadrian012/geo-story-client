@@ -6,8 +6,8 @@
     @for (answer of question.answers; track answer.id) {
         <app-selected-answer
             [answer]="answer"
-            [isDisable]="isAnswerSelectedMap[question.id]"
-            (selected)="onAnswerSelected(answer.id, $event)"
+            [isDisable]="questionService.getQuestionSelectedStatus(question.id)"
+            (selected)="onQuestionSelected(question.id, $event)"
         />
     }
 
