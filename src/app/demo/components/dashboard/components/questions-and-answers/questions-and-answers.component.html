@@ -1,11 +1,10 @@
-
 @for (question of questionsAndAnswers(); track question.id) {
 
     <app-title [title]="question.title"/>
-    
+
     <app-hint
         [textHint]="question.hint"
-        (usedHint)="onUsedHintEvent($event)"
+        (usedHint)="onUsedHintEvent(question.id, $event)"
         [disable]="questionService.getQuestionSelectedStatus(question.id)"
     />
 

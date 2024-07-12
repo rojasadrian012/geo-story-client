@@ -1,14 +1,13 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     OnChanges,
     SimpleChanges,
     input,
     inject,
-    signal,
 } from '@angular/core';
-import { JsonPipe } from '@angular/common';
+
+import { MessageService } from 'primeng/api';
 
 import {
     Answer,
@@ -32,7 +31,9 @@ import { HintComponent } from '../hint/hint.component';
 export class QuestionsAndAnswersComponent implements OnChanges {
     public questionsAndAnswers = input.required<QuestionListResponse[]>();
 
-    public questionService = inject(QuestionService);
+    public readonly questionService = inject(QuestionService);
+    private readonly messageService = inject(MessageService);
+
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['questionsAndAnswers']) {
@@ -55,11 +56,26 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     // Manejar la selección de una respuesta
     onQuestionSelected(questionId: string, response: Answer) {
-        console.log(questionId ,response);
         this.questionService.setQuestionSelectedStatus(questionId, true); // Actualizar el estado en el servicio
+        if (response.isCorrect) {
+            this.questionService.addPointsInQuestion(questionId, 4);
+            this.messagePoindClaimed(this.questionService.getPoinntTheQuestion(questionId));
+        }
     }
 
-    onUsedHintEvent(isUsedHint: boolean) {
-        console.log(isUsedHint);
+    onUsedHintEvent(questionId: string, isUsedHint: boolean) {
+        this.questionService.addPointsInQuestion(questionId, -1);
+    }
+
+    showMessage(severity: string, title: string, detail: string) {
+        this.messageService.add({
+            severity: severity,
+            summary: title,
+            detail: detail,
+        });
+    }
+
+    messagePoindClaimed(points: number) {
+        this.showMessage('success', '¡Ganaste!', `${points} puntos.`)
     }
 }

@@ -26,7 +26,7 @@ export class SelectedAnswerComponent {
     public isDisable = input<boolean>(false);
     public selected = output<Answer>();
 
-    private soundService = inject(SoundsService);
+    private readonly soundService = inject(SoundsService);
 
     public showResponse = signal<boolean>(false);
     public textIntro = signal<string>('');

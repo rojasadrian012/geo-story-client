@@ -39,7 +39,20 @@ export class QuestionService {
         });
     }
 
-    setPointInQuestion(questionId:string, points:number){
-        this.pointsTheUser().set(questionId, points)
+    getAllPointsMap() {
+        return this.pointsTheUser()
+    }
+
+    addPointsInQuestion(questionId: string, valueToAdd: number) {
+        if (this.pointsTheUser().has(questionId)) {
+            let currentValue = this.pointsTheUser().get(questionId);
+            this.pointsTheUser().set(questionId, currentValue + valueToAdd);
+        } else {
+            console.error(`La clave ${questionId} no existe en el Map.`);
+        }
+    }
+
+    getPoinntTheQuestion(questionId: string) {
+        return this.pointsTheUser().get(questionId);
     }
 }

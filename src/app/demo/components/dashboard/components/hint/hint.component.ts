@@ -1,6 +1,7 @@
 import { CommonModule, NgIf } from "@angular/common";
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output, signal } from '@angular/core';
 import { ButtonModule } from "primeng/button";
+import { SoundsService } from "../../services/sounds.service";
 
 @Component({
     selector: 'app-hint',
@@ -11,17 +12,17 @@ import { ButtonModule } from "primeng/button";
     ],
     template: `
         <div class="hint my-3 hint-container">
-                <p-button 
-                    label="Mostrar Pista" 
-                    [outlined]="true" 
-                    severity="secondary" 
+                <p-button
+                    label="Mostrar Pista"
+                    [outlined]="true"
+                    severity="secondary"
                     class="hint-button"
-                    (click)="onShowHint()" 
+                    (click)="onShowHint()"
                     [disabled]="disable() || showHint()"
                 >
                     <div class="mr-2">
-                        <img 
-                            src="assets/layout/images/mostrar-pista.svg" 
+                        <img
+                            src="assets/layout/images/mostrar-pista.svg"
                             alt="mostrar pista"
                         >
                     </div>
@@ -47,9 +48,12 @@ export class HintComponent {
     public disable = input.required<boolean>();
     public usedHint = output<boolean>();
 
+    private readonly soundService = inject(SoundsService);
+
     public showHint = signal<boolean>(false);
 
     public onShowHint(){
+        this.soundService.playPianoSound();
         this.showHint.set(true)
         this.usedHint.emit(true)
     }

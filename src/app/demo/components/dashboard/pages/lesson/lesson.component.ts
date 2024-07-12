@@ -2,9 +2,6 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import { MessageService } from 'primeng/api';
-import { zzfx } from 'zzfx';
-
 import { QuestionListResponse } from '../../interfaces/question-list-response.interface';
 import { environment } from 'src/environments/environment';
 import { SoundsService } from '../../services/sounds.service';
@@ -17,7 +14,6 @@ import { SoundsService } from '../../services/sounds.service';
 export class LessonComponent {
     private readonly route = inject(ActivatedRoute);
     private readonly http = inject(HttpClient);
-    private readonly messageService = inject(MessageService);
     private readonly soundsService = inject(SoundsService);
 
     title: string;
@@ -45,18 +41,6 @@ export class LessonComponent {
             .subscribe((data) => {
                 this.questions.set(data);
             });
-    }
-
-    toggleHint(value: boolean) {
-        this.showHintSignal.set(value);
-    }
-
-    showMessage(severity: string, title: string, detail: string) {
-        this.messageService.add({
-            severity: severity,
-            summary: title,
-            detail: detail,
-        });
     }
 
 }
