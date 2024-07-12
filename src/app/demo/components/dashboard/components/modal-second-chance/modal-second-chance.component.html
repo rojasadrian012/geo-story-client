@@ -1,0 +1,27 @@
+<p-dialog
+    [header]="titleModal()"
+    [modal]="true"
+    [(visible)]="show"
+    [style]="{ width: '50rem' }"
+    styleClass="text-center"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+>
+
+    <ng-lottie
+        class="lottie-container"
+        [options]="options"
+        width="500px"
+        height="500px"
+    />
+
+    <h2 class="my-5">Puntos altualmente: <strong>{{points()}}</strong></h2>
+    <div class="info-container">
+
+        <button
+            class="bg-primary-reverse border-round-xl text-2xl border-dotted border-primary p-3 hover:bg-primary"
+            (click)="goToSecondChance()"
+        >
+                {{buttonText()}}
+        </button>
+    </div>
+</p-dialog>

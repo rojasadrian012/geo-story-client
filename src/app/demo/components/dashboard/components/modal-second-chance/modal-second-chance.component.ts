@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, input } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, input, output, signal } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 
@@ -10,35 +11,10 @@ import { DialogModule } from "primeng/dialog";
     imports: [
         DialogModule,
         LottieComponent,
+        NgIf
     ],
-    template: `
-        <p-dialog
-            header="¡Vaya! Te has equivocado en algunas de las preguntas"
-            [modal]="true"
-            [(visible)]="show"
-            [style]="{ width: '50rem' }"
-            styleClass="text-center"
-            [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
-        >
-            <ng-lottie
-                class="lottie-container"
-                [options]="options"
-                width="500px"
-                height="500px"
-            />
-            <h2 class="my-5">Puntos altualmente: <strong>{{points()}}</strong></h2>
-            <div class="info-container">
-
-                <button
-                    class="bg-primary-reverse border-round-xl text-2xl border-dotted border-primary p-3 hover:bg-primary"
-                    (click)="goToSecondChance()"
-                >
-                        ¡Iniciemos una segunda oportunidad!
-                </button>
-            </div>
-        </p-dialog>
-    `,
-    styles:`
+    templateUrl: './modal-second-chance.component.html',
+    styles: `
 
         .lottie-container {
             display: flex;
@@ -58,7 +34,7 @@ import { DialogModule } from "primeng/dialog";
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalSecondChanceComponent {
+export class ModalSecondChanceComponent implements OnChanges {
 
     @Input({
         required: true
@@ -66,13 +42,36 @@ export class ModalSecondChanceComponent {
     public show: boolean;
     public points = input.required<number>();
 
+    public isSecondChance = input.required<boolean>();
+    public isPerfectPoint = input.required<boolean>();
+    public onSecondChange = output<boolean>();
+
+    public titleModal = signal<string>('¡Vaya! Te has equivocado en algunas de las preguntas');
+    public buttonText = signal<string>('¡Iniciemos una segunda oportunidad!');
     public options: AnimationOptions = {
         path: '/assets/images/animations/dos.json'
     };
 
-    goToSecondChance(){
-        console.log("Vamos a la segunda oportunidad");
+
+    ngOnChanges() {
+        if (this.isPerfectPoint()) {
+            this.options = { ...this.options, path: '/assets/images/animations/creativo.json' };
+            this.titleModal.set('¡Genial! Obtuviste una puntuación Perfecta');
+            this.buttonText.set('¡Pasemos al Siguiente Nivel!');
+        }
+
+        if (this.isSecondChance()) {
+            this.options = { ...this.options, path: '/assets/images/animations/decision-correcta.json' };
+            this.titleModal.set('¡Vaya! Te has equivocado en algunas de las preguntas');
+            this.buttonText.set('Finalizar esta segunda oportunidad');
+        }
+    }
+    goToSecondChance() {
+        if (!this.isPerfectPoint())
+            this.onSecondChange.emit(true);
         this.show = false;
     }
+
+
 
 }

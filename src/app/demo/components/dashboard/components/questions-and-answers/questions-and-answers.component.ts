@@ -40,6 +40,9 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     private counterQuestions = signal<number>(-1);
     private ignoreFirstZero = true;
     public pointLesson = 0;
+    public isSecondChance = signal(false);
+    public isPerfectPoint = false;
+
 
     constructor() {
         effect(() => {
@@ -51,6 +54,9 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
             if (this.counterQuestions() === 0 && !this.ignoreFirstZero) {
                 this.pointLesson = this.questionService.totalPointsLesson()
+                if (this.pointLesson === 20) {
+                    this.isPerfectPoint = true;
+                }
                 this.showModal = true;
             }
         });
@@ -103,4 +109,9 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         this.showMessage('success', '¡Ganaste!', `${points} puntos.`)
     }
 
+    goToSecondChance(value: boolean) {
+        this.isSecondChance.set(value);
+        console.log('second:', this.isSecondChance());
+
+    }
 }

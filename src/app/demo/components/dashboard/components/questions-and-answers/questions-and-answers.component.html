@@ -21,4 +21,10 @@
     <pre>Cargando...</pre>
 }
 
-<app-modal-second-chance [show]="showModal" [points]="pointLesson"/>
+<app-modal-second-chance
+    [show]="showModal"
+    [points]="pointLesson"
+    [isSecondChance]="isSecondChance()"
+    [isPerfectPoint]="isPerfectPoint"
+    (onSecondChange)="goToSecondChance($event)"
+/>
