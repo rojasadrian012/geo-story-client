@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
@@ -11,8 +13,10 @@ import { EventService } from './demo/service/event.service';
 import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { bearerTokenInterceptor } from './demo/interceptor/bearer-token.interceptor';
+
+import { provideCacheableAnimationLoader, provideLottieOptions } from 'ngx-lottie';
+import player from 'lottie-web';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -30,7 +34,9 @@ import { bearerTokenInterceptor } from './demo/interceptor/bearer-token.intercep
         PhotoService,
         ProductService,
 
-        [provideHttpClient(withInterceptors([bearerTokenInterceptor]))]
+        [provideHttpClient(withInterceptors([bearerTokenInterceptor]))],
+        provideLottieOptions({ player: () => player }),
+        provideCacheableAnimationLoader(),
     ],
     bootstrap: [AppComponent],
 })

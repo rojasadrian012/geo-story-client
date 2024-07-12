@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, effect, signal } from '@angular/core';
 
 @Injectable({
     providedIn: 'root',
@@ -55,4 +55,13 @@ export class QuestionService {
     getPoinntTheQuestion(questionId: string) {
         return this.pointsTheUser().get(questionId);
     }
+
+    totalPointsLesson(){
+        let sum = 0;
+        this.getAllPointsMap().forEach(value => {
+          sum += value;
+        });
+        return sum;
+    }
+
 }

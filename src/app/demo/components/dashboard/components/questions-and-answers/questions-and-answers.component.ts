@@ -5,9 +5,12 @@ import {
     SimpleChanges,
     input,
     inject,
+    signal,
+    effect,
 } from '@angular/core';
 
 import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 import {
     Answer,
@@ -17,15 +20,13 @@ import { TitleComponent } from '../title/title.component';
 import { SelectedAnswerComponent } from '../selected-answer/selected-answer.component';
 import { QuestionService } from '../../services/question.service';
 import { HintComponent } from '../hint/hint.component';
+import { ModalSecondChanceComponent } from '../modal-second-chance/modal-second-chance.component';
 
 @Component({
     selector: 'app-questions-and-answers',
     standalone: true,
-    imports: [TitleComponent, SelectedAnswerComponent, HintComponent],
+    imports: [TitleComponent, SelectedAnswerComponent, HintComponent, ModalSecondChanceComponent,],
     templateUrl: './questions-and-answers.component.html',
-    styles: `
-
-  `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuestionsAndAnswersComponent implements OnChanges {
@@ -34,10 +35,31 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     public readonly questionService = inject(QuestionService);
     private readonly messageService = inject(MessageService);
 
+    public isTwoTentative = signal<boolean>(false);
+    public showModal = false;
+    private counterQuestions = signal<number>(-1);
+    private ignoreFirstZero = true;
+    public pointLesson = 0;
+
+    constructor() {
+        effect(() => {
+
+            if (this.counterQuestions() === 0 && this.ignoreFirstZero) {
+                this.ignoreFirstZero = false;
+                return;
+            }
+
+            if (this.counterQuestions() === 0 && !this.ignoreFirstZero) {
+                this.pointLesson = this.questionService.totalPointsLesson()
+                this.showModal = true;
+            }
+        });
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['questionsAndAnswers']) {
             this.initializeMap();
+            this.counterQuestions.set(this.questionsAndAnswers().length);
         }
     }
 
@@ -56,6 +78,8 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     // Manejar la selección de una respuesta
     onQuestionSelected(questionId: string, response: Answer) {
+        this.counterQuestions.update((value) => value - 1);
+
         this.questionService.setQuestionSelectedStatus(questionId, true); // Actualizar el estado en el servicio
         if (response.isCorrect) {
             this.questionService.addPointsInQuestion(questionId, 4);
@@ -78,4 +102,5 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     messagePoindClaimed(points: number) {
         this.showMessage('success', '¡Ganaste!', `${points} puntos.`)
     }
+
 }

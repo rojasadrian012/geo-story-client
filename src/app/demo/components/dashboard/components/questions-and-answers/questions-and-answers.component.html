@@ -4,7 +4,7 @@
 
     <app-hint
         [textHint]="question.hint"
-        (usedHint)="onUsedHintEvent(question.id, $event)"
+        (usedHint)="onUsedHintEvent(question.id, $event, count)"
         [disable]="questionService.getQuestionSelectedStatus(question.id)"
     />
 
@@ -20,3 +20,5 @@
 }@empty{
     <pre>Cargando...</pre>
 }
+
+<app-modal-second-chance [show]="showModal" [points]="pointLesson"/>
