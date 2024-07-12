@@ -13,7 +13,6 @@ import { ToastModule } from 'primeng/toast';
 import { LessonComponent } from './pages/lesson/lesson.component';
 import { MessageService } from 'primeng/api';
 import { HintComponent } from './components/hint/hint.component';
-import { FinishMessageComponent } from './components/finish-message/finish-message.component';
 import { QuestionsAndAnswersComponent } from './components/questions-and-answers/questions-and-answers.component';
 
 @NgModule({
@@ -28,7 +27,6 @@ import { QuestionsAndAnswersComponent } from './components/questions-and-answers
         DashboardsRoutingModule,
         ToastModule,
         HintComponent,
-        FinishMessageComponent,
         QuestionsAndAnswersComponent
     ],
     declarations: [
