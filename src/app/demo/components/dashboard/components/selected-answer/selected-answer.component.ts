@@ -4,8 +4,10 @@ import {
     Component,
     inject,
     input,
+    OnChanges,
     output,
     signal,
+    SimpleChanges,
 } from '@angular/core';
 
 import { Answer } from '../../interfaces/question-list-response.interface';
@@ -20,11 +22,13 @@ import { QuestionService } from '../../services/question.service';
     styleUrl: './selected-answer.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectedAnswerComponent {
+export class SelectedAnswerComponent implements OnChanges {
     public answer = input.required<Answer>();
     public correctResponse = input.required<string>();
     public isDisable = input<boolean>(false);
     public selected = output<Answer>();
+    public isSecondChance = input<boolean>(false);
+
 
     private readonly soundService = inject(SoundsService);
 
@@ -46,12 +50,18 @@ export class SelectedAnswerComponent {
         '¡No te rindas!, La respuesta correcta es:',
     ]);
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['isSecondChance'])
+            this.resetValues();
+    }
     getRandomResponse(responses: string[]): string {
         const randomIndex = Math.floor(Math.random() * responses.length);
         return responses[randomIndex];
     }
 
     selectedOption(response: Answer) {
+        console.log(this.isDisable());
+
         if (this.isDisable()) return;
 
         if (response.isCorrect) {
@@ -79,5 +89,15 @@ export class SelectedAnswerComponent {
         }
 
         this.selected.emit(response);
+    }
+
+    resetValues() {
+        this.currentClass.update((value) => ({
+            option_container: true,
+            option_container_incorrect: false,
+            option_container_correct: false,
+        }));
+
+        this.showResponse.set(false);
     }
 }

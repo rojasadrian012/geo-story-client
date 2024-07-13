@@ -64,4 +64,16 @@ export class QuestionService {
         return sum;
     }
 
+    setNewValueSecondChange(newMap: Map<string, boolean>){
+        this.isQuestionSelectedMap.set(
+            new Map<string, boolean>(newMap)
+        )
+    }
+
+    inicializeSelectedStatus(){
+        this.isQuestionSelectedMap().forEach((value, key)=>{
+            this.isQuestionSelectedMap().set(key, false)
+        })
+    }
+
 }

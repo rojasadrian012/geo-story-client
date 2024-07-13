@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { QuestionListResponse } from '../../interfaces/question-list-response.interface';
 import { environment } from 'src/environments/environment';
 import { SoundsService } from '../../services/sounds.service';
+import { QuestionService } from '../../services/question.service';
+import { filter } from 'rxjs';
 
 @Component({
     selector: 'app-lesson',
@@ -15,6 +17,7 @@ export class LessonComponent {
     private readonly route = inject(ActivatedRoute);
     private readonly http = inject(HttpClient);
     private readonly soundsService = inject(SoundsService);
+    private readonly questionService = inject(QuestionService);
 
     title: string;
     questions = signal<QuestionListResponse[]>([])
@@ -41,6 +44,17 @@ export class LessonComponent {
             .subscribe((data) => {
                 this.questions.set(data);
             });
+    }
+
+    addNewValues(incorrectsQuestionsMAP: Map<string, boolean>) {
+
+        this.questions.set(
+            this.questions().filter(
+                question => incorrectsQuestionsMAP.has(question.id)
+            )
+        )
+
+        console.log(this.questions());
     }
 
 }

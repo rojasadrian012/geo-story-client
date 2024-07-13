@@ -7,6 +7,7 @@ import {
     inject,
     signal,
     effect,
+    output,
 } from '@angular/core';
 
 import { MessageService } from 'primeng/api';
@@ -34,13 +35,17 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     public readonly questionService = inject(QuestionService);
     private readonly messageService = inject(MessageService);
+    public onIncorrectsCuestions = output<Map<string, boolean>>();
 
     public isTwoTentative = signal<boolean>(false);
-    public showModal = false;
+    public isSecondChance = signal(false);
     private counterQuestions = signal<number>(-1);
+    private incorrectsQuestionsMap = signal<Map<string, boolean>>(
+        new Map<string, boolean>()
+    );
+    public showModal = false;
     private ignoreFirstZero = true;
     public pointLesson = 0;
-    public isSecondChance = signal(false);
     public isPerfectPoint = false;
 
 
@@ -85,12 +90,15 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     // Manejar la selección de una respuesta
     onQuestionSelected(questionId: string, response: Answer) {
         this.counterQuestions.update((value) => value - 1);
-
         this.questionService.setQuestionSelectedStatus(questionId, true); // Actualizar el estado en el servicio
+
         if (response.isCorrect) {
             this.questionService.addPointsInQuestion(questionId, 4);
             this.messagePoindClaimed(this.questionService.getPoinntTheQuestion(questionId));
+            return
         }
+
+        this.incorrectsQuestionsMap().set(questionId, false);
     }
 
     onUsedHintEvent(questionId: string, isUsedHint: boolean) {
@@ -111,7 +119,11 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     goToSecondChance(value: boolean) {
         this.isSecondChance.set(value);
-        console.log('second:', this.isSecondChance());
+        this.questionService.setNewValueSecondChange(this.incorrectsQuestionsMap())
+        console.log(this.incorrectsQuestionsMap());
 
+        this.onIncorrectsCuestions.emit(this.incorrectsQuestionsMap())
+        // this.questionService.inicializeSelectedStatus();
     }
+
 }
