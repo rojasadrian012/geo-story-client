@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnChanges, output, signal, SimpleChanges } from '@angular/core';
 import { ButtonModule } from "primeng/button";
 import { SoundsService } from "../../services/sounds.service";
 
@@ -34,7 +34,7 @@ import { SoundsService } from "../../services/sounds.service";
                 }
             </div>
     `,
-    styles:`
+    styles: `
         .hint-container {
             display: flex;
             align-items: center;
@@ -42,19 +42,28 @@ import { SoundsService } from "../../services/sounds.service";
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HintComponent {
+export class HintComponent implements OnChanges {
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['isSecondChance'])
+            this.resetValues();
+    }
 
     public textHint = input.required<string>();
     public disable = input.required<boolean>();
     public usedHint = output<boolean>();
+    public isSecondChance = input<boolean>(false);
 
     private readonly soundService = inject(SoundsService);
 
     public showHint = signal<boolean>(false);
 
-    public onShowHint(){
+    public onShowHint() {
         this.soundService.playPianoSound();
         this.showHint.set(true)
         this.usedHint.emit(true)
+    }
+
+    private resetValues() {
+        this.showHint.set(false)
     }
 }

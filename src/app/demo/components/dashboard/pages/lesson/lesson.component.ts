@@ -47,14 +47,11 @@ export class LessonComponent {
     }
 
     addNewValues(incorrectsQuestionsMAP: Map<string, boolean>) {
-
         this.questions.set(
             this.questions().filter(
                 question => incorrectsQuestionsMAP.has(question.id)
             )
         )
-
-        console.log(this.questions());
     }
 
 }

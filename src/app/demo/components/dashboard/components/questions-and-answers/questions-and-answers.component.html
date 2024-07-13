@@ -6,6 +6,7 @@
         [textHint]="question.hint"
         (usedHint)="onUsedHintEvent(question.id, $event, count)"
         [disable]="questionService.getQuestionSelectedStatus(question.id)"
+        [isSecondChance]="isSecondChance()"
     />
 
     @for (answer of question.answers; track answer.id) {

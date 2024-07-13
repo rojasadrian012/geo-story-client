@@ -29,7 +29,6 @@ export class SelectedAnswerComponent implements OnChanges {
     public selected = output<Answer>();
     public isSecondChance = input<boolean>(false);
 
-
     private readonly soundService = inject(SoundsService);
 
     public showResponse = signal<boolean>(false);
@@ -60,7 +59,6 @@ export class SelectedAnswerComponent implements OnChanges {
     }
 
     selectedOption(response: Answer) {
-        console.log(this.isDisable());
 
         if (this.isDisable()) return;
 

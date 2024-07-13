@@ -62,7 +62,7 @@ export class ModalSecondChanceComponent implements OnChanges {
 
         if (this.isSecondChance()) {
             this.options = { ...this.options, path: '/assets/images/animations/decision-correcta.json' };
-            this.titleModal.set('¡Vaya! Te has equivocado en algunas de las preguntas');
+            this.titleModal.set('¡Buen trabajo!');
             this.buttonText.set('Finalizar esta segunda oportunidad');
         }
     }

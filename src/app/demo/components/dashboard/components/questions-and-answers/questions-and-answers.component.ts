@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 
 import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
 
 import {
     Answer,
@@ -22,6 +21,14 @@ import { SelectedAnswerComponent } from '../selected-answer/selected-answer.comp
 import { QuestionService } from '../../services/question.service';
 import { HintComponent } from '../hint/hint.component';
 import { ModalSecondChanceComponent } from '../modal-second-chance/modal-second-chance.component';
+
+enum valuesForQuestion {
+    perfectPoint = 20,
+    usedHint = -1,
+    correct = 4,
+    correctSch = 2,
+    disableHint = 1,
+}
 
 @Component({
     selector: 'app-questions-and-answers',
@@ -40,6 +47,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     public isTwoTentative = signal<boolean>(false);
     public isSecondChance = signal(false);
     private counterQuestions = signal<number>(-1);
+    public isUsedHint = signal(false);
     private incorrectsQuestionsMap = signal<Map<string, boolean>>(
         new Map<string, boolean>()
     );
@@ -59,10 +67,11 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
             if (this.counterQuestions() === 0 && !this.ignoreFirstZero) {
                 this.pointLesson = this.questionService.totalPointsLesson()
-                if (this.pointLesson === 20) {
+                if (this.pointLesson === valuesForQuestion.perfectPoint) {
                     this.isPerfectPoint = true;
                 }
                 this.showModal = true;
+
             }
         });
     }
@@ -93,16 +102,27 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         this.questionService.setQuestionSelectedStatus(questionId, true); // Actualizar el estado en el servicio
 
         if (response.isCorrect) {
-            this.questionService.addPointsInQuestion(questionId, 4);
+            if (!this.isSecondChance()) {
+                this.questionService.addPointsInQuestion(questionId, valuesForQuestion.correct);
+                this.messagePoindClaimed(this.questionService.getPoinntTheQuestion(questionId));
+                return
+            }
+
+            this.questionService.addPointsInQuestion(questionId, valuesForQuestion.correctSch);
             this.messagePoindClaimed(this.questionService.getPoinntTheQuestion(questionId));
             return
         }
 
+        if(this.isUsedHint()){
+            this.questionService.addPointsInQuestion(questionId, valuesForQuestion.disableHint);
+            this.isUsedHint.set(false);
+        }
         this.incorrectsQuestionsMap().set(questionId, false);
     }
 
     onUsedHintEvent(questionId: string, isUsedHint: boolean) {
-        this.questionService.addPointsInQuestion(questionId, -1);
+        this.isUsedHint.set(isUsedHint);
+        this.questionService.addPointsInQuestion(questionId, valuesForQuestion.usedHint);
     }
 
     showMessage(severity: string, title: string, detail: string) {
@@ -120,8 +140,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     goToSecondChance(value: boolean) {
         this.isSecondChance.set(value);
         this.questionService.setNewValueSecondChange(this.incorrectsQuestionsMap())
-        console.log(this.incorrectsQuestionsMap());
-
+        this.showModal = false
         this.onIncorrectsCuestions.emit(this.incorrectsQuestionsMap())
         // this.questionService.inicializeSelectedStatus();
     }
