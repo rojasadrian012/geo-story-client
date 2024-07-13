@@ -21,6 +21,7 @@ import { SelectedAnswerComponent } from '../selected-answer/selected-answer.comp
 import { QuestionService } from '../../services/question.service';
 import { HintComponent } from '../hint/hint.component';
 import { ModalSecondChanceComponent } from '../modal-second-chance/modal-second-chance.component';
+import { Router } from '@angular/router';
 
 enum valuesForQuestion {
     perfectPoint = 20,
@@ -39,10 +40,11 @@ enum valuesForQuestion {
 })
 export class QuestionsAndAnswersComponent implements OnChanges {
     public questionsAndAnswers = input.required<QuestionListResponse[]>();
+    public onIncorrectsCuestions = output<Map<string, boolean>>();
 
     public readonly questionService = inject(QuestionService);
     private readonly messageService = inject(MessageService);
-    public onIncorrectsCuestions = output<Map<string, boolean>>();
+    private readonly routerService = inject(Router);
 
     public isTwoTentative = signal<boolean>(false);
     public isSecondChance = signal(false);
@@ -113,7 +115,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             return
         }
 
-        if(this.isUsedHint()){
+        if (this.isUsedHint()) {
             this.questionService.addPointsInQuestion(questionId, valuesForQuestion.disableHint);
             this.isUsedHint.set(false);
         }
@@ -137,12 +139,20 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         this.showMessage('success', '¡Ganaste!', `${points} puntos.`)
     }
 
-    goToSecondChance(value: boolean) {
-        this.isSecondChance.set(value);
-        this.questionService.setNewValueSecondChange(this.incorrectsQuestionsMap())
-        this.showModal = false
-        this.onIncorrectsCuestions.emit(this.incorrectsQuestionsMap())
-        // this.questionService.inicializeSelectedStatus();
+    goToSecondChance(initSecondChance: boolean) {
+        if (!this.isPerfectPoint) {
+            this.isSecondChance.set(initSecondChance);
+            this.questionService.setNewValueSecondChange(this.incorrectsQuestionsMap())
+            this.showModal = false
+            this.onIncorrectsCuestions.emit(this.incorrectsQuestionsMap())
+            return
+        }
+        this.goToHome(true)
+    }
+
+    goToHome(isFinishedSecondChange: boolean) {
+        console.info(`Guardar los ${this.pointLesson} puntos en la base de datos.`);
+        this.routerService.navigateByUrl('/');
     }
 
 }

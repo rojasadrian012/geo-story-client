@@ -45,6 +45,8 @@ export class ModalSecondChanceComponent implements OnChanges {
     public isSecondChance = input.required<boolean>();
     public isPerfectPoint = input.required<boolean>();
     public onSecondChange = output<boolean>();
+    public onFishSecondChange = output<boolean>();
+
 
     public titleModal = signal<string>('¡Vaya! Te has equivocado en algunas de las preguntas');
     public buttonText = signal<string>('¡Iniciemos una segunda oportunidad!');
@@ -52,8 +54,8 @@ export class ModalSecondChanceComponent implements OnChanges {
         path: '/assets/images/animations/dos.json'
     };
 
-
     ngOnChanges() {
+
         if (this.isPerfectPoint()) {
             this.options = { ...this.options, path: '/assets/images/animations/creativo.json' };
             this.titleModal.set('¡Genial! Obtuviste una puntuación Perfecta');
@@ -67,8 +69,11 @@ export class ModalSecondChanceComponent implements OnChanges {
         }
     }
     goToSecondChance() {
-        if (!this.isPerfectPoint())
-            this.onSecondChange.emit(true);
+        this.onSecondChange.emit(true);
+
+        if (this.isSecondChance())
+            this.onFishSecondChange.emit(true);
+
         this.show = false;
     }
 

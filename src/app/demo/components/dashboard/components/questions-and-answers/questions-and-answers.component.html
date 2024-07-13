@@ -13,9 +13,9 @@
         <app-selected-answer
             [answer]="answer"
             [isDisable]="questionService.getQuestionSelectedStatus(question.id)"
-            (selected)="onQuestionSelected(question.id, $event)"
             [correctResponse]="getCorrectAnswerText(question.answers)"
             [isSecondChance]="isSecondChance()"
+            (selected)="onQuestionSelected(question.id, $event)"
         />
     }
 
@@ -29,4 +29,5 @@
     [isSecondChance]="isSecondChance()"
     [isPerfectPoint]="isPerfectPoint"
     (onSecondChange)="goToSecondChance($event)"
+    (onFishSecondChange)="goToHome($event)"
 />
