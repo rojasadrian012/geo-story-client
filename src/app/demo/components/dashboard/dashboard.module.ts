@@ -14,6 +14,7 @@ import { LessonComponent } from './pages/lesson/lesson.component';
 import { MessageService } from 'primeng/api';
 import { HintComponent } from './components/hint/hint.component';
 import { QuestionsAndAnswersComponent } from './components/questions-and-answers/questions-and-answers.component';
+import { CategoryComponent } from './components/category/category.component';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { QuestionsAndAnswersComponent } from './components/questions-and-answers
         DashboardsRoutingModule,
         ToastModule,
         HintComponent,
-        QuestionsAndAnswersComponent
+        QuestionsAndAnswersComponent,
+        CategoryComponent,
     ],
     declarations: [
         DashboardComponent,

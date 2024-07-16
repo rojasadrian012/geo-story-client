@@ -1,0 +1,18 @@
+<div class="flex flex-column align-items-center">
+    <div class="path-container">
+        @for (level of levels(); track level; let i = $index; let first = $first) {
+        <div [ngClass]="(dashboardService.isBlockedSingal() && !first) ? 'blocked' : 'path-step'"
+            (click)="changePath(level, dashboardService.isBlockedSingal() && !first)">
+            @if(dashboardService.isBlockedSingal() && !first){
+            <img class="image-padlock" src="assets/images/bloqueado.svg" alt="nivel bloqueado">
+            }
+            <img [ngClass]="(dashboardService.isBlockedSingal() && !first) ? 'image-normal-blocked' : 'image-normal'"
+                class="mt-3" src="{{images[i]}}" alt="nivel desbloqueado">
+            <h4 [ngClass]="{ 'blocked-title': (dashboardService.isBlockedSingal() && !first) }">{{
+                level.title }}</h4>
+        </div>
+        @if (i < levels.length - 1) { <div class="path-line">
+    </div>
+    }
+    }
+</div>
