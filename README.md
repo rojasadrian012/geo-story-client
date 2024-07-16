@@ -17,3 +17,4 @@ yarn install
 ```
 ng s -0
 ```
+5. Versiones de node requeridas: __^18.19.1 || ^20.11.1 || >=22.0.0__
