@@ -24,6 +24,8 @@ import { Router } from '@angular/router';
 export class CategoryComponent {
     public images = input.required<string[]>();
     public levels = input.required<QuizListResponse[]>();
+    //TODO hacer que venga desde la bd el estado y las imagenes.
+    // public unlocked = input.required<boolean>() 
 
     public readonly dashboardService = inject(DashboardService);
     public readonly router = inject(Router);

@@ -1,22 +1,43 @@
-.path-container {
+@keyframes unlock {
+    0% {
+        box-shadow: 0 0 0px 0px rgba(255, 255, 0, 0.8);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.8);
+        transform: scale(1.05);
+    }
+    100% {
+        box-shadow: 0 0 0px 0px rgba(255, 255, 0, 0.8);
+        transform: scale(1);
+    }
+}
+
+@keyframes flash {
+    0% {
+        box-shadow: 0 0 20px 5px rgba(255, 255, 0, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 50px 25px rgba(255, 255, 0, 1);
+    }
+    100% {
+        box-shadow: 0 0 20px 5px rgba(255, 255, 0, 0.8);
+    }
+}
+
+h4 {
+    font-weight: 700;
+    color: var(--surface-600);
+}
+
+.category-container {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.path-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 5px dashed #ccc;
-    border-top-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    width: 80%;
-    position: relative;
-}
-
+.unlocked,
 .blocked {
     display: flex;
     flex-direction: column;
@@ -27,9 +48,19 @@
     border-bottom-right-radius: 20px;
     width: 80%;
     position: relative;
-    background-color: #ccc3;
+    transition: background-color 0.5s ease, opacity 0.5s ease,
+        box-shadow 0.5s ease, transform 0.5s ease;
 }
 
+.unlocked {
+    animation: unlock 1s ease-out forwards, flash 0.5s ease-out 0.5s;
+    opacity: 1;
+}
+
+.blocked {
+    background-color: rgba(204, 204, 204, 0.2);
+    opacity: 0.5;
+}
 
 .image-padlock {
     width: 30%;
@@ -41,12 +72,12 @@
     z-index: 2;
 }
 
-.image-normal {
+.image-unlocked {
     width: 35%;
     height: 35%;
 }
 
-.image-normal-blocked {
+.image-blocked {
     width: 35%;
     height: 35%;
     filter: grayscale(100%);
@@ -60,9 +91,9 @@
 
 .path-line {
     height: 50px;
-    width: 5px;
     background-color: transparent;
     z-index: 0;
-    border-style: dashed;
+    border-right-style: dashed;
+    border-right-width: 5px;
     border-color: #ccc;
 }
