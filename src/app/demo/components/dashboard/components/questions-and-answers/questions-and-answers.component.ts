@@ -34,13 +34,19 @@ enum valuesForQuestion {
 @Component({
     selector: 'app-questions-and-answers',
     standalone: true,
-    imports: [TitleComponent, SelectedAnswerComponent, HintComponent, ModalSecondChanceComponent,],
+    imports: [
+        TitleComponent,
+        SelectedAnswerComponent,
+        HintComponent,
+        ModalSecondChanceComponent,
+    ],
     templateUrl: './questions-and-answers.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuestionsAndAnswersComponent implements OnChanges {
     public questionsAndAnswers = input.required<QuestionListResponse[]>();
     public onIncorrectsCuestions = output<Map<string, boolean>>();
+    public onPointsWinned = output<number>();
 
     public readonly questionService = inject(QuestionService);
     private readonly messageService = inject(MessageService);
@@ -58,22 +64,19 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     public pointLesson = 0;
     public isPerfectPoint = false;
 
-
     constructor() {
         effect(() => {
-
             if (this.counterQuestions() === 0 && this.ignoreFirstZero) {
                 this.ignoreFirstZero = false;
                 return;
             }
 
             if (this.counterQuestions() === 0 && !this.ignoreFirstZero) {
-                this.pointLesson = this.questionService.totalPointsLesson()
+                this.pointLesson = this.questionService.totalPointsLesson();
                 if (this.pointLesson === valuesForQuestion.perfectPoint) {
                     this.isPerfectPoint = true;
                 }
                 this.showModal = true;
-
             }
         });
     }
@@ -105,18 +108,31 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
         if (response.isCorrect) {
             if (!this.isSecondChance()) {
-                this.questionService.addPointsInQuestion(questionId, valuesForQuestion.correct);
-                this.messagePoindClaimed(this.questionService.getPoinntTheQuestion(questionId));
-                return
+                this.questionService.addPointsInQuestion(
+                    questionId,
+                    valuesForQuestion.correct
+                );
+                this.messagePoindClaimed(
+                    this.questionService.getPoinntTheQuestion(questionId)
+                );
+                return;
             }
 
-            this.questionService.addPointsInQuestion(questionId, valuesForQuestion.correctSch);
-            this.messagePoindClaimed(this.questionService.getPoinntTheQuestion(questionId));
-            return
+            this.questionService.addPointsInQuestion(
+                questionId,
+                valuesForQuestion.correctSch
+            );
+            this.messagePoindClaimed(
+                this.questionService.getPoinntTheQuestion(questionId)
+            );
+            return;
         }
 
         if (this.isUsedHint()) {
-            this.questionService.addPointsInQuestion(questionId, valuesForQuestion.disableHint);
+            this.questionService.addPointsInQuestion(
+                questionId,
+                valuesForQuestion.disableHint
+            );
             this.isUsedHint.set(false);
         }
         this.incorrectsQuestionsMap().set(questionId, false);
@@ -124,7 +140,10 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     onUsedHintEvent(questionId: string, isUsedHint: boolean) {
         this.isUsedHint.set(isUsedHint);
-        this.questionService.addPointsInQuestion(questionId, valuesForQuestion.usedHint);
+        this.questionService.addPointsInQuestion(
+            questionId,
+            valuesForQuestion.usedHint
+        );
     }
 
     showMessage(severity: string, title: string, detail: string) {
@@ -136,23 +155,24 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     }
 
     messagePoindClaimed(points: number) {
-        this.showMessage('success', '¡Ganaste!', `${points} puntos.`)
+        this.showMessage('success', '¡Ganaste!', `${points} puntos.`);
     }
 
     goToSecondChance(initSecondChance: boolean) {
         if (!this.isPerfectPoint) {
             this.isSecondChance.set(initSecondChance);
-            this.questionService.setNewValueSecondChange(this.incorrectsQuestionsMap())
-            this.showModal = false
-            this.onIncorrectsCuestions.emit(this.incorrectsQuestionsMap())
-            return
+            this.questionService.setNewValueSecondChange(
+                this.incorrectsQuestionsMap()
+            );
+            this.showModal = false;
+            this.onIncorrectsCuestions.emit(this.incorrectsQuestionsMap());
+            return;
         }
-        this.goToHome(true)
+        this.goToHome(true);
     }
 
     goToHome(isFinishedSecondChange: boolean) {
-        console.info(`Guardar los ${this.pointLesson} puntos en la base de datos.`);
+        this.onPointsWinned.emit(this.pointLesson);
         this.routerService.navigateByUrl('/');
     }
-
 }

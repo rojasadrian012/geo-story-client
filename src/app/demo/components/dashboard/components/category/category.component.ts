@@ -4,14 +4,17 @@ import {
     Component,
     inject,
     input,
+    OnChanges,
     OnInit,
     signal,
+    SimpleChanges,
 } from '@angular/core';
 import { QuizListResponse } from '../../interfaces/quiz-list-response.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DashboardService } from '../../services/dashboard.service';
 import { Router } from '@angular/router';
+import { LevelByUser } from '../../interfaces/levels-by-user.interface';
 
 @Component({
     selector: 'app-category',
@@ -22,17 +25,17 @@ import { Router } from '@angular/router';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryComponent {
-    public images = input.required<string[]>();
-    public levels = input.required<QuizListResponse[]>();
-    //TODO hacer que venga desde la bd el estado y las imagenes.
-    // public unlocked = input.required<boolean>() 
 
-    public readonly dashboardService = inject(DashboardService);
+    //TODO: hacer que las imagenes vengan de bd.
+    public images = input.required<string[]>();
+    public levels = input.required<LevelByUser[]>();
+    
     public readonly router = inject(Router);
 
-    changePath(level: QuizListResponse, blocked: boolean) {
-        if (blocked) return;
-        this.router.navigateByUrl(`lesson/${level.title}/${level.id}`);
+    changePath(level: LevelByUser, unlockLevel: boolean) {        
+        if (!unlockLevel) return;
+        this.router.navigateByUrl(
+            `lesson/${level.quizId.title}/${level.id}`
+        );
     }
-
 }

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { QuizListResponse } from './interfaces/quiz-list-response.interface';
 import { Router } from '@angular/router';
 import { DashboardService } from './services/dashboard.service';
+import { LevelByUser } from './interfaces/levels-by-user.interface';
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -21,7 +22,8 @@ export class DashboardComponent implements OnInit {
         '../../../../assets/images/options-images/cultura.svg',
         '../../../../assets/images/options-images/turismo.svg',
     ]);
-    public levels = signal<QuizListResponse[]>([]);
+
+    public levels = signal<LevelByUser[]>([]);
 
     ngOnInit() {
         this.getQuizzes();
@@ -29,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
     getQuizzes() {
         this.http
-            .get<QuizListResponse[]>(environment.baseUrl + '/quiz')
+            .get<LevelByUser[]>(environment.baseUrl + '/quiz/levels-by-user')
             .subscribe((data) => {
                 this.levels.set(data);
             });
