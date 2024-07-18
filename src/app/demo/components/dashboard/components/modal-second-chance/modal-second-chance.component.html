@@ -5,16 +5,17 @@
     [style]="{ width: '50rem' }"
     styleClass="text-center"
     [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [closable]="false"
 >
 
     <ng-lottie
         class="lottie-container"
         [options]="options"
-        width="500px"
-        height="500px"
+        width="50%"
+        height="50%"
     />
 
-    <h2 class="my-5">Puntos altualmente: <strong>{{points()}}</strong></h2>
+    <p class="my-5 text-2xl">Puntos altualmente: <strong>{{points()}}</strong></p>
     <div class="info-container">
 
         <button

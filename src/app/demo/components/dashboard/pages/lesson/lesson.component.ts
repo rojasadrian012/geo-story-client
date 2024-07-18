@@ -64,7 +64,6 @@ export class LessonComponent {
             .subscribe({
                 next: (response) => {
                     this.getQuestions(this.userQuizId());
-                    console.log(this.userQuizId());
                 },
                 error: (error) => {
                     console.error('Error al guardar los puntos:', error);

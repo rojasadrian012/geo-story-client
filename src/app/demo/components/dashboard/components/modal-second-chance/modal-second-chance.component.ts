@@ -1,18 +1,24 @@
 import { NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, input, output, signal } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+    input,
+    output,
+    signal,
+} from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 
-import { DialogModule } from "primeng/dialog";
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
     selector: 'app-modal-second-chance',
     standalone: true,
-    imports: [
-        DialogModule,
-        LottieComponent,
-        NgIf
-    ],
+    imports: [DialogModule, LottieComponent, NgIf],
     templateUrl: './modal-second-chance.component.html',
     styles: `
 
@@ -31,13 +37,20 @@ import { DialogModule } from "primeng/dialog";
             margin-top: 20px; /* Ajusta el margen según sea necesario */
         }
 
+        ::ng-deep .p-dialog-title {
+            font-size: 1.75rem;
+            color: var(--text-color-secondary);
+            text-align: center !important;
+            width: 100%; 
+            display: flex;
+            justify-content: center; 
+        }
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalSecondChanceComponent implements OnChanges {
-
     @Input({
-        required: true
+        required: true,
     })
     public show: boolean;
     public points = input.required<number>();
@@ -47,23 +60,29 @@ export class ModalSecondChanceComponent implements OnChanges {
     public onSecondChange = output<boolean>();
     public onFishSecondChange = output<boolean>();
 
-
-    public titleModal = signal<string>('¡Vaya! Te has equivocado en algunas de las preguntas');
+    public titleModal = signal<string>(
+        '¡Vaya! Te has equivocado en algunas de las preguntas'
+    );
     public buttonText = signal<string>('¡Iniciemos una segunda oportunidad!');
     public options: AnimationOptions = {
-        path: '/assets/images/animations/dos.json'
+        path: '/assets/images/animations/dos.json',
     };
 
     ngOnChanges() {
-
         if (this.isPerfectPoint()) {
-            this.options = { ...this.options, path: '/assets/images/animations/creativo.json' };
+            this.options = {
+                ...this.options,
+                path: '/assets/images/animations/creativo.json',
+            };
             this.titleModal.set('¡Genial! Obtuviste una puntuación Perfecta');
             this.buttonText.set('¡Pasemos al Siguiente Nivel!');
         }
 
         if (this.isSecondChance()) {
-            this.options = { ...this.options, path: '/assets/images/animations/decision-correcta.json' };
+            this.options = {
+                ...this.options,
+                path: '/assets/images/animations/decision-correcta.json',
+            };
             this.titleModal.set('¡Buen trabajo!');
             this.buttonText.set('Finalizar esta segunda oportunidad');
         }
@@ -71,12 +90,8 @@ export class ModalSecondChanceComponent implements OnChanges {
     goToSecondChance() {
         this.onSecondChange.emit(true);
 
-        if (this.isSecondChance())
-            this.onFishSecondChange.emit(true);
+        if (this.isSecondChance()) this.onFishSecondChange.emit(true);
 
         this.show = false;
     }
-
-
-
 }
