@@ -27,7 +27,6 @@ button {
     background-color: transparent;
 }
 
-
 button:disabled {
     cursor: not-allowed;
     opacity: 0.5;
@@ -44,4 +43,9 @@ button:disabled {
 
 .hint-button {
     margin-right: 10px;
+}
+
+::ng-deep .p-toast {
+    width: calc(50%);
+    font-size: 1.25rem;
 }
