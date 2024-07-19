@@ -8,6 +8,7 @@ import {
 } from '../../interfaces/question-list-response.interface';
 import { environment } from 'src/environments/environment';
 import { SoundsService } from '../../services/sounds.service';
+import { QuizStatusService } from '../../services/quizStatus.service';
 
 @Component({
     selector: 'app-lesson',
@@ -18,6 +19,7 @@ export class LessonComponent {
     private readonly route = inject(ActivatedRoute);
     private readonly http = inject(HttpClient);
     private readonly soundsService = inject(SoundsService);
+    private readonly quizStatusService = inject(QuizStatusService);
 
     userQuizId = signal<string>('noId012');
     questions = signal<QuestionListResponse[]>([]);
@@ -64,6 +66,7 @@ export class LessonComponent {
             .subscribe({
                 next: (response) => {
                     this.getQuestions(this.userQuizId());
+                    this.quizStatusService.refresh.set(true);
                 },
                 error: (error) => {
                     console.error('Error al guardar los puntos:', error);

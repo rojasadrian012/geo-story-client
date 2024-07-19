@@ -1,46 +1,35 @@
 <div class="flex flex-column align-items-center">
     <div class="category-container">
-        @for (level of levels(); track level; let i = $index; let first = $first, last = $last) {
-            <div
-                [class]="
-                    level.unlockLevel
-                        ? 'unlocked'
-                        : 'blocked'
-                "
-                (click)="
-                    changePath(level, level.unlockLevel)
-                "
-            >
-                @if(!level.unlockLevel){
-                    <img
-                        class="image-padlock"
-                        src="assets/images/bloqueado.svg"
-                        alt="nivel bloqueado"
-                    />
-                }
-                <img
-                    [class]="
-                    level.unlockLevel
-                            ? 'image-unlocked'
-                            : 'image-blocked'
-                    "
-                    class="mt-3"
-                    [src]="images()[i]"
-                    alt="nivel desbloqueado"
-                />
-                <h4
-                    [ngClass]="{
-                        'blocked-title':
-                        level.unlockLevel
-                    }"
-                >
-                    {{ level.quizId.title }}
-                </h4>
-            </div>
-            @if (!last) {
-                <span class="line"></span>
+        @for (level of levels(); track level; let i = $index; let first =
+        $first, last = $last) {
+        <div
+            #level
+            [class]="level.unlockLevel ? 'unlocked' : 'blocked'"
+            (click)="changePath(level, level.unlockLevel)"
+        >
+            @if(!level.unlockLevel){
+            <img
+                class="image-padlock"
+                src="assets/images/bloqueado.svg"
+                alt="nivel bloqueado"
+            />
             }
-             
-        }
+            <img
+                [class]="level.unlockLevel ? 'image-unlocked' : 'image-blocked'"
+                class="mt-3"
+                [src]="images()[i]"
+                alt="nivel desbloqueado"
+            />
+            <h4
+                [ngClass]="{
+                    'blocked-title': level.unlockLevel
+                }"
+            >
+                {{ level.quizId.title }}
+            </h4>
+        </div>
+        @if (!last) {
+        <span class="line"></span>
+        } }
     </div>
 </div>
