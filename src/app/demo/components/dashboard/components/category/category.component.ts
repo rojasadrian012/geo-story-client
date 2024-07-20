@@ -35,45 +35,39 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['levels']) {
-          console.log('Desde ngOnChanges');
-          console.log(this.levels());
-          this.delayedScrollToLastUnlockedLevel();
+            this.delayedScrollToLastUnlockedLevel();
         }
-      }
-    
-      ngAfterViewInit(): void {
-        console.log('Desde ngAfterViewInit');
+    }
+
+    ngAfterViewInit(): void {
         this.delayedScrollToLastUnlockedLevel();
-      }
-    
-      private delayedScrollToLastUnlockedLevel(): void {
+    }
+
+    private delayedScrollToLastUnlockedLevel(): void {
         // Usamos setTimeout para retrasar la ejecución y dar tiempo a Angular para renderizar los elementos
         setTimeout(() => {
-          this.scrollToLastUnlockedLevel();
+            this.scrollToLastUnlockedLevel();
         }, 500); // Ajusta el tiempo según sea necesario
-      }
-    
-      private scrollToLastUnlockedLevel(): void {
-        console.log('Desde scroll', this.levelsElements);
+    }
+
+    private scrollToLastUnlockedLevel(): void {
         if (this.levelsElements && this.levelsElements.length > 0) {
-          const lastUnlockedIndex = this.levels()
-              .map((level) => level.unlockLevel)
-              .lastIndexOf(true);
-    
-          console.log('Último índice desbloqueado:', lastUnlockedIndex);
-    
-          if (lastUnlockedIndex !== -1) {
-            const element =
-                this.levelsElements.toArray()[lastUnlockedIndex]
-                    .nativeElement;
-            console.log('Elemento a desplazar:', element);
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
+            const lastUnlockedIndex = this.levels()
+                .map((level) => level.unlockLevel)
+                .lastIndexOf(true);
+
+            if (lastUnlockedIndex !== -1) {
+                const element =
+                    this.levelsElements.toArray()[lastUnlockedIndex]
+                        .nativeElement;
+
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         } else {
-          console.log('No hay elementos en levelsElements aún.');
+            console.log('No hay elementos en levelsElements aún.');
         }
-      }
-    
+    }
+
     changePath(level: LevelByUser, unlockLevel: boolean) {
         if (!unlockLevel) return;
         this.quizStatusService.refresh.set(false);
