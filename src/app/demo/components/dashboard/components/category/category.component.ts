@@ -10,6 +10,7 @@ import {
     QueryList,
     SimpleChanges,
     ViewChildren,
+    signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { LevelByUser } from '../../interfaces/levels-by-user.interface';
@@ -30,6 +31,8 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
 
     public readonly router = inject(Router);
     public readonly quizStatusService = inject(QuizStatusService);
+
+    public lastUnlockedIndex = signal<number>(-1);
 
     @ViewChildren('level') levelsElements!: QueryList<ElementRef>;
 
@@ -52,13 +55,15 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
 
     private scrollToLastUnlockedLevel(): void {
         if (this.levelsElements && this.levelsElements.length > 0) {
-            const lastUnlockedIndex = this.levels()
-                .map((level) => level.unlockLevel)
-                .lastIndexOf(true);
+            this.lastUnlockedIndex.set(
+                this.levels()
+                    .map((level) => level.unlockLevel)
+                    .lastIndexOf(true)
+            );
 
-            if (lastUnlockedIndex !== -1) {
+            if (this.lastUnlockedIndex() !== -1) {
                 const element =
-                    this.levelsElements.toArray()[lastUnlockedIndex]
+                    this.levelsElements.toArray()[this.lastUnlockedIndex()]
                         .nativeElement;
 
                 element.scrollIntoView({ behavior: 'smooth', block: 'center' });
