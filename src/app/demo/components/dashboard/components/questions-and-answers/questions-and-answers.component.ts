@@ -61,7 +61,6 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     );
     public showModal = false;
     private ignoreFirstZero = true;
-    public pointLesson = 0; //TODO: ver para que demonios se usa esta variable, mirando por arriba no lo entendi.
     public isPerfectPoint = false;
 
     constructor() {
@@ -73,10 +72,6 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             }
 
             if (this.counterQuestions() === 0 && !this.ignoreFirstZero) {
-                this.pointLesson = this.questionService.totalPointsLesson();
-                if (this.pointLesson === pointsQuestion.perfectPoint) {
-                    this.isPerfectPoint = true;
-                }
                 this.showModal = true;
             }
         });
@@ -105,9 +100,11 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     // Manejar la selección de una respuesta
     onQuestionSelected(questionId: string, response: Answer) {
         this.counterQuestions.update((value) => value - 1);
-        this.questionService.setQuestionSelectedStatus(questionId, true); // Actualizar el estado en el servicio
+        this.questionService.setQuestionSelectedStatus(questionId, true);
 
         if (response.isCorrect) {
+
+            if (this.isUsedHint()) this.isUsedHint.set(false);
 
             if (!this.isSecondChance()) {
 
@@ -140,6 +137,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             );
             this.isUsedHint.set(false);
         }
+
         this.incorrectsQuestionsMap().set(questionId, false);
     }
 
