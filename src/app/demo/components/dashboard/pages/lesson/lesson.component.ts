@@ -35,7 +35,7 @@ export class LessonComponent {
         this.route.paramMap.subscribe((params) => {
             this.title = params.get('level');
             this.userQuizId.set(params.get('id'));
-            this.getQuestions(params.get('id'));
+            this.getQuestions(this.userQuizId());
         });
     }
 
@@ -62,6 +62,7 @@ export class LessonComponent {
             .post(`${environment.baseUrl}/quiz/save-points`, {
                 points,
                 title: this.title,
+                userQuizId: this.userQuizId(),
             })
             .subscribe({
                 next: (response) => {
