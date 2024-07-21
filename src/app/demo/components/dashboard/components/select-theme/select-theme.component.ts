@@ -30,11 +30,7 @@ export class SelectThemeComponent {
 
     public titleAndThemes = signal<TitleAndThemes[]>([
         {
-<<<<<<< HEAD
             title: 'Tema por defecto',
-=======
-            title: 'Aventuras Espaciales',
->>>>>>> 66246331ec60e38df15cac0c83cfa2308665d360
             themes: [
                 {
                     theme: 'lara-light-indigo',
