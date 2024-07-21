@@ -37,16 +37,16 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-chart-line',
                         routerLink: ['/ranking'],
                     },
-                    {
-                        label: 'Agregar Contenido',
-                        icon: 'pi pi-fw pi-plus',
-                        routerLink: ['/agregar-contenido'],
-                    },
-                    {
-                        label: 'Perfil',
-                        icon: 'pi pi-fw pi-user',
-                        routerLink: ['/perfil'],
-                    },
+                    // {
+                    //     label: 'Agregar Contenido',
+                    //     icon: 'pi pi-fw pi-plus',
+                    //     routerLink: ['/agregar-contenido'],
+                    // },
+                    // {
+                    //     label: 'Perfil',
+                    //     icon: 'pi pi-fw pi-user',
+                    //     routerLink: ['/perfil'],
+                    // },
                     {
                         label: 'Logros',
                         icon: 'pi pi-fw pi-star',
