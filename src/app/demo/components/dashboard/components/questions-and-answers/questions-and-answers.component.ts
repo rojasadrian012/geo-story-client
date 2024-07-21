@@ -23,7 +23,7 @@ import { HintComponent } from '../hint/hint.component';
 import { ModalSecondChanceComponent } from '../modal-second-chance/modal-second-chance.component';
 import { Router } from '@angular/router';
 
-enum valuesForQuestion {
+enum pointsQuestion {
     perfectPoint = 20,
     usedHint = -1,
     correct = 4,
@@ -61,11 +61,12 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     );
     public showModal = false;
     private ignoreFirstZero = true;
-    public pointLesson = 0;
+    public pointLesson = 0; //TODO: ver para que demonios se usa esta variable, mirando por arriba no lo entendi.
     public isPerfectPoint = false;
 
     constructor() {
         effect(() => {
+
             if (this.counterQuestions() === 0 && this.ignoreFirstZero) {
                 this.ignoreFirstZero = false;
                 return;
@@ -73,7 +74,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
             if (this.counterQuestions() === 0 && !this.ignoreFirstZero) {
                 this.pointLesson = this.questionService.totalPointsLesson();
-                if (this.pointLesson === valuesForQuestion.perfectPoint) {
+                if (this.pointLesson === pointsQuestion.perfectPoint) {
                     this.isPerfectPoint = true;
                 }
                 this.showModal = true;
@@ -107,11 +108,14 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         this.questionService.setQuestionSelectedStatus(questionId, true); // Actualizar el estado en el servicio
 
         if (response.isCorrect) {
+
             if (!this.isSecondChance()) {
+
                 this.questionService.addPointsInQuestion(
                     questionId,
-                    valuesForQuestion.correct
+                    pointsQuestion.correct
                 );
+
                 this.messagePoindClaimed(
                     this.questionService.getPoinntTheQuestion(questionId)
                 );
@@ -120,8 +124,9 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
             this.questionService.addPointsInQuestion(
                 questionId,
-                valuesForQuestion.correctSch
+                pointsQuestion.correctSch
             );
+
             this.messagePoindClaimed(
                 this.questionService.getPoinntTheQuestion(questionId)
             );
@@ -131,7 +136,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         if (this.isUsedHint()) {
             this.questionService.addPointsInQuestion(
                 questionId,
-                valuesForQuestion.disableHint
+                pointsQuestion.disableHint
             );
             this.isUsedHint.set(false);
         }
@@ -142,7 +147,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         this.isUsedHint.set(isUsedHint);
         this.questionService.addPointsInQuestion(
             questionId,
-            valuesForQuestion.usedHint
+            pointsQuestion.usedHint
         );
     }
 
@@ -172,7 +177,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     }
 
     goToHome(isFinishedSecondChange: boolean) {
-        this.onPointsWinned.emit(this.pointLesson);
+        this.onPointsWinned.emit(this.questionService.totalPointsLesson());
         this.routerService.navigateByUrl('/');
     }
 }

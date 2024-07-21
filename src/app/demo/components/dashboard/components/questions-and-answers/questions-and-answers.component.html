@@ -4,7 +4,7 @@
 
     <app-hint
         [textHint]="question.hint"
-        (usedHint)="onUsedHintEvent(question.id, $event, count)"
+        (usedHint)="onUsedHintEvent(question.id, $event)"
         [disable]="questionService.getQuestionSelectedStatus(question.id)"
         [isSecondChance]="isSecondChance()"
     />
@@ -25,7 +25,7 @@
 
 <app-modal-second-chance
     [show]="showModal"
-    [points]="pointLesson"
+    [points]="questionService.totalPointsLesson()"
     [isSecondChance]="isSecondChance()"
     [isPerfectPoint]="isPerfectPoint"
     (onSecondChange)="goToSecondChance($event)"
