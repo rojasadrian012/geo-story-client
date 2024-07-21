@@ -58,11 +58,6 @@ export class AppMenuComponent implements OnInit {
                         routerLink: ['/configuracion'],
                     },
                     {
-                        label: 'Ejecutar Semilla',
-                        icon: 'pi pi-fw pi-database',
-                        command: () => this.executeSeed(),
-                    },
-                    {
                         label: 'Cerrar Sesión',
                         icon: 'pi pi-fw pi-sign-out',
                         command: () => this.authService.logout(),
@@ -70,11 +65,5 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
         ];
-    }
-
-    executeSeed() {
-        this.http
-            .get(`${environment.baseUrl}/seed`)
-            .subscribe((data) => console.log(data));
     }
 }

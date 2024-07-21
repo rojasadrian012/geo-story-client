@@ -1,7 +1,26 @@
 <div class="grid">
     <div class="col-12 lg:col-12 xl:col-12">
-        <div class="card mb-0 py-4 text-center text-3xl box-content-1">
-            <p>settings wordasliuhapsiuodd!</p>
+        <div class="card">
+            <p class="text-xl font-bold text-color-secondary">Elija un tema</p>
+            <small>< Selector de tema aqui ></small>
+            <p class="text-xl font-bold text-color-secondary mt-3 mb-0">
+                Reestablecer base de datos
+            </p>
+            <p class="text-sm mt-0 mb-2">
+                Borrará toda la información actual y cargará los valores por
+                defecto de la semilla.
+            </p>
+
+            <button
+                (click)="executeSeed()"
+                [class]="
+                    textButton() === 'Ejecutar Semilla'
+                        ? 'bg-primary-reverse border-round-xl text-xl border-dotted border-primary p-3'
+                        : 'transparent-background text-red-500 font-bold border-round-xl text-xl border-dotted border-red-500 p-3'
+                "
+            >
+                {{ textButton() }}
+            </button>
         </div>
     </div>
 </div>
