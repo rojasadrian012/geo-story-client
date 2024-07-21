@@ -7,11 +7,12 @@ import {
     signal,
 } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { SelectThemeComponent } from '../../components/select-theme/select-theme.component';
 
 @Component({
     selector: 'app-settings',
     standalone: true,
-    imports: [CommonModule],
+    imports: [SelectThemeComponent],
     templateUrl: './settings.component.html',
     styles: `
         .transparent-background{
