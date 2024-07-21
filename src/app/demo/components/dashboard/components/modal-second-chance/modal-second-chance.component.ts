@@ -41,9 +41,9 @@ import { DialogModule } from 'primeng/dialog';
             font-size: 1.75rem;
             color: var(--text-color-secondary);
             text-align: center !important;
-            width: 100%; 
+            width: 100%;
             display: flex;
-            justify-content: center; 
+            justify-content: center;
         }
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -57,6 +57,7 @@ export class ModalSecondChanceComponent implements OnChanges {
 
     public isSecondChance = input.required<boolean>();
     public isPerfectPoint = input.required<boolean>();
+    public isPerfectPointUsingHint = input.required<boolean>();
     public onSecondChange = output<boolean>();
     public onFishSecondChange = output<boolean>();
 
@@ -85,6 +86,15 @@ export class ModalSecondChanceComponent implements OnChanges {
             };
             this.titleModal.set('¡Buen trabajo!');
             this.buttonText.set('Finalizar esta segunda oportunidad');
+        }
+
+        if (this.isPerfectPointUsingHint()) {
+            this.options = {
+                ...this.options,
+                path: '/assets/images/animations/foco.json',
+            };
+            this.titleModal.set('¡Vaya! !Respondiste bien todas!');
+            this.buttonText.set('Vamos al siguiente!');
         }
     }
     goToSecondChance() {

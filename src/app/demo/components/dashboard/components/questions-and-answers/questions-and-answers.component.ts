@@ -24,7 +24,8 @@ import { ModalSecondChanceComponent } from '../modal-second-chance/modal-second-
 import { Router } from '@angular/router';
 
 enum pointsQuestion {
-    perfectPoint = 20,
+    perfectScore = 20,
+    perfectScoreMinUsingHint = 15,
     usedHint = -1,
     correct = 4,
     correctSch = 2,
@@ -52,7 +53,6 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     private readonly messageService = inject(MessageService);
     private readonly routerService = inject(Router);
 
-    public isTwoTentative = signal<boolean>(false);
     public isSecondChance = signal(false);
     private counterQuestions = signal<number>(-1);
     public isUsedHint = signal(false);
@@ -62,6 +62,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     public showModal = false;
     private ignoreFirstZero = true;
     public isPerfectPoint = false;
+    public isPerfectPointUsingHint = false;
 
     constructor() {
         effect(() => {
@@ -72,7 +73,18 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             }
 
             if (this.counterQuestions() === 0 && !this.ignoreFirstZero) {
-                this.showModal = true;
+                if (this.questionService.totalPointsLesson() === pointsQuestion.perfectScore) {
+                    this.isPerfectPoint = true;
+                    this.showModal = true;
+                    return
+                }
+
+                if (this.questionService.totalPointsLesson() >= pointsQuestion.perfectScoreMinUsingHint) {
+                    this.isPerfectPointUsingHint = true;
+                    this.showModal = true;
+                    return
+                }
+
             }
         });
     }
@@ -162,16 +174,18 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     }
 
     goToSecondChance(initSecondChance: boolean) {
-        if (!this.isPerfectPoint) {
-            this.isSecondChance.set(initSecondChance);
-            this.questionService.setNewValueSecondChange(
-                this.incorrectsQuestionsMap()
-            );
-            this.showModal = false;
-            this.onIncorrectsCuestions.emit(this.incorrectsQuestionsMap());
-            return;
+        if (this.isPerfectPoint || this.isPerfectPointUsingHint) {
+            this.goToHome(true);
+            return
         }
-        this.goToHome(true);
+
+        this.isSecondChance.set(initSecondChance);
+        this.questionService.setNewValueSecondChange(
+            this.incorrectsQuestionsMap()
+        );
+        this.showModal = false;
+        this.onIncorrectsCuestions.emit(this.incorrectsQuestionsMap());
+        return;
     }
 
     goToHome(isFinishedSecondChange: boolean) {
