@@ -32,7 +32,9 @@ export class LayoutService {
         scale: 14,
     };
 
-    config = signal<AppConfig>(this._config);
+    config = signal<AppConfig>(
+        this.loadConfigFromLocalStorage() || this._config
+    );
 
     state: LayoutState = {
         staticMenuDesktopInactive: false,
@@ -59,6 +61,7 @@ export class LayoutService {
             }
             this.changeScale(config.scale);
             this.onConfigUpdate();
+            this.saveConfigToLocalStorage(config);
         });
     }
 
@@ -155,5 +158,16 @@ export class LayoutService {
 
     changeScale(value: number) {
         document.documentElement.style.fontSize = `${value}px`;
+    }
+
+    // Guarda la configuración en localStorage
+    saveConfigToLocalStorage(config: AppConfig) {
+        localStorage.setItem('appConfig', JSON.stringify(config));
+    }
+
+    // Carga la configuración desde localStorage
+    loadConfigFromLocalStorage(): AppConfig | null {
+        const config = localStorage.getItem('appConfig');
+        return config ? JSON.parse(config) : null;
     }
 }
