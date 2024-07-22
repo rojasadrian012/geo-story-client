@@ -1,0 +1,20 @@
+<div
+    class="border-round border-solid w-full h-4rem flex align-items-center mb-2"
+    [ngClass]="{
+        'border-gold bg-gold-light': user().position === 1,
+        'border-silver bg-silver-light': user().position === 2,
+        'border-bronze bg-bronze-light': user().position === 3,
+        'surface-border':
+            user().position !== 1 &&
+            user().position !== 2 &&
+            user().position !== 3
+    }"
+>
+    <p class="ml-5 text-2xl text-color-secondary w-full flex justify-between">
+        <span>
+            <strong>{{ user().position }} - </strong>
+            {{ user().user_fullName }}
+        </span>
+        <span class="text-right mr-5">🏆{{ user().score }}</span>
+    </p>
+</div>

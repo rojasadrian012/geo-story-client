@@ -3,10 +3,10 @@ export interface UserQuizResponse {
     score:       string;
     dataScore:   null;
     unlockLevel: boolean;
-    quizId:      QuizID;
+    quiz:      Quiz;
 }
 
-export interface QuizID {
+export interface Quiz {
     id:          string;
     title:       string;
     description: null;

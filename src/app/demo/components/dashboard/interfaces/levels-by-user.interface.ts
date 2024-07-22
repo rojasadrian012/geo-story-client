@@ -3,7 +3,7 @@ export interface LevelByUser {
     score:       string;
     dataScore:   null;
     unlockLevel: boolean;
-    quizId:      Quiz;
+    quiz:      Quiz;
 }
 
 export interface Quiz {

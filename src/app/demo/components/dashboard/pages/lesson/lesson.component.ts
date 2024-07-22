@@ -45,7 +45,7 @@ export class LessonComponent {
                 environment.baseUrl + '/quiz/questions/' + id
             )
             .subscribe((data) => {
-                this.questions.set(data.quizId.questions);
+                this.questions.set(data.quiz.questions);
             });
     }
 

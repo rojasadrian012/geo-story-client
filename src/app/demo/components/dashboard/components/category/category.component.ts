@@ -76,6 +76,6 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
     changePath(level: LevelByUser, unlockLevel: boolean) {
         if (!unlockLevel) return;
         this.quizStatusService.refresh.set(false);
-        this.router.navigateByUrl(`lesson/${level.quizId.title}/${level.id}`);
+        this.router.navigateByUrl(`lesson/${level.quiz.title}/${level.id}`);
     }
 }

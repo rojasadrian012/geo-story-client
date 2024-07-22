@@ -1,7 +1,13 @@
-<div class="grid">
-    <div class="col-12 lg:col-12 xl:col-12">
-        <div class="card">
-            <small>< Top de jugadores ></small>
-        </div>
-    </div>
-</div>
+<app-geo-center-container>
+    <h2 class="text-3xl font-bold text-color-secondary">Top de Jugadores</h2>
+
+    <p class="text-color-secondary text-xl">
+        <span class="text-primary font-bold">{{ users()?.currentUser.fullName }}</span> estas en el top
+        <span class="text-primary font-bold">{{ users()?.currentUser.position }}</span>
+    </p>
+
+    @if (users()?.rankingUsers) { @for (user of users().rankingUsers; track
+    user.user_id) {
+    <app-ranking-item [user]="user" />
+    } }
+</app-geo-center-container>
