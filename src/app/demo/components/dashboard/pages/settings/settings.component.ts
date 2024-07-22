@@ -8,17 +8,13 @@ import {
 } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SelectThemeComponent } from '../../components/select-theme/select-theme.component';
+import { GeoCenterContainerComponent } from "../../components/core/geo-center-container/geo-center-container.component";
 
 @Component({
     selector: 'app-settings',
     standalone: true,
-    imports: [SelectThemeComponent],
+    imports: [SelectThemeComponent, GeoCenterContainerComponent],
     templateUrl: './settings.component.html',
-    styles: `
-        .transparent-background{
-            background-color: transparent;
-        }
-    `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsComponent {
