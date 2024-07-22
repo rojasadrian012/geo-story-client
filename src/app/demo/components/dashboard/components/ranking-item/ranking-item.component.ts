@@ -1,4 +1,4 @@
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule, NgClass, NgSwitch } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
     ChangeDetectionStrategy,
@@ -12,7 +12,7 @@ import { RankingUser } from '../../interfaces/users-ranking-and-current-user.int
 @Component({
     selector: 'app-ranking-item',
     standalone: true,
-    imports: [CommonModule, NgClass],
+    imports: [NgClass, NgSwitch],
     templateUrl: './ranking-item.component.html',
     styleUrl: './ranking-item.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
