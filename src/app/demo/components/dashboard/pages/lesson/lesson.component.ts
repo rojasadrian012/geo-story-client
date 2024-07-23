@@ -9,6 +9,7 @@ import {
 import { environment } from 'src/environments/environment';
 import { SoundsService } from '../../services/sounds.service';
 import { QuizStatusService } from '../../services/quizStatus.service';
+import { QuestionService } from '../../services/question.service';
 
 @Component({
     selector: 'app-lesson',
@@ -20,6 +21,7 @@ export class LessonComponent {
     private readonly http = inject(HttpClient);
     private readonly soundsService = inject(SoundsService);
     private readonly quizStatusService = inject(QuizStatusService);
+    private readonly questionService = inject(QuestionService);
 
     userQuizId = signal<string>('noId012');
     questions = signal<QuestionListResponse[]>([]);
@@ -55,6 +57,7 @@ export class LessonComponent {
                 incorrectsQuestionsMAP.has(question.id)
             )
         );
+        this.questionService.numberOfQuestions.set(this.questions().length);
     }
 
     savePointsWinned(points: number) {

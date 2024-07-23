@@ -1,4 +1,5 @@
 import { Injectable, effect, signal } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -11,6 +12,8 @@ export class QuestionService {
     private pointsTheUser = signal<Map<string, number>>(
         new Map<string, number>()
     );
+
+    public numberOfQuestions = signal<number>(environment.number_of_questions);
 
     // Inicializa el mapa con los IDs de las preguntas
     initializeQuestionStatusInFalse(questionIds: string[]): void {
@@ -40,7 +43,7 @@ export class QuestionService {
     }
 
     getAllPointsMap() {
-        return this.pointsTheUser()
+        return this.pointsTheUser();
     }
 
     addPointsInQuestion(questionId: string, valueToAdd: number) {
@@ -56,24 +59,21 @@ export class QuestionService {
         return this.pointsTheUser().get(questionId);
     }
 
-    totalPointsLesson(){
+    totalPointsLesson() {
         let sum = 0;
-        this.getAllPointsMap().forEach(value => {
-          sum += value;
+        this.getAllPointsMap().forEach((value) => {
+            sum += value;
         });
         return sum;
     }
 
-    setNewValueSecondChange(newMap: Map<string, boolean>){
-        this.isQuestionSelectedMap.set(
-            new Map<string, boolean>(newMap)
-        )
+    setNewValueSecondChange(newMap: Map<string, boolean>) {
+        this.isQuestionSelectedMap.set(new Map<string, boolean>(newMap));
     }
 
-    inicializeSelectedStatus(){
-        this.isQuestionSelectedMap().forEach((value, key)=>{
-            this.isQuestionSelectedMap().set(key, false)
-        })
+    inicializeSelectedStatus() {
+        this.isQuestionSelectedMap().forEach((value, key) => {
+            this.isQuestionSelectedMap().set(key, false);
+        });
     }
-
 }

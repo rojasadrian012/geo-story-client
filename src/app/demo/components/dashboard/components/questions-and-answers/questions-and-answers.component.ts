@@ -22,6 +22,7 @@ import { QuestionService } from '../../services/question.service';
 import { HintComponent } from '../hint/hint.component';
 import { ModalSecondChanceComponent } from '../modal-second-chance/modal-second-chance.component';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 enum pointsQuestion {
     perfectScore = 20,
@@ -54,7 +55,6 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     private readonly routerService = inject(Router);
 
     public isSecondChance = signal(false);
-    private counterQuestions = signal<number>(-1);
     public isUsedHint = signal(false);
     private incorrectsQuestionsMap = signal<Map<string, boolean>>(
         new Map<string, boolean>()
@@ -66,25 +66,26 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     constructor() {
         effect(() => {
-
-            if (this.counterQuestions() === 0 && this.ignoreFirstZero) {
-                this.ignoreFirstZero = false;
-                return;
-            }
-
-            if (this.counterQuestions() === 0 && !this.ignoreFirstZero) {
-                if (this.questionService.totalPointsLesson() === pointsQuestion.perfectScore) {
+            if (this.questionService.numberOfQuestions() === 0) {
+                if (
+                    this.questionService.totalPointsLesson() ===
+                    pointsQuestion.perfectScore
+                ) {
                     this.isPerfectPoint = true;
                     this.showModal = true;
-                    return
+                    return;
                 }
 
-                if (this.questionService.totalPointsLesson() >= pointsQuestion.perfectScoreMinUsingHint) {
+                if (
+                    this.questionService.totalPointsLesson() >=
+                    pointsQuestion.perfectScoreMinUsingHint
+                ) {
                     this.isPerfectPointUsingHint = true;
                     this.showModal = true;
-                    return
+                    return;
                 }
 
+                this.showModal = true;
             }
         });
     }
@@ -92,7 +93,6 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['questionsAndAnswers']) {
             this.initializeMap();
-            this.counterQuestions.set(this.questionsAndAnswers().length);
         }
     }
 
@@ -111,15 +111,13 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     // Manejar la selección de una respuesta
     onQuestionSelected(questionId: string, response: Answer) {
-        this.counterQuestions.update((value) => value - 1);
+        this.questionService.numberOfQuestions.update((value) => value - 1);
         this.questionService.setQuestionSelectedStatus(questionId, true);
 
         if (response.isCorrect) {
-
             if (this.isUsedHint()) this.isUsedHint.set(false);
 
             if (!this.isSecondChance()) {
-
                 this.questionService.addPointsInQuestion(
                     questionId,
                     pointsQuestion.correct
@@ -176,7 +174,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     goToSecondChance(initSecondChance: boolean) {
         if (this.isPerfectPoint || this.isPerfectPointUsingHint) {
             this.goToHome(true);
-            return
+            return;
         }
 
         this.isSecondChance.set(initSecondChance);
