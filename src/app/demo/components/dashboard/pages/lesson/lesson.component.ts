@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -10,11 +10,19 @@ import { environment } from 'src/environments/environment';
 import { SoundsService } from '../../services/sounds.service';
 import { QuizStatusService } from '../../services/quizStatus.service';
 import { QuestionService } from '../../services/question.service';
+import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
+import { QuestionsAndAnswersComponent } from '../../components/questions-and-answers/questions-and-answers.component';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'app-lesson',
+    standalone: true,
     templateUrl: './lesson.component.html',
     styleUrl: './lesson.component.scss',
+    imports: [GeoCenterContainerComponent, QuestionsAndAnswersComponent, ToastModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [MessageService]
 })
 export class LessonComponent {
     private readonly route = inject(ActivatedRoute);
