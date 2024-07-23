@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     standalone: true,
     imports: [],
     template: `
-        <h3 class="text-2xl text-primary mt-0 mb-4">
+        <h3 class="text-2xl text-primary mt-0 mb-4 font-bold">
             {{ title() }}
         </h3>
     `,

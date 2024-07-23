@@ -23,6 +23,7 @@ import { HintComponent } from '../hint/hint.component';
 import { ModalSecondChanceComponent } from '../modal-second-chance/modal-second-chance.component';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { style } from '@angular/animations';
 
 enum pointsQuestion {
     perfectScore = 20,
@@ -43,6 +44,16 @@ enum pointsQuestion {
         ModalSecondChanceComponent,
     ],
     templateUrl: './questions-and-answers.component.html',
+    styles:`
+        .question-container{
+            border-radius: var(--border-radius);
+            border-width: 2px;
+            border-style: dashed;
+            border-color: var(--surface-300);
+            padding: 1rem 2rem;
+            margin-bottom: 1rem;
+        }
+    `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuestionsAndAnswersComponent implements OnChanges {
