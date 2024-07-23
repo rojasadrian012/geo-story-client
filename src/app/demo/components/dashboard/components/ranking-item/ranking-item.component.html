@@ -21,8 +21,8 @@
             <div class="flex-none flex align-items-center justify-content-start">
                 <app-render-amated-image
                     image="/assets/images/animations/medalla-uno-avanlanza.json"
-                    width="5rem"
-                    height="5rem"
+                    width="7rem"
+                    height="7rem"
                 />
             </div>
 
@@ -31,7 +31,7 @@
                     class="flex-grow text-left"
                     [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
                 >
-                    - {{ user().user_fullName }}
+                    {{ user().user_fullName }}
                 </span>
             </div>
 
@@ -47,7 +47,7 @@
     }
     @case (user().position === 2) {
         <div class="ml-3 text-2xl text-color-secondary w-full flex overflow-hidden">
-            <div class="flex-none flex align-items-center justify-content-start">
+            <div class="ml-2 flex-none flex align-items-center justify-content-start">
                 <app-render-amated-image
                     image="/assets/images/animations/dos.json"
                     width="4rem"
@@ -55,12 +55,12 @@
                 />
             </div>
 
-            <div class="flex-grow-1 flex align-items-center justify-content-start">
+            <div class="ml-2 flex-grow-1 flex align-items-center justify-content-start">
                 <span
                     class="flex-grow text-left"
                     [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
                 >
-                    - {{ user().user_fullName }}
+                    {{ user().user_fullName }}
                 </span>
             </div>
 
@@ -77,7 +77,7 @@
     }
     @case (user().position === 3) {
         <div class="ml-3 text-2xl text-color-secondary w-full flex overflow-hidden">
-            <div class="flex-none flex align-items-center justify-content-start">
+            <div class="ml-2 flex-none flex align-items-center justify-content-start">
                 <app-render-amated-image
                     image="/assets/images/animations/tres.json"
                     width="4rem"
@@ -85,12 +85,12 @@
                 />
             </div>
 
-            <div class="flex-grow-1 flex align-items-center justify-content-start">
+            <div class="ml-2 flex-grow-1 flex align-items-center justify-content-start">
                 <span
                     class="flex-grow text-left"
                     [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
                 >
-                    - {{ user().user_fullName }}
+                    {{ user().user_fullName }}
                 </span>
             </div>
 
@@ -115,7 +115,7 @@
                 <span
                     class="flex-grow text-left"
                 >
-                    - {{ user().user_fullName }}
+                    - &nbsp;&nbsp;{{ user().user_fullName }}
                 </span>
             </div>
 

@@ -6,8 +6,9 @@
         <span class="text-primary font-bold">{{ users()?.currentUser.position }}</span>
     </p>
 
-    @if (users()?.rankingUsers) { @for (user of users().rankingUsers; track
-    user.user_id) {
-    <app-ranking-item [user]="user" />
-    } }
+    @if (users()?.rankingUsers) {
+        @for (user of users().rankingUsers; track user.user_id) {
+            <app-ranking-item [user]="user" />
+        }
+    }
 </app-geo-center-container>
