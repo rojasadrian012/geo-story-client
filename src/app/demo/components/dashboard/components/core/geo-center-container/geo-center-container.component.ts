@@ -1,15 +1,18 @@
-import { CommonModule } from "@angular/common";
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CommonModule, NgIf } from "@angular/common";
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
     selector: 'app-geo-center-container',
     standalone: true,
-    imports: [],
+    imports: [NgIf],
     template: `
         <div class="div-container card">
             <main class="main-content">
                     <div class="col-12 lg:col-12 xl:col-12">
-
+                        @if (title()) {
+                            <h2 class="font-bold text-color-secondary">{{title()}}</h2>
+                        }
+                        
                         <ng-content></ng-content>
 
                     </div>
@@ -61,4 +64,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GeoCenterContainerComponent { }
+export class GeoCenterContainerComponent { 
+    public title = input<string>('')
+}
