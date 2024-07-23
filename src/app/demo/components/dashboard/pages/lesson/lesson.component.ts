@@ -71,6 +71,7 @@ export class LessonComponent {
                 next: (response) => {
                     this.getQuestions(this.userQuizId());
                     this.quizStatusService.refresh.set(true);
+                    this.questionService.numberOfQuestions.set(environment.number_of_questions);
                 },
                 error: (error) => {
                     console.error('Error al guardar los puntos:', error);

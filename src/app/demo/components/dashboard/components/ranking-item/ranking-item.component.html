@@ -14,32 +14,53 @@
 @switch (true) { 
     @case (user().position === 1) {
         <p class="ml-3 text-2xl text-color-secondary w-full flex justify-between">
-            <span>
-                <strong>🥇- </strong> {{ user().user_fullName }}
+            <span [ngClass]="{
+                'dark-mode-text': layoutService.isDarkMode
+            }">
+                🥇- {{ user().user_fullName }}
             </span>
-            <span class="text-right mr-5">🏆{{ user().score }}</span>
+            <span 
+                [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
+                class="text-right mr-5"
+            >
+                🏆{{ user().score }}
+            </span>
         </p>
     } 
     @case (user().position === 2) {
         <p class="ml-3 text-2xl text-color-secondary w-full flex justify-between">
-            <span>
-                <strong>🥈- </strong> {{ user().user_fullName }}
+            <span [ngClass]="{
+                'dark-mode-text': layoutService.isDarkMode
+            }">
+                🥈- {{ user().user_fullName }}
             </span>
-            <span class="text-right mr-5">🏆{{ user().score }}</span>
+            <span 
+                [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
+                class="text-right mr-5"
+            >
+                🏆{{ user().score }}
+            </span>
         </p>        
     } 
     @case (user().position === 3) {
         <p class="ml-3 text-2xl text-color-secondary w-full flex justify-between">
-            <span>
-                <strong>🥉- </strong> {{ user().user_fullName }}
+            <span [ngClass]="{
+                'dark-mode-text': layoutService.isDarkMode
+            }">
+                🥉- {{ user().user_fullName }}
             </span>
-            <span class="text-right mr-5">🏆{{ user().score }}</span>
+            <span 
+                [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
+                class="text-right mr-5"
+            >
+                🏆{{ user().score }}
+            </span>
         </p> 
     } 
     @default{
         <p class="ml-5 text-2xl text-color-secondary w-full flex justify-between">
             <span>
-                <strong>{{user().position}} - </strong> {{ user().user_fullName }}
+                <strong>{{user().position}}</strong> - {{ user().user_fullName }}
             </span>
             <span class="text-right mr-5">🏆{{ user().score }}</span>
         </p> 

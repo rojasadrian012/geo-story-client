@@ -7,7 +7,6 @@
     padding-bottom: 1rem;
     padding-left: 1rem;
     padding-right: 2rem;
-    font-weight: 500;
     cursor: pointer;
     gap: 1rem;
     font-size: 1.25rem;
@@ -33,7 +32,7 @@
     flex-direction: column;
     align-items: flex-start;
     // border-left: 3px solid var(--green-500);
-    background-color: var(--green-200);
+    background-color: var(--green-300);
 }
 
 .option_container_incorrect {
@@ -48,5 +47,12 @@
     padding-left: 1rem;
     padding-bottom: 1rem;
     font-size: 1.125rem;
-    font-weight: 600;
+}
+
+.dark-mode-text-correct{
+    color: var(--surface-0);
+}
+
+.dark-mode-text-incorrect{
+    color: var(--surface-0);
 }

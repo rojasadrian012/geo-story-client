@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { RankingUser } from '../../interfaces/users-ranking-and-current-user.interface';
+import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({
     selector: 'app-ranking-item',
@@ -19,4 +20,6 @@ import { RankingUser } from '../../interfaces/users-ranking-and-current-user.int
 })
 export class RankingItemComponent {
     public user = input.required<RankingUser>();
+    
+    public layoutService = inject(LayoutService)
 }

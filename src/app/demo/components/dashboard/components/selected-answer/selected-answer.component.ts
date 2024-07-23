@@ -13,6 +13,7 @@ import {
 import { Answer } from '../../interfaces/question-list-response.interface';
 import { SoundsService } from '../../services/sounds.service';
 import { QuestionService } from '../../services/question.service';
+import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({
     selector: 'app-selected-answer',
@@ -30,6 +31,7 @@ export class SelectedAnswerComponent implements OnChanges {
     public isSecondChance = input<boolean>(false);
 
     private readonly soundService = inject(SoundsService);
+    public readonly layoutService = inject(LayoutService);
 
     public showResponse = signal<boolean>(false);
     public textIntro = signal<string>('');
@@ -50,8 +52,7 @@ export class SelectedAnswerComponent implements OnChanges {
     ]);
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['isSecondChance'])
-            this.resetValues();
+        if (changes['isSecondChance']) this.resetValues();
     }
     getRandomResponse(responses: string[]): string {
         const randomIndex = Math.floor(Math.random() * responses.length);
@@ -59,7 +60,6 @@ export class SelectedAnswerComponent implements OnChanges {
     }
 
     selectedOption(response: Answer) {
-
         if (this.isDisable()) return;
 
         if (response.isCorrect) {

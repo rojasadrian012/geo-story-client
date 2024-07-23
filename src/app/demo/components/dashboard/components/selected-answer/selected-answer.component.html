@@ -4,11 +4,32 @@
         class="option-label"
         (click)="selectedOption(answer())"
     >
-        {{ answer().text }}
+        <span
+            [ngClass]="{
+                'dark-mode-text-correct':
+                    currentClass().option_container_correct &&
+                    layoutService.isDarkMode,
+                'dark-mode-text-incorrect':
+                    currentClass().option_container_incorrect &&
+                    layoutService.isDarkMode
+            }"
+        >
+            {{ answer().text }}
+        </span>
     </label>
     @if (showResponse()) {
-        <small class="option-small">
-            {{textIntro()}} @if (!answer().isCorrect) {<strong>{{ correctResponse() }}</strong>}
+        <small
+            class="option-small"
+            [ngClass]="
+                layoutService.isDarkMode
+                    ? 'dark-mode-text-correct'
+                    : ''
+            "
+        >
+            {{ textIntro() }} @if (!answer().isCorrect) {<strong>{{
+                correctResponse()
+            }}</strong
+            >}
         </small>
     }
 </div>

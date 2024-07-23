@@ -53,6 +53,8 @@ export class LayoutService {
 
     overlayOpen$ = this.overlayOpen.asObservable();
 
+    public isDarkMode: boolean = false;
+
     constructor() {
         effect(() => {
             const config = this.config();
@@ -61,6 +63,8 @@ export class LayoutService {
             }
             this.changeScale(config.scale);
             this.onConfigUpdate();
+            if (config.colorScheme === 'dark') this.isDarkMode = true;
+            else this.isDarkMode = false;
             this.saveConfigToLocalStorage(config);
         });
     }
