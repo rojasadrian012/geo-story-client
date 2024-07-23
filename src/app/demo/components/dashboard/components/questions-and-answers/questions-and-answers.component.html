@@ -1,23 +1,27 @@
 @for (question of questionsAndAnswers(); track question.id) {
 
-    <app-title [title]="question.title"/>
+    <div class="card">
 
-    <app-hint
-        [textHint]="question.hint"
-        (usedHint)="onUsedHintEvent(question.id, $event)"
-        [disable]="questionService.getQuestionSelectedStatus(question.id)"
-        [isSecondChance]="isSecondChance()"
-    />
+        <app-title [title]="question.title"/>
 
-    @for (answer of question.answers; track answer.id) {
-        <app-selected-answer
-            [answer]="answer"
-            [isDisable]="questionService.getQuestionSelectedStatus(question.id)"
-            [correctResponse]="getCorrectAnswerText(question.answers)"
+        <app-hint
+            [textHint]="question.hint"
+            (usedHint)="onUsedHintEvent(question.id, $event)"
+            [disable]="questionService.getQuestionSelectedStatus(question.id)"
             [isSecondChance]="isSecondChance()"
-            (selected)="onQuestionSelected(question.id, $event)"
         />
-    }
+
+        @for (answer of question.answers; track answer.id) {
+            <app-selected-answer
+                [answer]="answer"
+                [isDisable]="questionService.getQuestionSelectedStatus(question.id)"
+                [correctResponse]="getCorrectAnswerText(question.answers)"
+                [isSecondChance]="isSecondChance()"
+                (selected)="onQuestionSelected(question.id, $event)"
+            />
+        }
+
+    </div>
 
 }@empty{
     <pre>Cargando...</pre>

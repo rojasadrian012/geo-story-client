@@ -41,7 +41,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
             // margin-bottom: 6rem;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            color: rgb(255, 255, 255);
+            // color: rgb(255, 255, 255);
         }
 
         @media (min-width: 768px) {

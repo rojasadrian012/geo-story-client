@@ -1,24 +1,24 @@
-<div class="grid">
-    <div class="col-12 lg:col-12 xl:col-12">
-        <div class="card mb-0 py-4 text-center text-3xl box-content-1">
-            <h2 class="m-0 text-5xl text-primary font-bold">
-                Lección de {{ title }}
-            </h2>
-        </div>
+<app-geo-center-container>
 
-        <div class="card mt-2">
-            <p-toast
-                [breakpoints]="{
-                    '920px': { width: '100%', right: '0', left: '0' }
-                }"
-                [life]="1500"
-            ></p-toast>
-
-            <app-questions-and-answers
-                [questionsAndAnswers]="questions()"
-                (onIncorrectsCuestions)="addNewValues($event)"
-                (onPointsWinned)="savePointsWinned($event)"
-            ></app-questions-and-answers>
-        </div>
+    <div class="pb-4 text-center text-3xl">
+        <h2 class="m-0 text-5xl text-primary font-bold">
+            Lección de {{ title }}
+        </h2>
     </div>
-</div>
+
+    <div class="mt-2">
+        <p-toast
+            [breakpoints]="{
+                '920px': { width: '100%', right: '0', left: '0' }
+            }"
+            [life]="1500"
+        ></p-toast>
+
+        <app-questions-and-answers
+            [questionsAndAnswers]="questions()"
+            (onIncorrectsCuestions)="addNewValues($event)"
+            (onPointsWinned)="savePointsWinned($event)"
+        ></app-questions-and-answers>
+    </div>
+
+</app-geo-center-container>
