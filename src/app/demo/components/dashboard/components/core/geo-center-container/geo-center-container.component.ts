@@ -32,7 +32,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
         .main-content {
             width: 100%;
-            max-width: 48rem;
+            max-width: 70rem;
             min-width: 0;
             padding-left: 1.5rem;
             padding-right: 1.5rem;

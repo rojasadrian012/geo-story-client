@@ -1,40 +1,28 @@
-.flex {
-    display: flex;
-}
 
 .justify-between {
     justify-content: space-between;
 }
 
-.text-right {
-    text-align: right;
+.gold {
+    border-color: #ffd700;
+    background-color: #fff8dc;
+    height: 6rem;
 }
 
-/* Oro Pulido */
-.border-gold {
-    border-color: #ffd700; /* Oro brillante */
-}
-.bg-gold-light {
-    background-color: #fff8dc; /* Fondo oro claro */
+.silver {
+    border-color: #c0c0c0;
+    background-color: #f8f8f8;
+    height: 6rem;
+
 }
 
-/* Plata */
-.border-silver {
-    border-color: #c0c0c0; /* Plata */
-}
-.bg-silver-light {
-    background-color: #f8f8f8; /* Fondo plata claro */
+.bronze {
+    border-color: #cd7f32;
+    background-color: #FFDAB9;
+    height: 6rem;
 }
 
-/* Bronce */
-.border-bronze {
-    border-color: #cd7f32; /* Bronce */
-}
-.bg-bronze-light {
-  background-color: #FFDAB9; /* Fondo bronce claro */
-}
-
-.surface-border {
+.default {
     border: 1px solid #e2e8f0; /* Ejemplo de borde genérico */
 }
 

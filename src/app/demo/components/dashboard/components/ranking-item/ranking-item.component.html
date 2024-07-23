@@ -1,70 +1,133 @@
 <div
-    class="border-round border-solid w-full h-4rem flex align-items-center mb-2"
+    class="border-round border-solid w-full flex align-items-center mb-2"
     [ngClass]="{
-        'border-gold bg-gold-light': user().position === 1,
-        'border-silver bg-silver-light': user().position === 2,
-        'border-bronze bg-bronze-light': user().position === 3,
-        'surface-border':
+        'gold': user().position === 1,
+        'silver': user().position === 2,
+        'bronze': user().position === 3,
+        'default':
             user().position !== 1 &&
             user().position !== 2 &&
-            user().position !== 3
+            user().position !== 3,
+        'h-4rem':
+        user().position !== 1 &&
+        user().position !== 2 &&
+        user().position !== 3
     }"
 >
 
-@switch (true) { 
+@switch (true) {
     @case (user().position === 1) {
-        <p class="ml-3 text-2xl text-color-secondary w-full flex justify-between">
-            <span [ngClass]="{
-                'dark-mode-text': layoutService.isDarkMode
-            }">
-                🥇- {{ user().user_fullName }}
-            </span>
-            <span 
-                [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
-                class="text-right mr-5"
-            >
-                🏆{{ user().score }}
-            </span>
-        </p>
-    } 
+        <div class="ml-3 text-2xl text-color-secondary w-full flex overflow-hidden">
+            <div class="flex-none flex align-items-center justify-content-start">
+                <app-render-amated-image
+                    image="/assets/images/animations/medalla-uno-avanlanza.json"
+                    width="5rem"
+                    height="5rem"
+                />
+            </div>
+
+            <div class="flex-grow-1 flex align-items-center justify-content-start">
+                <span
+                    class="flex-grow text-left"
+                    [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
+                >
+                    - {{ user().user_fullName }}
+                </span>
+            </div>
+
+            <div class="flex-none flex align-items-center justify-content-end">
+                <span
+                    [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
+                    class="text-right mr-5"
+                >
+                    🏆{{ user().score }}
+                </span>
+            </div>
+        </div>
+    }
     @case (user().position === 2) {
-        <p class="ml-3 text-2xl text-color-secondary w-full flex justify-between">
-            <span [ngClass]="{
-                'dark-mode-text': layoutService.isDarkMode
-            }">
-                🥈- {{ user().user_fullName }}
-            </span>
-            <span 
-                [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
-                class="text-right mr-5"
-            >
-                🏆{{ user().score }}
-            </span>
-        </p>        
-    } 
+        <div class="ml-3 text-2xl text-color-secondary w-full flex overflow-hidden">
+            <div class="flex-none flex align-items-center justify-content-start">
+                <app-render-amated-image
+                    image="/assets/images/animations/dos.json"
+                    width="4rem"
+                    height="4rem"
+                />
+            </div>
+
+            <div class="flex-grow-1 flex align-items-center justify-content-start">
+                <span
+                    class="flex-grow text-left"
+                    [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
+                >
+                    - {{ user().user_fullName }}
+                </span>
+            </div>
+
+            <div class="flex-none flex align-items-center justify-content-end">
+                <span
+                    [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
+                    class="text-right mr-5"
+                >
+                    🏆{{ user().score }}
+                </span>
+            </div>
+        </div>
+
+    }
     @case (user().position === 3) {
-        <p class="ml-3 text-2xl text-color-secondary w-full flex justify-between">
-            <span [ngClass]="{
-                'dark-mode-text': layoutService.isDarkMode
-            }">
-                🥉- {{ user().user_fullName }}
-            </span>
-            <span 
-                [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
-                class="text-right mr-5"
-            >
-                🏆{{ user().score }}
-            </span>
-        </p> 
-    } 
+        <div class="ml-3 text-2xl text-color-secondary w-full flex overflow-hidden">
+            <div class="flex-none flex align-items-center justify-content-start">
+                <app-render-amated-image
+                    image="/assets/images/animations/tres.json"
+                    width="4rem"
+                    height="4rem"
+                />
+            </div>
+
+            <div class="flex-grow-1 flex align-items-center justify-content-start">
+                <span
+                    class="flex-grow text-left"
+                    [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
+                >
+                    - {{ user().user_fullName }}
+                </span>
+            </div>
+
+            <div class="flex-none flex align-items-center justify-content-end">
+                <span
+                    [ngClass]="{ 'dark-mode-text': layoutService.isDarkMode }"
+                    class="text-right mr-5"
+                >
+                    🏆{{ user().score }}
+                </span>
+            </div>
+        </div>
+    }
     @default{
-        <p class="ml-5 text-2xl text-color-secondary w-full flex justify-between">
-            <span>
-                <strong>{{user().position}}</strong> - {{ user().user_fullName }}
-            </span>
-            <span class="text-right mr-5">🏆{{ user().score }}</span>
-        </p> 
+
+        <div class="ml-3 text-2xl text-color-secondary w-full flex overflow-hidden">
+            <div class="flex-none flex align-items-center justify-content-start ml-5 mr-3">
+                <strong>{{user().position}}</strong>
+            </div>
+
+            <div class="flex-grow-1 flex align-items-center justify-content-start">
+                <span
+                    class="flex-grow text-left"
+                >
+                    - {{ user().user_fullName }}
+                </span>
+            </div>
+
+            <div class="flex-none flex align-items-center justify-content-end">
+                <span
+                    class="text-right mr-5"
+                >
+                    🏆{{ user().score }}
+                </span>
+            </div>
+        </div>
     }
 }
-      
+
 </div>
