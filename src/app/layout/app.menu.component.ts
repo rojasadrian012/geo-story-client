@@ -16,7 +16,6 @@ export class AppMenuComponent implements OnInit {
     constructor(public layoutService: LayoutService) {}
 
     private authService = inject(AuthService);
-    private http = inject(HttpClient);
 
     ngOnInit() {
         this.updateModel();
@@ -37,11 +36,11 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-chart-line',
                         routerLink: ['/ranking'],
                     },
-                    // {
-                    //     label: 'Agregar Contenido',
-                    //     icon: 'pi pi-fw pi-plus',
-                    //     routerLink: ['/agregar-contenido'],
-                    // },
+                    {
+                        label: 'Usuarios',
+                        icon: 'pi pi-fw pi-users',
+                        routerLink: ['/usuarios'],
+                    },
                     // {
                     //     label: 'Perfil',
                     //     icon: 'pi pi-fw pi-user',
