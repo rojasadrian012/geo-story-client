@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -6,21 +6,16 @@ import {
     OnInit,
     signal,
 } from '@angular/core';
-import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
 import { RankingItemComponent } from '../../components/ranking-item/ranking-item.component';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { UsersRankingAndCurrentUser } from '../../interfaces/users-ranking-and-current-user.interface';
+import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
 
 @Component({
     selector: 'app-ranking',
     standalone: true,
-    imports: [
-        CommonModule,
-        GeoCenterContainerComponent,
-        RankingItemComponent,
-        JsonPipe,
-    ],
+    imports: [NgIf, NgFor, GeoCenterContainerComponent, RankingItemComponent],
     templateUrl: './ranking.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

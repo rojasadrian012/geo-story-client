@@ -7,10 +7,10 @@ import { AnimationOptions, LottieComponent } from "ngx-lottie";
     imports: [
         LottieComponent,
     ],
-    templateUrl: './render-amated-image.component.html',
+    templateUrl: './geo-render-amated-image.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RenderAmatedImageComponent implements OnChanges {
+export class GeoRenderAmatedImageComponent implements OnChanges {
 
     public image = input.required<string>();
     public height = input.required<string>();

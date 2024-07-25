@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 import { RankingUser } from '../../interfaces/users-ranking-and-current-user.interface';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { RenderAmatedImageComponent } from '../core/render-amated-image/render-amated-image.component';
+import { GeoRenderAmatedImageComponent } from '../core/geo-render-amated-image/geo-render-amated-image.component';
 
 @Component({
     selector: 'app-ranking-item',
     standalone: true,
-    imports: [NgClass, NgSwitch, RenderAmatedImageComponent],
+    imports: [NgClass, NgSwitch, GeoRenderAmatedImageComponent],
     templateUrl: './ranking-item.component.html',
     styleUrl: './ranking-item.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,5 +21,5 @@ import { RenderAmatedImageComponent } from '../core/render-amated-image/render-a
 export class RankingItemComponent {
     public user = input.required<RankingUser>();
 
-    public layoutService = inject(LayoutService)
+    public layoutService = inject(LayoutService);
 }

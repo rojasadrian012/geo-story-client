@@ -9,6 +9,11 @@
     @if (users()?.rankingUsers) {
         @for (user of users().rankingUsers; track user.user_id) {
             <app-ranking-item [user]="user" />
-        }
+        } 
+        <!-- //TODO: Caso no haya usuarios con puntos se debe mostrar que ningun 
+                usuario a completado una categoria.
+        @empty {
+            aqui
+        } -->
     }
 </app-geo-center-container>
