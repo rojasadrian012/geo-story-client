@@ -54,7 +54,7 @@ export class AuthService {
             this.logout()
             return of(false)
         }
-
+        //TODO: ver si es necesario
         const headers = new HttpHeaders()
             .set('Authorization', `Bearer ${token}`)
 
