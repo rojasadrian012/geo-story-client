@@ -4,4 +4,5 @@ export interface UserListResponse {
     fullName: string;
     isActive: boolean;
     roles:    string[];
+    password?: string;
 }

@@ -15,4 +15,8 @@ export class UserServiceService {
     getUserList(): Observable<UserListResponse[]> {
         return this.http.get<UserListResponse[]>(this.baseUrl + '/list');
     }
+
+    editUser(user: UserListResponse) {
+        return this.http.patch(`${this.baseUrl}/edit/${user.id}`, user);
+    }
 }

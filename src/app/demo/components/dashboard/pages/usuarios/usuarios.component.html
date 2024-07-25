@@ -18,10 +18,7 @@
         </ng-template>
     </p-toolbar>
 
-    <app-table
-        [users]="users()"
-        (onEditUser)="editUser($event)"
-    />
+    <app-table [users]="users()" (onEditUser)="editUser($event)" />
 
     <p-dialog
         [(visible)]="userDialog"
@@ -37,7 +34,7 @@
                     type="text"
                     pInputText
                     id="name"
-                    [(ngModel)]="user.nickname"
+                    [(ngModel)]="user().nickname"
                     required
                     autofocus
                 />
@@ -52,7 +49,7 @@
                     type="text"
                     pInputText
                     id="name"
-                    [(ngModel)]="user.fullName"
+                    [(ngModel)]="user().fullName"
                     required
                     autofocus
                 />
@@ -64,7 +61,7 @@
             <div class="field">
                 <label for="inventoryStatus">¿Esta Activo?</label>
                 <p-dropdown
-                    [(ngModel)]="user.isActive"
+                    [(ngModel)]="user().isActive"
                     inputId="inventoryStatus"
                     [options]="statuses()"
                 >
@@ -72,12 +69,12 @@
             </div>
 
             <div class="field">
-                <label for="name">Usuario</label>
+                <label for="name">Roles que posee</label>
                 <input
                     type="text"
                     pInputText
                     id="name"
-                    [(ngModel)]="user.roles"
+                    [(ngModel)]="user().roles"
                     required
                     autofocus
                 />

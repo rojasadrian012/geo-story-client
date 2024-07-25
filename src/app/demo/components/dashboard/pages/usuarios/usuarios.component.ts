@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     inject,
+    model,
     OnInit,
     signal,
 } from '@angular/core';
@@ -34,7 +35,7 @@ import { ToastModule } from 'primeng/toast';
         GeoCenterContainerComponent,
         ToolbarModule,
         // ButtonModule,
-        
+
         DialogModule,
         DropdownModule,
         InputTextModule,
@@ -70,14 +71,16 @@ export class UsuariosComponent implements OnInit {
             value: false,
         },
     ]);
-
-    public userDialog: boolean = false;
-    public user: UserListResponse;
+    public user = model<UserListResponse>();
+    public userDialog = model<boolean>(false);
 
     ngOnInit(): void {
+        this.getUsers();
+    }
+
+    getUsers() {
         this.userService.getUserList().subscribe({
             next: (response) => {
-                console.log({ response });
                 this.users.set(response);
             },
             error: (error) => console.error(error),
@@ -85,16 +88,23 @@ export class UsuariosComponent implements OnInit {
     }
 
     editUser(user: UserListResponse) {
-        this.userDialog = true;
-        this.user = user;
+        this.userDialog.set(true);
+        this.user.set(user);
     }
-    
-    hideDialog(){
-        this.userDialog = false
+
+    hideDialog() {
+        this.userDialog.set(false);
     }
-    
-    saveProduct(){
-        this.userDialog = false
-        console.log({ user: this.user });
+
+    saveProduct() {
+        this.hideDialog();
+        this.user.update((value) => ({
+            ...value,
+            password: 'test',
+        }));
+        this.userService.editUser(this.user()).subscribe({
+            next: (r) => this.getUsers(),
+            error: (e) => console.error({ e }),
+        });
     }
 }
