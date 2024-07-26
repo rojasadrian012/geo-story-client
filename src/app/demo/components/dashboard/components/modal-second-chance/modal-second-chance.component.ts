@@ -4,18 +4,17 @@ import {
     Component,
     Input,
     OnChanges,
-    OnInit,
-    SimpleChanges,
     inject,
     input,
     output,
     signal,
 } from '@angular/core';
-import { AnimationItem } from 'lottie-web';
-import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 
+import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 import { DialogModule } from 'primeng/dialog';
+
 import { LessonService } from '../../pages/lesson/services/lesson.service';
+import { ModalData } from './interfaces/modal-data.interface';
 
 @Component({
     selector: 'app-modal-second-chance',
@@ -56,10 +55,8 @@ export class ModalSecondChanceComponent implements OnChanges {
     })
     public show: boolean;
 
-    public points = input.required<number>();
-    public isSecondChance = input.required<boolean>();
-    public isPerfectPoint = input.required<boolean>();
-    public isPerfectPointUsingHint = input.required<boolean>();
+    public modalData = input.required<ModalData>()
+
     public onSecondChange = output<boolean>();
     public onFishSecondChange = output<boolean>();
 
@@ -74,7 +71,7 @@ export class ModalSecondChanceComponent implements OnChanges {
     };
 
     ngOnChanges() {
-        if (this.isPerfectPoint()) {
+        if (this.modalData().isPerfectPoint) {
             this.options = {
                 ...this.options,
                 path: '/assets/images/animations/creativo.json',
@@ -83,14 +80,14 @@ export class ModalSecondChanceComponent implements OnChanges {
             this.buttonText.set('¡Pasemos al Siguiente Nivel!');
         }
 
-        if (this.isSecondChance()) {
+        if (this.modalData().isSecondChance) {
             if (!this.lessonService.isUnLockedNextLevel) {
                 this.options = {
                     ...this.options,
                     path: '/assets/images/animations/juego-terminado.json',
                 };
                 this.titleModal.set('¡Casi desbloqueas el siguiente nivel!');
-                this.buttonText.set('Intentar de nuveo');
+                this.buttonText.set('Intentar de nuevo');
                 return;
             }
             this.options = {
@@ -101,7 +98,7 @@ export class ModalSecondChanceComponent implements OnChanges {
             this.buttonText.set('Finalizar esta segunda oportunidad');
         }
 
-        if (this.isPerfectPointUsingHint()) {
+        if (this.modalData().isPerfectPointUsingHint) {
             this.options = {
                 ...this.options,
                 path: '/assets/images/animations/foco.json',
@@ -110,10 +107,11 @@ export class ModalSecondChanceComponent implements OnChanges {
             this.buttonText.set('Vamos al siguiente!');
         }
     }
+
     goToSecondChance() {
         this.onSecondChange.emit(true);
 
-        if (this.isSecondChance()) this.onFishSecondChange.emit(true);
+        if (this.modalData().isSecondChance) this.onFishSecondChange.emit(true);
 
         this.lessonService.isUnLockedNextLevel = false;
         this.show = false;
