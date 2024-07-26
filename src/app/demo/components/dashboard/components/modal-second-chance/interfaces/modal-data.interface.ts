@@ -4,3 +4,8 @@ export interface ModalData {
     isPerfectPoint: boolean;
     isPerfectPointUsingHint: boolean;
 }
+
+export interface ModalChances {
+    secondChange: boolean;
+    fishSecondChange: boolean;
+}

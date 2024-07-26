@@ -25,6 +25,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { style } from '@angular/animations';
 import { LessonService } from '../../pages/lesson/services/lesson.service';
+import { ModalChances } from '../modal-second-chance/interfaces/modal-data.interface';
 
 enum pointsQuestion {
     perfectScore = 20,
@@ -195,7 +196,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     goToSecondChance(initSecondChance: boolean) {
         if (this.isPerfectPoint || this.isPerfectPointUsingHint) {
-            this.goToHome(true);
+            this.goToHome();
             return;
         }
 
@@ -208,8 +209,17 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         return;
     }
 
-    goToHome(isFinishedSecondChange: boolean) {
+    goToHome() {
         this.onPointsWinned.emit(this.questionService.totalPointsLesson());
         this.routerService.navigateByUrl('/');
+    }
+
+    handleModalEvents(event: ModalChances) {
+        if (event.secondChange) {
+            this.goToSecondChance(event.secondChange);
+        }
+        if (event.fishSecondChange) {
+            this.goToHome();
+        }
     }
 }

@@ -14,7 +14,7 @@ import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 import { DialogModule } from 'primeng/dialog';
 
 import { LessonService } from '../../pages/lesson/services/lesson.service';
-import { ModalData } from './interfaces/modal-data.interface';
+import { ModalChances, ModalData } from './interfaces/modal-data.interface';
 
 @Component({
     selector: 'app-modal-second-chance',
@@ -50,15 +50,10 @@ import { ModalData } from './interfaces/modal-data.interface';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalSecondChanceComponent implements OnChanges {
-    @Input({
-        required: true,
-    })
-    public show: boolean;
+    @Input({ required: true }) public show: boolean;
 
-    public modalData = input.required<ModalData>()
-
-    public onSecondChange = output<boolean>();
-    public onFishSecondChange = output<boolean>();
+    public modalData = input.required<ModalData>();
+    public onModalChances = output<ModalChances>();
 
     public readonly lessonService = inject(LessonService);
 
@@ -109,9 +104,10 @@ export class ModalSecondChanceComponent implements OnChanges {
     }
 
     goToSecondChance() {
-        this.onSecondChange.emit(true);
-
-        if (this.modalData().isSecondChance) this.onFishSecondChange.emit(true);
+        this.onModalChances.emit({
+            secondChange: true,
+            fishSecondChange: this.modalData().isSecondChance,
+        });
 
         this.lessonService.isUnLockedNextLevel = false;
         this.show = false;
