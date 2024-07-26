@@ -6,6 +6,7 @@ import {
     OnChanges,
     OnInit,
     SimpleChanges,
+    inject,
     input,
     output,
     signal,
@@ -14,6 +15,7 @@ import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 
 import { DialogModule } from 'primeng/dialog';
+import { LessonService } from '../../pages/lesson/services/lesson.service';
 
 @Component({
     selector: 'app-modal-second-chance',
@@ -53,13 +55,15 @@ export class ModalSecondChanceComponent implements OnChanges {
         required: true,
     })
     public show: boolean;
-    public points = input.required<number>();
 
+    public points = input.required<number>();
     public isSecondChance = input.required<boolean>();
     public isPerfectPoint = input.required<boolean>();
     public isPerfectPointUsingHint = input.required<boolean>();
     public onSecondChange = output<boolean>();
     public onFishSecondChange = output<boolean>();
+
+    public readonly lessonService = inject(LessonService);
 
     public titleModal = signal<string>(
         '¡Vaya! Te has equivocado en algunas de las preguntas'
@@ -80,6 +84,15 @@ export class ModalSecondChanceComponent implements OnChanges {
         }
 
         if (this.isSecondChance()) {
+            if (!this.lessonService.isUnLockedNextLevel) {
+                this.options = {
+                    ...this.options,
+                    path: '/assets/images/animations/juego-terminado.json',
+                };
+                this.titleModal.set('¡Casi desbloqueas el siguiente nivel!');
+                this.buttonText.set('Intentar de nuveo');
+                return;
+            }
             this.options = {
                 ...this.options,
                 path: '/assets/images/animations/decision-correcta.json',
@@ -102,6 +115,7 @@ export class ModalSecondChanceComponent implements OnChanges {
 
         if (this.isSecondChance()) this.onFishSecondChange.emit(true);
 
+        this.lessonService.isUnLockedNextLevel = false;
         this.show = false;
     }
 }

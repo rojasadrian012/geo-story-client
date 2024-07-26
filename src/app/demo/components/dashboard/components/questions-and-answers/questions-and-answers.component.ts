@@ -24,6 +24,7 @@ import { ModalSecondChanceComponent } from '../modal-second-chance/modal-second-
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { style } from '@angular/animations';
+import { LessonService } from '../../pages/lesson/services/lesson.service';
 
 enum pointsQuestion {
     perfectScore = 20,
@@ -32,6 +33,7 @@ enum pointsQuestion {
     correct = 4,
     correctSch = 2,
     disableHint = 1,
+    minPointsUnlockNextLevel = 12,
 }
 
 @Component({
@@ -44,7 +46,7 @@ enum pointsQuestion {
         ModalSecondChanceComponent,
     ],
     templateUrl: './questions-and-answers.component.html',
-    styles:`
+    styles: `
         .question-container{
             border-radius: var(--border-radius);
             border-width: 2px;
@@ -64,6 +66,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     public readonly questionService = inject(QuestionService);
     private readonly messageService = inject(MessageService);
     private readonly routerService = inject(Router);
+    public readonly lessonService = inject(LessonService);
 
     public isSecondChance = signal(false);
     public isUsedHint = signal(false);
@@ -71,7 +74,6 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         new Map<string, boolean>()
     );
     public showModal = false;
-    private ignoreFirstZero = true;
     public isPerfectPoint = false;
     public isPerfectPointUsingHint = false;
 
@@ -95,6 +97,13 @@ export class QuestionsAndAnswersComponent implements OnChanges {
                     this.showModal = true;
                     return;
                 }
+
+                if (
+                    this.isSecondChance() &&
+                    this.questionService.totalPointsLesson() <
+                        pointsQuestion.minPointsUnlockNextLevel
+                )
+                    this.lessonService.isUnLockedNextLevel = false;
 
                 this.showModal = true;
             }
