@@ -98,12 +98,14 @@ export class QuestionsAndAnswersComponent implements OnChanges {
                     return;
                 }
 
-                if (
-                    this.isSecondChance() &&
-                    this.questionService.totalPointsLesson() <
+                if (this.isSecondChance()) {
+                    if (
+                        this.questionService.totalPointsLesson() <
                         pointsQuestion.minPointsUnlockNextLevel
-                )
-                    this.lessonService.isUnLockedNextLevel = false;
+                    )
+                        this.lessonService.isUnLockedNextLevel = false;
+                    else this.lessonService.isUnLockedNextLevel = true;
+                }
 
                 this.showModal = true;
             }
