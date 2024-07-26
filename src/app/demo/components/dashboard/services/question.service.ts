@@ -59,7 +59,7 @@ export class QuestionService {
         return this.pointsTheUser().get(questionId);
     }
 
-    totalPointsLesson() {
+    totalPointsLesson(): number {
         let sum = 0;
         this.getAllPointsMap().forEach((value) => {
             sum += value;
@@ -76,4 +76,9 @@ export class QuestionService {
             this.isQuestionSelectedMap().set(key, false);
         });
     }
+
+    clearAllPoints(): void {
+        this.pointsTheUser().clear()
+    }
+    
 }

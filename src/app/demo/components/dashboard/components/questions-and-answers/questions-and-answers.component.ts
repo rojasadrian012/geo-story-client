@@ -211,6 +211,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     goToHome() {
         this.onPointsWinned.emit(this.questionService.totalPointsLesson());
+        this.questionService.clearAllPoints()
         this.routerService.navigateByUrl('/');
     }
 
