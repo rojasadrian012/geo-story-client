@@ -37,7 +37,7 @@ export class LayoutService {
     );
 
     state: LayoutState = {
-        staticMenuDesktopInactive: false,
+        staticMenuDesktopInactive: true,  //Hace que el el menu en la version de escritorio incialmente este abierto
         overlayMenuActive: false,
         profileSidebarVisible: false,
         configSidebarVisible: false,
