@@ -18,12 +18,12 @@
         </ng-template>
     </p-toolbar>
 
-    <app-table [users]="users()" (onEditUser)="editUser($event)" />
+    <app-table [users]="users()" (onEditUser)="openEdit($event)" />
 
     <p-dialog
         [(visible)]="userDialog"
         [style]="{ width: '450px' }"
-        header="Detalles del Usuario"
+        [header]="isNewUser() ? 'Crear Usuario:' : 'Editar Usuario:'"
         [modal]="true"
         styleClass="p-fluid"
     >
@@ -38,9 +38,9 @@
                     required
                     autofocus
                 />
-                <small class="p-error" *ngIf="submitted && !product.name">
+                <!-- <small class="p-error" *ngIf="submitted && !product.name">
                     Name is required.
-                </small>
+                </small> -->
             </div>
 
             <div class="field">
@@ -53,11 +53,12 @@
                     required
                     autofocus
                 />
-                <small class="p-error" *ngIf="submitted && !product.name">
+                <!-- <small class="p-error" *ngIf="submitted && !product.name">
                     Name is required.
-                </small>
+                </small> -->
             </div>
 
+            @if (!isNewUser()) {
             <div class="field">
                 <label for="inventoryStatus">¿Esta Activo?</label>
                 <p-dropdown
@@ -67,6 +68,7 @@
                 >
                 </p-dropdown>
             </div>
+            }
 
             <div class="field">
                 <label for="name">Roles que posee</label>
@@ -75,6 +77,20 @@
                     pInputText
                     id="name"
                     [(ngModel)]="user().roles"
+                    required
+                    autofocus
+                />
+            </div>
+
+            <div class="field">
+                <label for="name">{{
+                    isNewUser() ? "Contraseña" : "Nueva Contraseña"
+                }}</label>
+                <input
+                    type="text"
+                    pInputText
+                    id="name"
+                    [(ngModel)]="user().password"
                     required
                     autofocus
                 />

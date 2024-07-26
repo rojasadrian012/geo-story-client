@@ -6,51 +6,40 @@ import {
     OnInit,
     signal,
 } from '@angular/core';
+
 import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
 import { UserServiceService } from './services/userService.service';
 import { UserListResponse } from './interface/user-list-response.interface';
-import { CommonModule, JsonPipe } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { ToolbarModule } from 'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
 import { TableComponent } from './components/table/table.component';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { FileUploadModule } from 'primeng/fileupload';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { RatingModule } from 'primeng/rating';
-import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
-import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'app-usuarios',
     standalone: true,
     imports: [
         GeoCenterContainerComponent,
+        TableComponent,
+        
+        NgIf,
+        FormsModule,
+        
         ToolbarModule,
         // ButtonModule,
-
         DialogModule,
         DropdownModule,
         InputTextModule,
-        TableComponent,
-        TableModule,
-        RippleModule,
-        ToastModule,
         ConfirmDialogModule,
         InputTextareaModule,
-        CommonModule,
-        FileUploadModule,
-        TagModule,
         RadioButtonModule,
-        RatingModule,
-        FormsModule,
         InputNumberModule,
     ],
     templateUrl: './usuarios.component.html',
@@ -67,19 +56,37 @@ export class UsuariosComponent implements OnInit {
             value: true,
         },
         {
-            label: 'No',
+            label: 'NO',
             value: false,
         },
     ]);
-    public user = model<UserListResponse>();
+    public userRols = signal([
+        {
+            label: 'Administrador',
+            value: 'admin',
+        },
+        {
+            label: 'Usuario',
+            value: 'user',
+        },
+    ]);
+    public user = model<UserListResponse>({
+        id: '',
+        nickname: '',
+        fullName: '',
+        isActive: true,
+        roles: [],
+        password: '',
+    });
     public userDialog = model<boolean>(false);
+    public isNewUser = signal<boolean>(false);
 
     ngOnInit(): void {
         this.getUsers();
     }
 
     getUsers() {
-        this.userService.getUserList().subscribe({
+        this.userService.getList().subscribe({
             next: (response) => {
                 this.users.set(response);
             },
@@ -87,24 +94,52 @@ export class UsuariosComponent implements OnInit {
         });
     }
 
-    editUser(user: UserListResponse) {
+    openNew() {
+        this.userDialog.set(true);
+        this.isNewUser.set(true);
+    }
+
+    openEdit(user: UserListResponse) {
+        this.isNewUser.set(false);
         this.userDialog.set(true);
         this.user.set(user);
     }
 
+    resetUser() {
+        this.user.set({
+            id: '',
+            nickname: '',
+            fullName: '',
+            isActive: false,
+            roles: [],
+        });
+    }
+
     hideDialog() {
         this.userDialog.set(false);
+        this.resetUser();
     }
 
     saveProduct() {
+        if (this.isNewUser()) {
+            this.saveNewUser();
+            this.hideDialog();
+            return;
+        }
+        this.saveUserEdited();
         this.hideDialog();
-        this.user.update((value) => ({
-            ...value,
-            password: 'test',
-        }));
-        this.userService.editUser(this.user()).subscribe({
-            next: (r) => this.getUsers(),
+    }
+    saveUserEdited() {
+        this.userService.edit(this.user()).subscribe({
+            next: () => this.getUsers(),
             error: (e) => console.error({ e }),
+        });
+    }
+
+    saveNewUser() {
+        this.userService.create(this.user()).subscribe({
+            next: () => this.getUsers(),
+            error: (err) => console.error(err),
         });
     }
 }
