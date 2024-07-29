@@ -26,6 +26,7 @@ import { environment } from 'src/environments/environment';
 import { style } from '@angular/animations';
 import { LessonService } from '../../pages/lesson/services/lesson.service';
 import { ModalChances } from '../modal-second-chance/interfaces/modal-data.interface';
+import { LevelStatus } from '../../pages/lesson/interfaces/level-status.enum';
 
 enum pointsQuestion {
     perfectScore = 20,
@@ -104,8 +105,8 @@ export class QuestionsAndAnswersComponent implements OnChanges {
                         this.questionService.totalPointsLesson() <
                         pointsQuestion.minPointsUnlockNextLevel
                     )
-                        this.lessonService.isUnLockedNextLevel = false;
-                    else this.lessonService.isUnLockedNextLevel = true;
+                        this.lessonService.isUnLockedNextLevel = LevelStatus.LOCKED;
+                    else this.lessonService.isUnLockedNextLevel = LevelStatus.UNLOCKED;
                 }
 
                 this.showModal = true;

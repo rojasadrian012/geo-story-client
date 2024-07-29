@@ -4,8 +4,10 @@ import {
     Component,
     Input,
     OnChanges,
+    SimpleChanges,
     inject,
     input,
+    model,
     output,
     signal,
 } from '@angular/core';
@@ -15,6 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 
 import { LessonService } from '../../pages/lesson/services/lesson.service';
 import { ModalChances, ModalData } from './interfaces/modal-data.interface';
+import { LevelStatus } from '../../pages/lesson/interfaces/level-status.enum';
 
 @Component({
     selector: 'app-modal-second-chance',
@@ -55,6 +58,8 @@ export class ModalSecondChanceComponent implements OnChanges {
     public modalData = input.required<ModalData>();
     public onModalChances = output<ModalChances>();
 
+    public isVisible = model<boolean>(false);
+
     public readonly lessonService = inject(LessonService);
 
     public titleModal = signal<string>(
@@ -65,41 +70,62 @@ export class ModalSecondChanceComponent implements OnChanges {
         path: '/assets/images/animations/dos.json',
     };
 
-    ngOnChanges() {
-        if (this.modalData().isPerfectPoint) {
-            this.options = {
-                ...this.options,
-                path: '/assets/images/animations/creativo.json',
-            };
-            this.titleModal.set('¡Genial! Obtuviste una puntuación Perfecta');
-            this.buttonText.set('¡Pasemos al Siguiente Nivel!');
-        }
-
-        if (this.modalData().isSecondChance) {
-            if (!this.lessonService.isUnLockedNextLevel) {
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['modalData']) {
+            if (this.modalData().isPerfectPoint) {
                 this.options = {
                     ...this.options,
-                    path: '/assets/images/animations/juego-terminado.json',
+                    path: '/assets/images/animations/creativo.json',
                 };
-                this.titleModal.set('¡Casi desbloqueas el siguiente nivel!');
-                this.buttonText.set('Intentar de nuevo');
-                return;
+                this.titleModal.set(
+                    '¡Genial! Obtuviste una puntuación Perfecta'
+                );
+                this.buttonText.set('¡Pasemos al Siguiente Nivel!');
             }
-            this.options = {
-                ...this.options,
-                path: '/assets/images/animations/decision-correcta.json',
-            };
-            this.titleModal.set('¡Buen trabajo!');
-            this.buttonText.set('Finalizar esta segunda oportunidad');
+
+            if (this.modalData().isSecondChance) {
+                if (
+                    this.lessonService.isUnLockedNextLevel ===
+                    LevelStatus.LOCKED
+                ) {
+                    this.options = {
+                        ...this.options,
+                        path: '/assets/images/animations/juego-terminado.json',
+                    };
+                    this.titleModal.set(
+                        '¡Casi desbloqueas el siguiente nivel!'
+                    );
+                    this.buttonText.set('Intentar de nuevo');
+                    return;
+                }
+                this.options = {
+                    ...this.options,
+                    path: '/assets/images/animations/decision-correcta.json',
+                };
+                this.titleModal.set('¡Buen trabajo!');
+                this.buttonText.set('Finalizar esta segunda oportunidad');
+            }
+
+            if (this.modalData().isPerfectPointUsingHint) {
+                this.options = {
+                    ...this.options,
+                    path: '/assets/images/animations/foco.json',
+                };
+                this.titleModal.set('¡Vaya! !Respondiste bien todas!');
+                this.buttonText.set('Vamos al siguiente!');
+            }
         }
 
-        if (this.modalData().isPerfectPointUsingHint) {
-            this.options = {
-                ...this.options,
-                path: '/assets/images/animations/foco.json',
-            };
-            this.titleModal.set('¡Vaya! !Respondiste bien todas!');
-            this.buttonText.set('Vamos al siguiente!');
+        // if (changes['show']) this.showModalWithDelay();
+    }
+
+    showModalWithDelay() {
+        if (this.show) {
+            setTimeout(() => {
+                this.isVisible.set(true);
+            }, 2000);
+        } else {
+            this.isVisible.set(false);
         }
     }
 
@@ -109,7 +135,10 @@ export class ModalSecondChanceComponent implements OnChanges {
             fishSecondChange: this.modalData().isSecondChance,
         });
 
-        this.lessonService.isUnLockedNextLevel = false;
+        if (this.modalData().isSecondChance) {
+            this.lessonService.isUnLockedNextLevel = LevelStatus.NO_ASIGNED;
+        }
+
         this.show = false;
     }
 }

@@ -3,11 +3,8 @@ import { Injectable, signal } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { UserSavedResponse } from '../interfaces/user-saved-response.interface';
 import { Observable } from 'rxjs';
-import {
-    QuestionListResponse,
-    UserQuizResponse,
-} from '../../../interfaces/question-list-response.interface';
 import { LessonQuestionListResponse } from '../interfaces/lesson-question-list-response.interface';
+import { LevelStatus } from '../interfaces/level-status.enum';
 
 @Injectable({
     providedIn: 'root',
@@ -17,7 +14,7 @@ export class LessonService {
 
     private baseUrl = `${environment.baseUrl}/quiz`;
 
-    public isUnLockedNextLevel = false
+    public isUnLockedNextLevel: LevelStatus = LevelStatus.NO_ASIGNED;
 
     getQuestions(id: string): Observable<LessonQuestionListResponse> {
         return this.http.get<LessonQuestionListResponse>(
