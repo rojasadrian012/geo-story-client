@@ -51,11 +51,11 @@ enum pointsQuestion {
     styles: `
         .question-container{
             border-radius: var(--border-radius);
-            border-width: 2px;
+            border-width: 5px;
             border-style: dashed;
             border-color: var(--surface-300);
             padding: 1rem 2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
         }
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
