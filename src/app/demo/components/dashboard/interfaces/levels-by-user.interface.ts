@@ -11,4 +11,5 @@ export interface Quiz {
     title:       string;
     description: null;
     difficulty:  null;
+    image: string;
 }

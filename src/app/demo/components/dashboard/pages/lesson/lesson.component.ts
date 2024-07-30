@@ -6,11 +6,9 @@ import {
     signal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 import {
     QuestionListResponse,
-    UserQuizResponse,
 } from '../../interfaces/question-list-response.interface';
 import { environment } from 'src/environments/environment';
 import { SoundsService } from '../../services/sounds.service';
