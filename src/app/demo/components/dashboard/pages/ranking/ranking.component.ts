@@ -23,6 +23,7 @@ export class RankingComponent implements OnInit {
     private readonly http = inject(HttpClient);
 
     public users = signal<UsersRankingAndCurrentUser | undefined>(undefined);
+    public showRanking = signal<boolean>(false);
 
     ngOnInit(): void {
         this.getUsersRankingAndCurrentUser();
@@ -35,6 +36,11 @@ export class RankingComponent implements OnInit {
             )
             .subscribe((data) => {
                 this.users.set(data);
+                this.showRanking.set(
+                    data.rankingUsers.some(
+                        (user) => parseInt(user.score, 10) > 0
+                    )
+                );
             });
     }
 }
