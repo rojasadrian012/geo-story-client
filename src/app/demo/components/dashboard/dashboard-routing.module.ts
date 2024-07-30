@@ -3,10 +3,10 @@ import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { LessonComponent } from './pages/lesson/lesson.component';
 import { isAuthenticatedGuard } from '../auth/guards/is-authenticated.guard';
-import { ArcheivementComponent } from './pages/archeivement/archeivement.component';
 import { RankingComponent } from './pages/ranking/ranking.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { ArcheivementComponent } from './pages/achievement/achievement.component';
 
 @NgModule({
     imports: [
