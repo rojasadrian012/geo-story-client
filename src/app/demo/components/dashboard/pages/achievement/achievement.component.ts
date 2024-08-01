@@ -14,6 +14,8 @@ export class ArcheivementComponent {
     public dataInput = signal<DataInput>({
         id: '818af8f2-80kt-484e-9fab-a3d4ad846645',
         description: '¡Eres genial! Has completado la primera categoria.',
-        name: 'Completa una categoria'      
-    })
+        name: 'Completa una categoria',
+        image: 'assets/images/achievement/primer-logro.svg',
+    });
 }
+
