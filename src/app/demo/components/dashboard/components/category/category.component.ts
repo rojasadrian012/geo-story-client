@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -15,24 +15,27 @@ import {
 import { Router } from '@angular/router';
 import { LevelByUser } from '../../interfaces/levels-by-user.interface';
 import { QuizStatusService } from '../../services/quizStatus.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-category',
     standalone: true,
-    imports: [NgClass],
+    imports: [NgClass,
+        // NgOptimizedImage
+    ],
     templateUrl: './category.component.html',
     styleUrl: './category.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryComponent implements AfterViewInit, OnChanges {
-    //TODO: hacer que las imagenes vengan de bd.
-    public images = input.required<string[]>();
     public levels = input.required<LevelByUser[]>();
 
     public readonly router = inject(Router);
     public readonly quizStatusService = inject(QuizStatusService);
 
     public lastUnlockedIndex = signal<number>(-1);
+    public hostApi = signal<string>(environment.baseUrl + '/files/vehicle/');
+
 
     @ViewChildren('level') levelsElements!: QueryList<ElementRef>;
 

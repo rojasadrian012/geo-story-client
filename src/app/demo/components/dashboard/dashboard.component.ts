@@ -16,23 +16,9 @@ export class DashboardComponent {
     public dashboardService = inject(DashboardService);
     public quizStatusService = inject(QuizStatusService);
 
-    constructor() {
+    private getData = effect(() => {
         this.getQuizzes();
-        effect(() => {
-            if (this.quizStatusService.refresh()) {
-                this.getQuizzes();
-            }
-        });
-    }
-
-    public images = signal<string[]>([
-        '../../../../assets/images/options-images/curiosidades.svg',
-        '../../../../assets/images/options-images/historia.svg',
-        '../../../../assets/images/options-images/geografia.svg',
-        '../../../../assets/images/options-images/economia.svg',
-        '../../../../assets/images/options-images/cultura.svg',
-        '../../../../assets/images/options-images/turismo.svg',
-    ]);
+    })
 
     public levels = signal<LevelByUser[]>([]);
 
@@ -40,6 +26,7 @@ export class DashboardComponent {
         this.http
             .get<LevelByUser[]>(environment.baseUrl + '/quiz/levels-by-user')
             .subscribe((data) => {
+                console.log({ data });
                 this.levels.set(data);
             });
     }

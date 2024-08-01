@@ -20,7 +20,7 @@
             <img
                 [class]="level.unlockLevel ? 'image-unlocked' : 'image-blocked'"
                 class="mt-3"
-                [src]="images()[i]"
+                [src]="hostApi() + level.quiz.image"
                 alt="nivel desbloqueado"
             />
             <h4
