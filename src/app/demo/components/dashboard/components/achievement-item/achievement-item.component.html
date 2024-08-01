@@ -1,2 +1,14 @@
-<p>{{ dataInput() | json }}</p>
-<img [src]="dataInput().image" alt="logo-image">
+<li class="li-container">
+    <picture class="picture-container">
+        <img
+            alt="logo-image"
+            class="img-container"
+            [src]="dataInput().image"
+        >
+    </picture>
+    <h2 class="h2-container">{{ dataInput().name }}</h2>
+    <p class="date-container">fecha aqui</p>
+    <small class="small-container">{{ dataInput().description }}</small>
+</li>
+
+
