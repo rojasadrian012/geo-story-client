@@ -26,7 +26,6 @@ export class DashboardComponent {
         this.http
             .get<LevelByUser[]>(environment.baseUrl + '/quiz/levels-by-user')
             .subscribe((data) => {
-                console.log({ data });
                 this.levels.set(data);
             });
     }
