@@ -27,6 +27,7 @@ import { style } from '@angular/animations';
 import { LessonService } from '../../pages/lesson/services/lesson.service';
 import { ModalChances } from '../modal-second-chance/interfaces/modal-data.interface';
 import { LevelStatus } from '../../pages/lesson/interfaces/level-status.enum';
+import { SelectedAnswersService } from '../selected-answer/services/selected-answers.service';
 
 enum pointsQuestion {
     perfectScore = 20,
@@ -68,6 +69,8 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     public readonly questionService = inject(QuestionService);
     private readonly messageService = inject(MessageService);
     public readonly lessonService = inject(LessonService);
+    public readonly selectedAnswersService = inject(SelectedAnswersService);
+
 
     public isSecondChance = signal(false);
     public isUsedHint = signal(false);
@@ -78,6 +81,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     public isPerfectPoint = false;
     public isPerfectPointUsingHint = false;
 
+    //TODO: se recomienda que cada efecto solo tenga un signal
     constructor() {
         effect(() => {
             if (this.questionService.numberOfQuestions() === 0) {
@@ -92,7 +96,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
                 if (
                     this.questionService.totalPointsLesson() >=
-                    pointsQuestion.perfectScoreMinUsingHint
+                    pointsQuestion.perfectScoreMinUsingHint && this.selectedAnswersService.areAllResponsesCorrect()
                 ) {
                     this.isPerfectPointUsingHint = true;
                     this.showModal = true;
@@ -100,6 +104,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
                 }
 
                 if (this.isSecondChance()) {
+
                     if (
                         this.questionService.totalPointsLesson() <
                         pointsQuestion.minPointsUnlockNextLevel

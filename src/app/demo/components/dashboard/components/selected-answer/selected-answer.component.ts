@@ -14,6 +14,8 @@ import { Answer } from '../../interfaces/question-list-response.interface';
 import { SoundsService } from '../../services/sounds.service';
 import { QuestionService } from '../../services/question.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { SelectedAnswersService } from './services/selected-answers.service';
+import { effect } from '@angular/core';
 
 @Component({
     selector: 'app-selected-answer',
@@ -32,6 +34,7 @@ export class SelectedAnswerComponent implements OnChanges {
 
     private readonly soundService = inject(SoundsService);
     public readonly layoutService = inject(LayoutService);
+    public readonly selectedAnswersService = inject(SelectedAnswersService);
 
     public showResponse = signal<boolean>(false);
     public textIntro = signal<string>('');
@@ -61,6 +64,8 @@ export class SelectedAnswerComponent implements OnChanges {
 
     selectedOption(response: Answer) {
         if (this.isDisable()) return;
+
+        this.selectedAnswersService.addResponseInMap(response.id, response.isCorrect)
 
         if (response.isCorrect) {
             this.soundService.playCorrectSound();

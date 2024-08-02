@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
     providedIn: 'root',
 })
 export class QuestionService {
-    // Mapa para almacenar el estado de selección de cada pregunt
+    //TODO: Cambiar el nombre, esto guarda si una pregunta ya se respondio.
     private isQuestionSelectedMap = signal<Map<string, boolean>>(
         new Map<string, boolean>()
     );
@@ -80,5 +80,5 @@ export class QuestionService {
     clearAllPoints(): void {
         this.pointsTheUser().clear()
     }
-    
+
 }
