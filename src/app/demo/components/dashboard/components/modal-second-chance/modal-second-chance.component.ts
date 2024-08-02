@@ -84,10 +84,7 @@ export class ModalSecondChanceComponent implements OnChanges {
             }
 
             if (this.modalData().isSecondChance) {
-                if (
-                    this.lessonService.isUnLockedNextLevel ===
-                    LevelStatus.LOCKED
-                ) {
+                if (this.modalData().points < 12) {
                     this.options = {
                         ...this.options,
                         path: '/assets/images/animations/juego-terminado.json',
