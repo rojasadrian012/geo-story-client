@@ -5,7 +5,7 @@ import {
     inject,
     signal,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import {
     QuestionListResponse,
@@ -39,6 +39,7 @@ export class LessonComponent {
     private readonly quizStatusService = inject(QuizStatusService);
     private readonly questionService = inject(QuestionService);
     private readonly lessonService = inject(LessonService);
+    private readonly routerService = inject(Router);
 
     userQuizId = signal<string>('noId012');
     questions = signal<QuestionListResponse[]>([]);
@@ -86,6 +87,7 @@ export class LessonComponent {
                     this.questionService.numberOfQuestions.set(
                         environment.number_of_questions
                     );
+                    this.routerService.navigateByUrl('/');
                 },
                 error: (error) => {
                     console.error('Error al guardar los puntos:', error);

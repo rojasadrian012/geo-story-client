@@ -67,7 +67,6 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     public readonly questionService = inject(QuestionService);
     private readonly messageService = inject(MessageService);
-    private readonly routerService = inject(Router);
     public readonly lessonService = inject(LessonService);
 
     public isSecondChance = signal(false);
@@ -197,7 +196,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     goToSecondChance(initSecondChance: boolean) {
         if (this.isPerfectPoint || this.isPerfectPointUsingHint) {
-            this.goToHome();
+            this.emitAndClearPoints();
             return;
         }
 
@@ -210,10 +209,9 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         return;
     }
 
-    goToHome() {
+    emitAndClearPoints() {
         this.onPointsWinned.emit(this.questionService.totalPointsLesson());
         this.questionService.clearAllPoints()
-        this.routerService.navigateByUrl('/');
     }
 
     handleModalEvents(event: ModalChances) {
@@ -221,7 +219,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             this.goToSecondChance(event.secondChange);
         }
         if (event.fishSecondChange) {
-            this.goToHome();
+            this.emitAndClearPoints();
         }
     }
 }

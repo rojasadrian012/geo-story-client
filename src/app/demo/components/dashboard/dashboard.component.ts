@@ -11,18 +11,19 @@ import { QuizStatusService } from './services/quizStatus.service';
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
     private readonly http = inject(HttpClient);
     public dashboardService = inject(DashboardService);
     public quizStatusService = inject(QuizStatusService);
 
-    private getData = effect(() => {
+    ngOnInit(): void {
         this.getQuizzes();
-    })
+    }
 
     public levels = signal<LevelByUser[]>([]);
 
     getQuizzes() {
+
         this.http
             .get<LevelByUser[]>(environment.baseUrl + '/quiz/levels-by-user')
             .subscribe((data) => {
