@@ -33,4 +33,8 @@ export class SelectedAnswersService {
         return Array.from(this.responsesTheUser().values()).every(status => status === true);
     }
 
+    clearAllPoints(): void {
+        this.responsesTheUser().clear()
+    }
+
 }

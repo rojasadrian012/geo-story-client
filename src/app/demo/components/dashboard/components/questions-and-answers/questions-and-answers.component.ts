@@ -202,6 +202,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     goToSecondChance(initSecondChance: boolean) {
         if (this.isPerfectPoint || this.isPerfectPointUsingHint) {
             this.emitAndClearPoints();
+            this.selectedAnswersService.clearAllPoints();
             return;
         }
 
