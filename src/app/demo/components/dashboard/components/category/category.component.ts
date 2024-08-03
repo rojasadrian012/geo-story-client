@@ -72,7 +72,7 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
                 element.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         } else {
-            console.log('No hay elementos en levelsElements aún.');
+            console.error('No hay elementos en levelsElements aún.');
         }
     }
 

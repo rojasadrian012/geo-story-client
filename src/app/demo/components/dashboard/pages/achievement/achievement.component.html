@@ -1,9 +1,8 @@
 <app-geo-center-container title="Logros">
 
     <ul class="ul-container">
-        <app-achievement-item [dataInput]="dataInput()"/>
-        <app-achievement-item [dataInput]="dataInput()"/>
-        <app-achievement-item [dataInput]="dataInput()"/>
-        <app-achievement-item [dataInput]="dataInput()"/>
+        @for (achievement of achievements(); track $index) {
+            <app-achievement-item [achievement]="achievement"/>
+        }
     </ul>
 </app-geo-center-container>

@@ -6,8 +6,6 @@ import { environment } from 'src/environments/environment';
 })
 export class SelectedAnswersService {
 
-    constructor() { }
-
     private responsesTheUser = signal<Map<string, boolean>>(
         new Map<string, boolean>()
     );

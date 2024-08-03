@@ -5,7 +5,6 @@ import { zzfx } from 'zzfx';
     providedIn: 'root',
 })
 export class SoundsService {
-    constructor() {}
 
     playCorrectSound() {
         zzfx(...[, , 537, 0.02, 0.02, 0.22, 1, 1.59, -6.98, 4.97]); // Heart

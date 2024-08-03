@@ -3,12 +3,12 @@
         <img
             alt="logo-image"
             class="img-container"
-            [src]="dataInput().image"
+            [src]="achievement().achievement.image"
         >
     </picture>
-    <h2 class="h2-container">{{ dataInput().name }}</h2>
-    <p class="date-container">fecha aqui</p>
-    <small class="small-container">{{ dataInput().description }}</small>
+    <h2 class="h2-container">{{ achievement().achievement.name }}</h2>
+    <p class="date-container">{{ achievement().date ? achievement().date : 'Sin fecha' }}</p>
+    <small class="small-container">{{ achievement().achievement.description }}</small>
 </li>
 
 

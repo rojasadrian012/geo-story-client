@@ -1,13 +1,21 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject, OnInit } from '@angular/core';
 import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
 import { AchievementItemComponent } from '../../components/achievement-item/achievement-item.component';
 import { DataInput } from '../../components/achievement-item/interfaces/data-inputs.interface';
 import { style } from '@angular/animations';
+import { AchievementPageService } from './services/achievement-page.service';
+import { AchievementListResponse } from './interfaces/achievement-list-response.interface';
+import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'app-archeivement',
     standalone: true,
-    imports: [GeoCenterContainerComponent, AchievementItemComponent],
+    imports: [
+        NgFor,
+
+        GeoCenterContainerComponent,
+        AchievementItemComponent
+    ],
     templateUrl: './achievement.component.html',
     styles: `
         .ul-container{
@@ -26,12 +34,24 @@ import { style } from '@angular/animations';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArcheivementComponent {
-    public dataInput = signal<DataInput>({
-        id: '818af8f2-80kt-484e-9fab-a3d4ad846645',
-        description: '¡Eres genial! Has completado la primera categoria.',
-        name: '¡Inicio!',
-        image: 'assets/images/achievement/primer-logro.svg',
-    });
+export class ArcheivementComponent implements OnInit {
+
+    private readonly achievementsService = inject(AchievementPageService);
+
+    public achievements = signal<AchievementListResponse[]>([]);
+
+    ngOnInit(): void {
+        this.getAchievements();
+    }
+
+    getAchievements() {
+        this.achievementsService.getAchievementsByUser()
+            .subscribe({
+                next: (response) => this.achievements.set(response),
+                error: (error) => console.error(error),
+            })
+    }
+
 }
+
 

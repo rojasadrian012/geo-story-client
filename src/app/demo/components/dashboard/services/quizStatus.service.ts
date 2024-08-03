@@ -1,12 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class QuizStatusService {
 
-  public refresh = signal(false)
-
-  constructor() { }
+    public refresh = signal(false)
 
 }
