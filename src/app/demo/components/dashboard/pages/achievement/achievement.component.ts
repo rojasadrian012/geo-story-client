@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, signal, inject, OnInit } from '@angular/core';
+import { NgFor } from '@angular/common';
+
 import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
 import { AchievementItemComponent } from '../../components/achievement-item/achievement-item.component';
-import { DataInput } from '../../components/achievement-item/interfaces/data-inputs.interface';
-import { style } from '@angular/animations';
 import { AchievementPageService } from './services/achievement-page.service';
 import { Achievement, AchievementCurrentUser } from './interfaces/achievement-list-response.interface';
-import { NgFor } from '@angular/common';
 import { NormalAchievementItemComponent } from '../../components/normal-achievement-item/normal-achievement-item.component';
 
 @Component({
@@ -42,19 +41,23 @@ export class ArcheivementComponent implements OnInit {
 
     public achievementsCurrentUser = signal<AchievementCurrentUser[]>([]);
     public allAchievements = signal<Achievement[]>([]);
+    public currentUserName = signal<string | null>(null);
 
 
     ngOnInit(): void {
         this.getAchievements();
+        this.getcurrentUser();
     }
 
+    getcurrentUser() {
+        this.currentUserName.set(localStorage.getItem('currentUserName') ? localStorage.getItem('currentUserName') : null)
+    }
     getAchievements() {
         this.achievementsService.getAchievementsByUser()
             .subscribe({
                 next: (response) => {
                     this.achievementsCurrentUser.set(response.achievementsCurrentUser);
-                    this.allAchievements.set(response.allAchievements);
-
+                    this.allAchievements.set(response.achievementsNoUnlocked);
                 },
                 error: (error) => console.error(error),
             })

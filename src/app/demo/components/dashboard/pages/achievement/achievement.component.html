@@ -2,16 +2,17 @@
 
     <ul class="ul-container">
         @for (achievement of achievementsCurrentUser(); track $index) {
-            <app-achievement-item [achievement]="achievement"/>
+            <app-achievement-item [achievement]="achievement" />
         }
         @empty{
-            <h4 class="text-color-secondary">Usuario sin logros aun.</h4>
+            <h4 class="text-color-secondary">Usuario <span class="text-primary font-bold">{{currentUserName()}}</span> aun
+                no tiene logros.</h4>
         }
     </ul>
     <h2 class="font-bold text-color-secondary mb-0">Todos los logros</h2>
     <ul class="ul-container">
         @for (achievement of allAchievements(); track $index) {
-            <app-normal-achievement-item [achievement]="achievement"/>
+            <app-normal-achievement-item [achievement]="achievement" />
         }
     </ul>
 </app-geo-center-container>
