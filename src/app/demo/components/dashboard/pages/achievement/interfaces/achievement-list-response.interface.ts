@@ -13,5 +13,5 @@ export interface Achievement {
 
 export interface AchievementListResponse {
     achievementsCurrentUser: AchievementCurrentUser[]
-    allAchievements: Achievement[]
+    achievementsNoUnlocked: Achievement[]
 }
