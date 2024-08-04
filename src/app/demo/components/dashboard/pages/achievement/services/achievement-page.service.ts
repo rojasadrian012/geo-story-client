@@ -13,8 +13,8 @@ export class AchievementPageService {
 
     baseUrl = `${environment.baseUrl}/quiz/achievements`
 
-    getAchievementsByUser(): Observable<AchievementListResponse[]> {
-        return this.http.get<AchievementListResponse[]>(this.baseUrl);
+    getAchievementsByUser(): Observable<AchievementListResponse> {
+        return this.http.get<AchievementListResponse>(this.baseUrl);
     }
 
 }

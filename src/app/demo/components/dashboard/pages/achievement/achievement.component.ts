@@ -4,7 +4,7 @@ import { AchievementItemComponent } from '../../components/achievement-item/achi
 import { DataInput } from '../../components/achievement-item/interfaces/data-inputs.interface';
 import { style } from '@angular/animations';
 import { AchievementPageService } from './services/achievement-page.service';
-import { AchievementListResponse } from './interfaces/achievement-list-response.interface';
+import { Achievement, AchievementCurrentUser } from './interfaces/achievement-list-response.interface';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -38,7 +38,9 @@ export class ArcheivementComponent implements OnInit {
 
     private readonly achievementsService = inject(AchievementPageService);
 
-    public achievements = signal<AchievementListResponse[]>([]);
+    public achievementsCurrentUser = signal<AchievementCurrentUser[]>([]);
+    public allAchievements = signal<Achievement[]>([]);
+
 
     ngOnInit(): void {
         this.getAchievements();
@@ -47,7 +49,9 @@ export class ArcheivementComponent implements OnInit {
     getAchievements() {
         this.achievementsService.getAchievementsByUser()
             .subscribe({
-                next: (response) => this.achievements.set(response),
+                next: (response) => {
+                    this.achievementsCurrentUser.set(response.achievementsCurrentUser);
+                },
                 error: (error) => console.error(error),
             })
     }

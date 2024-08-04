@@ -1,4 +1,4 @@
-export interface AchievementListResponse {
+export interface AchievementCurrentUser {
     id:          string;
     date:        null;
     achievement: Achievement;
@@ -9,4 +9,9 @@ export interface Achievement {
     name:        string;
     description: string;
     image:       string;
+}
+
+export interface AchievementListResponse {
+    achievementsCurrentUser: AchievementCurrentUser[]
+    achievements: Achievement[]
 }

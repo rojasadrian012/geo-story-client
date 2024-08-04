@@ -1,8 +1,16 @@
 <app-geo-center-container title="Logros">
 
     <ul class="ul-container">
-        @for (achievement of achievements(); track $index) {
+        @for (achievement of achievementsCurrentUser(); track $index) {
             <app-achievement-item [achievement]="achievement"/>
         }
+        @empty{
+            <pre>Usuario sin logros aun.</pre>
+        }
+    </ul>
+    <ul class="ul-container">
+        <h2>Todos los logros</h2>
+
+
     </ul>
 </app-geo-center-container>
