@@ -6,6 +6,7 @@ import { style } from '@angular/animations';
 import { AchievementPageService } from './services/achievement-page.service';
 import { Achievement, AchievementCurrentUser } from './interfaces/achievement-list-response.interface';
 import { NgFor } from '@angular/common';
+import { NormalAchievementItemComponent } from '../../components/normal-achievement-item/normal-achievement-item.component';
 
 @Component({
     selector: 'app-archeivement',
@@ -14,7 +15,8 @@ import { NgFor } from '@angular/common';
         NgFor,
 
         GeoCenterContainerComponent,
-        AchievementItemComponent
+        AchievementItemComponent,
+        NormalAchievementItemComponent,
     ],
     templateUrl: './achievement.component.html',
     styles: `
@@ -22,7 +24,7 @@ import { NgFor } from '@angular/common';
             display: grid;
             grid-template-columns: 1fr;
             gap: 3rem;
-            margin-top: 3rem;
+            margin: 3rem 0;
             padding:0;
         }
 
@@ -50,7 +52,10 @@ export class ArcheivementComponent implements OnInit {
         this.achievementsService.getAchievementsByUser()
             .subscribe({
                 next: (response) => {
+                    console.log({response});
                     this.achievementsCurrentUser.set(response.achievementsCurrentUser);
+                    this.allAchievements.set(response.allAchievements);
+
                 },
                 error: (error) => console.error(error),
             })

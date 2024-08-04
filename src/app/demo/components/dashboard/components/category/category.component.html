@@ -11,11 +11,11 @@
             (click)="changePath(level, level.unlockLevel)"
         >
             @if(!level.unlockLevel){
-            <img
-                class="image-padlock"
-                src="assets/images/bloqueado.svg"
-                alt="nivel bloqueado"
-            />
+                <img
+                    class="image-padlock"
+                    src="assets/images/bloqueado.svg"
+                    alt="nivel bloqueado"
+                />
             }
             <img
                 [class]="level.unlockLevel ? 'image-unlocked' : 'image-blocked'"

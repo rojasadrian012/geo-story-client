@@ -1,0 +1,45 @@
+.li-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.li-container:hover {
+    transform: scale(1.05);
+    filter: contrast(1.25);
+}
+
+.picture-container {
+    display: block;
+    margin-bottom: 0.5rem;
+    padding: 2rem;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 0.5rem;
+    border: 0.35rem solid var(--primary-color);
+}
+
+.img-container {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.h2-container {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-top: 0.25rem;
+    color: var(--primary-color); ; /* color amarillo */
+}
+
+.date-container {
+    font-size: 1rem;
+    margin-bottom: 0;
+    opacity: 0.7;
+}
+
+.small-container {
+    font-weight: bold;
+}

@@ -5,12 +5,13 @@
             <app-achievement-item [achievement]="achievement"/>
         }
         @empty{
-            <pre>Usuario sin logros aun.</pre>
+            <h4 class="text-color-secondary">Usuario sin logros aun.</h4>
         }
     </ul>
+    <h2 class="font-bold text-color-secondary">Todos los logros</h2>
     <ul class="ul-container">
-        <h2>Todos los logros</h2>
-
-
+        @for (achievement of allAchievements(); track $index) {
+            <app-normal-achievement-item [achievement]="achievement"/>
+        }
     </ul>
 </app-geo-center-container>
