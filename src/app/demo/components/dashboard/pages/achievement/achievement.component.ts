@@ -52,7 +52,6 @@ export class ArcheivementComponent implements OnInit {
         this.achievementsService.getAchievementsByUser()
             .subscribe({
                 next: (response) => {
-                    console.log({response});
                     this.achievementsCurrentUser.set(response.achievementsCurrentUser);
                     this.allAchievements.set(response.allAchievements);
 

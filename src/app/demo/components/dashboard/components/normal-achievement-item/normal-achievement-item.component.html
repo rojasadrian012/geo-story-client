@@ -1,6 +1,11 @@
 <li class="li-container">
     <picture class="picture-container">
         <img
+            class="image-padlock"
+            src="assets/images/bloqueado.svg"
+            alt="nivel bloqueado"
+        />
+        <img
             alt="logo-image"
             class="img-container"
             [src]="achievement().image"
@@ -9,5 +14,3 @@
     <h2 class="h2-container">{{ achievement().name }}</h2>
     <small class="small-container">{{ achievement().description }}</small>
 </li>
-
-

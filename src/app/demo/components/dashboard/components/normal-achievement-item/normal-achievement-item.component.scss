@@ -3,6 +3,8 @@
     flex-direction: column;
     text-align: center;
     transition: transform 0.3s, filter 0.3s;
+    opacity: 0.6;
+    position: relative; /* Añadido */
 }
 
 .li-container:hover {
@@ -17,13 +19,15 @@
     width: 100%;
     aspect-ratio: 1;
     border-radius: 0.5rem;
-    border: 0.35rem solid var(--primary-color);
+    border: 0.35rem solid var(--surface-500);
+    position: relative; /* Añadido */
 }
 
 .img-container {
     display: block;
     width: 100%;
     aspect-ratio: 1;
+    filter: grayscale(100%);
 }
 
 .h2-container {
@@ -31,7 +35,7 @@
     font-weight: bold;
     margin-bottom: 0;
     margin-top: 0.25rem;
-    color: var(--primary-color); ; /* color amarillo */
+    color: var(--surface-500);
 }
 
 .date-container {
@@ -42,4 +46,16 @@
 
 .small-container {
     font-weight: bold;
+    color: var(--surface-500);
+}
+
+.image-padlock {
+    width: 30%;
+    height: 30%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    pointer-events: none; /* Asegura que no interfiera con el hover */
 }
