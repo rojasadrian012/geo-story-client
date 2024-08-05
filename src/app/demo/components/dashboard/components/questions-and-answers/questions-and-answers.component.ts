@@ -21,9 +21,6 @@ import { SelectedAnswerComponent } from '../selected-answer/selected-answer.comp
 import { QuestionService } from '../../services/question.service';
 import { HintComponent } from '../hint/hint.component';
 import { ModalSecondChanceComponent } from '../modal-second-chance/modal-second-chance.component';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { style } from '@angular/animations';
 import { LessonService } from '../../pages/lesson/services/lesson.service';
 import { ModalChances } from '../modal-second-chance/interfaces/modal-data.interface';
 import { LevelStatus } from '../../pages/lesson/interfaces/level-status.enum';
@@ -117,6 +114,10 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             }
         });
     }
+
+    private effectNumberOfQuestionResponded = effect(() => {
+
+    })
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['questionsAndAnswers']) {

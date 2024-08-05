@@ -11,9 +11,15 @@ export class SelectedAnswersService {
     );
 
     public setedValue = signal<boolean>(false);
+    public streakOfCorrectQuestions = signal<number>(0);
+    public numberOfTimesResponsed = signal<number>(0);
 
-    addResponseInMap(answerId: string, status: boolean): void {
-        this.responsesTheUser().set(answerId, status);
+    addResponseInMap(answerId: string, isCorrect: boolean): void {
+
+        this.numberOfTimesResponsed.update((value) => (value + 1));
+        isCorrect ? this.streakOfCorrectQuestions.update((value) => (value + 1)) : this.streakOfCorrectQuestions.set(0);
+
+        this.responsesTheUser().set(answerId, isCorrect);
         this.setedValue.set(true);
     }
 
