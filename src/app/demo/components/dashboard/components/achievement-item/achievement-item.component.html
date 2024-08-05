@@ -4,11 +4,9 @@
             alt="logo-image"
             class="img-container"
             [src]="achievement().achievement.image"
-        >
+        />
     </picture>
     <h2 class="h2-container">{{ achievement().achievement.name }}</h2>
-    <p class="date-container">{{ achievement().date ? achievement().date : 'Sin fecha' }}</p>
-    <small class="small-container">{{ achievement().achievement.description }}</small>
+    <small class="date-container">{{ dateFormated() }}</small>
+    <p class="description-container">{{ achievement().achievement.description }}</p>
 </li>
-
-
