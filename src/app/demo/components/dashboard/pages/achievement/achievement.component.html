@@ -1,12 +1,14 @@
 <app-geo-center-container title="Logros">
-
     <ul class="ul-container">
         @for (achievement of achievementsCurrentUser(); track $index) {
             <app-achievement-item [achievement]="achievement" />
-        }
-        @empty{
-            <h4 class="text-color-secondary"><span class="text-primary font-bold">{{currentUserName()}}</span> aún
-                no tienes logros.</h4>
+        } @empty{
+            <h4 class="text-color-secondary">
+                <span class="text-primary text-2xl font-bold font-italic"
+                    >{{ currentUserName() }}
+                </span>
+                aún no tienes logros.
+            </h4>
         }
     </ul>
     <h2 class="font-bold text-color-secondary mb-0">Todos los logros</h2>

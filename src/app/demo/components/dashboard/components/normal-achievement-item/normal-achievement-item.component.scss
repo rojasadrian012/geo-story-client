@@ -1,18 +1,29 @@
-.li-container {
+.achievement-item {
     display: flex;
     flex-direction: column;
     text-align: center;
     transition: transform 0.3s, filter 0.3s;
-    opacity: 0.6;
-    position: relative; /* Añadido */
+    position: relative;
 }
 
-.li-container:hover {
+.achievement-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.achievement-content {
+    opacity: 0.6;
+}
+
+.achievement-item:hover {
     transform: scale(1.05);
     filter: contrast(1.25);
 }
 
-.picture-container {
+.picture-frame {
     display: block;
     margin-bottom: 0.5rem;
     padding: 2rem;
@@ -20,42 +31,45 @@
     aspect-ratio: 1;
     border-radius: 0.5rem;
     border: 0.35rem solid var(--surface-500);
-    position: relative; /* Añadido */
+    position: relative;
 }
 
-.img-container {
+.achievement-image {
     display: block;
     width: 100%;
     aspect-ratio: 1;
     filter: grayscale(100%);
+    position: relative;
 }
 
-.h2-container {
+.padlock-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.padlock-icon {
+    width: 50%;
+    height: 50%;
+    opacity: 1 !important;
+}
+
+.achievement-title {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 0;
     margin-top: 0.25rem;
     color: var(--surface-500);
+    opacity: 0.6;
 }
 
-.date-container {
-    font-size: 1rem;
-    margin-bottom: 0;
-    opacity: 0.7;
-}
-
-.small-container {
+.achievement-description {
     font-weight: bold;
     color: var(--surface-500);
-}
-
-.image-padlock {
-    width: 30%;
-    height: 30%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    pointer-events: none; /* Asegura que no interfiera con el hover */
+    opacity: 0.6;
 }
