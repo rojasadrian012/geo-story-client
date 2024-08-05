@@ -1,10 +1,19 @@
-import { ChangeDetectionStrategy, Component, signal, inject, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    signal,
+    inject,
+    OnInit,
+} from '@angular/core';
 import { NgFor } from '@angular/common';
 
 import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
 import { AchievementItemComponent } from '../../components/achievement-item/achievement-item.component';
 import { AchievementPageService } from './services/achievement-page.service';
-import { Achievement, AchievementCurrentUser } from './interfaces/achievement-list-response.interface';
+import {
+    Achievement,
+    AchievementCurrentUser,
+} from './interfaces/achievement-list-response.interface';
 import { NormalAchievementItemComponent } from '../../components/normal-achievement-item/normal-achievement-item.component';
 
 @Component({
@@ -22,7 +31,7 @@ import { NormalAchievementItemComponent } from '../../components/normal-achievem
         .ul-container{
             display: grid;
             grid-template-columns: 1fr;
-            gap: 3rem;
+            // gap: 3rem;
             margin: 3rem 0;
             padding:0;
         }
@@ -36,13 +45,11 @@ import { NormalAchievementItemComponent } from '../../components/normal-achievem
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArcheivementComponent implements OnInit {
-
     private readonly achievementsService = inject(AchievementPageService);
 
     public achievementsCurrentUser = signal<AchievementCurrentUser[]>([]);
     public allAchievements = signal<Achievement[]>([]);
     public currentUserName = signal<string | null>(null);
-
 
     ngOnInit(): void {
         this.getAchievements();
@@ -50,19 +57,21 @@ export class ArcheivementComponent implements OnInit {
     }
 
     getcurrentUser() {
-        this.currentUserName.set(localStorage.getItem('currentUserName') ? localStorage.getItem('currentUserName') : null)
+        this.currentUserName.set(
+            localStorage.getItem('currentUserName')
+                ? localStorage.getItem('currentUserName')
+                : null
+        );
     }
     getAchievements() {
-        this.achievementsService.getAchievementsByUser()
-            .subscribe({
-                next: (response) => {
-                    this.achievementsCurrentUser.set(response.achievementsCurrentUser);
-                    this.allAchievements.set(response.achievementsNoUnlocked);
-                },
-                error: (error) => console.error(error),
-            })
+        this.achievementsService.getAchievementsByUser().subscribe({
+            next: (response) => {
+                this.achievementsCurrentUser.set(
+                    response.achievementsCurrentUser
+                );
+                this.allAchievements.set(response.achievementsNoUnlocked);
+            },
+            error: (error) => console.error(error),
+        });
     }
-
 }
-
-
