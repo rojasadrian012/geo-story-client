@@ -1,6 +1,6 @@
 export interface AchievementCurrentUser {
     id:          string;
-    date:        null;
+    date:        Date;
     achievement: Achievement;
 }
 
