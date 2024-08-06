@@ -8,17 +8,21 @@
                 class="mr-2"
                 (onClick)="openNew()"
             />
-            <p-button
+            <!-- <p-button
                 severity="danger"
                 label="Eliminar"
                 icon="pi pi-trash"
                 (onClick)="deleteSelectedProducts()"
                 [disabled]="!selectedUsers || !selectedUsers.length"
-            />
+            /> -->
         </ng-template>
     </p-toolbar>
 
-    <app-table [users]="users()" (onEditUser)="openEdit($event)" />
+    <app-table
+        [users]="users()"
+        (onEditUser)="openEdit($event)"
+        (onDeletedUser)="getUsers()"
+    />
 
     <p-dialog
         [(visible)]="userDialog"
