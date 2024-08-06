@@ -10,7 +10,7 @@ import {
 import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
 import { UserServiceService } from './services/userService.service';
 import { UserListResponse } from './interface/user-list-response.interface';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TableComponent } from './components/table/table.component';
 import { DialogModule } from 'primeng/dialog';
@@ -21,6 +21,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'app-usuarios',
@@ -28,10 +30,15 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     imports: [
         GeoCenterContainerComponent,
         TableComponent,
-        
+
         NgIf,
         FormsModule,
-        
+        CommonModule,
+
+        ToastModule,
+
+
+
         ToolbarModule,
         // ButtonModule,
         DialogModule,
@@ -45,9 +52,13 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     templateUrl: './usuarios.component.html',
     styleUrl: './usuarios.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [MessageService],
 })
 export class UsuariosComponent implements OnInit {
     private readonly userService = inject(UserServiceService);
+
+    //TODO: optimizar el codigo, cuando se edite no debe ser obligatoria la contraseña, usar nuevo control flow, eliminar imports innecesario.
+    constructor(private messageService: MessageService) { }
 
     public users = signal<UserListResponse[]>([]);
     public statuses = signal([
@@ -80,6 +91,7 @@ export class UsuariosComponent implements OnInit {
     });
     public userDialog = model<boolean>(false);
     public isNewUser = signal<boolean>(false);
+    public submitted = signal<boolean>(false); // Indica si el formulario ha sido enviado
 
     ngOnInit(): void {
         this.getUsers();
@@ -97,12 +109,14 @@ export class UsuariosComponent implements OnInit {
     openNew() {
         this.userDialog.set(true);
         this.isNewUser.set(true);
+        this.submitted.set(false); // Resetea el estado de submitted
     }
 
     openEdit(user: UserListResponse) {
         this.isNewUser.set(false);
         this.userDialog.set(true);
         this.user.set(user);
+        this.submitted.set(false); // Resetea el estado de submitted
     }
 
     resetUser() {
@@ -121,6 +135,10 @@ export class UsuariosComponent implements OnInit {
     }
 
     saveProduct() {
+        if (!this.validateUser()) {
+            return; // Si la validación falla, no guarda el producto
+        }
+
         if (this.isNewUser()) {
             this.saveNewUser();
             this.hideDialog();
@@ -131,15 +149,47 @@ export class UsuariosComponent implements OnInit {
     }
     saveUserEdited() {
         this.userService.edit(this.user()).subscribe({
-            next: () => this.getUsers(),
+            next: () => {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Usuario editado',
+                    detail: 'Usuario editado exitosamente.',
+                });
+                this.getUsers()
+            },
             error: (e) => console.error({ e }),
         });
     }
 
     saveNewUser() {
         this.userService.create(this.user()).subscribe({
-            next: () => this.getUsers(),
+            next: () => {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Usuario creado',
+                    detail: 'Usuario creado exitosamente.',
+                });
+                this.getUsers()
+            },
             error: (err) => console.error(err),
         });
+    }
+
+    validateUser(): boolean {
+        this.submitted.set(true); // Marca el formulario como enviado
+        if (
+            !this.user().nickname ||
+            !this.user().fullName ||
+            !this.user().roles.length ||
+            !this.user().password
+        ) {
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Por favor complete todos los campos.',
+            });
+            return false;
+        }
+        return true;
     }
 }
