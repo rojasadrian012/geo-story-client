@@ -9,15 +9,15 @@
     }
 
     @if (users()?.rankingUsers) {
-        
+
         @for (user of users().rankingUsers; track user.user_id) {
             <app-ranking-item [user]="user" />
-        } 
-       
+        }
+
         @empty {
             <h2 class="text-color-secondary text-center my-8">
-                Ningun usuario a compleado una categoria.
+                Ningún usuario ha completado una categoria.
             </h2>
-        } 
+        }
     }
 </app-geo-center-container>
