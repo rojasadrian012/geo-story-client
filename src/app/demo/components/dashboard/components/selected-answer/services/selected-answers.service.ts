@@ -27,7 +27,9 @@ export class SelectedAnswersService {
         return this.responsesTheUser();
     }
 
+    //TODO: esto me parece es innecesario, creo que si en addResponseInMap uno es falso podria poner un a bandera y omitir este metodo.
     areAllResponsesCorrect(): boolean {
+
         const totalElements = this.responsesTheUser().size;
 
         if (totalElements !== environment.number_of_questions) {

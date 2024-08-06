@@ -226,6 +226,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             this.goToSecondChance(event.secondChange);
         }
         if (event.fishSecondChange) {
+            this.selectedAnswersService.clearAllPoints();
             this.emitAndClearPoints();
         }
     }
