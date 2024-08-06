@@ -197,7 +197,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     }
 
     messagePoindClaimed(points: number) {
-        this.showMessage('success', '¡Ganaste!', `${points} puntos.`);
+        this.showMessage('success', '¡Ganaste!', points > 1 ? `${points} puntos.` : `${points} punto.`);
     }
 
     goToSecondChance(initSecondChance: boolean) {

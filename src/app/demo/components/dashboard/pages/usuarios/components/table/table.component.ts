@@ -43,7 +43,7 @@ export class TableComponent {
     deleteUser(user: UserListResponse) {
         this.openDialog.set(true);
         this.messageDialogConfirm.set(
-            `¿Estas seguro que desea eliminar a: ${user.fullName}`
+            `¿Estás seguro que quieres eliminar a ${user.fullName}?`
         );
     }
 }
