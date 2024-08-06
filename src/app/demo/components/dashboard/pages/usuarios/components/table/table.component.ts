@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { UserListResponse } from '../../interface/user-list-response.interface';
 import { ButtonModule } from 'primeng/button';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { GeoModalConfirmComponent } from '../../../../components/core/geo-modal-confirm/geo-modal-confirm.component';
 import { UserServiceService } from '../../services/userService.service';
 
