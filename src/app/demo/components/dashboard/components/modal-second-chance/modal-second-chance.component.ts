@@ -79,7 +79,7 @@ export class ModalSecondChanceComponent implements OnChanges {
             ) {
                 this.options = {
                     ...this.options,
-                    path: '/assets/images/animations/creativo.json',
+                    path: '/assets/images/animations/control-de-juego-perfect.json',
                 };
                 this.titleModal.set(`¡Pasaste el ultimo nivel como genio!`);
                 this.buttonText.set('¡Finalizar!');
@@ -92,7 +92,7 @@ export class ModalSecondChanceComponent implements OnChanges {
             ) {
                 this.options = {
                     ...this.options,
-                    path: '/assets/images/animations/creativo.json',
+                    path: '/assets/images/animations/control-de-juego-hint.json',
                 };
                 this.titleModal.set(
                     `¡Pasaste el ultimo nivel sin equivocarte!`
@@ -106,7 +106,7 @@ export class ModalSecondChanceComponent implements OnChanges {
                     if (this.modalData().points < 12) {
                         this.options = {
                             ...this.options,
-                            path: '/assets/images/animations/juego-terminado.json',
+                            path: '/assets/images/animations/ojo.json',
                         };
                         this.titleModal.set('¡Casi, animo es el ulitmo nivel!');
                         this.buttonText.set('Intentar de nuevo');
@@ -114,7 +114,7 @@ export class ModalSecondChanceComponent implements OnChanges {
                     }
                     this.options = {
                         ...this.options,
-                        path: '/assets/images/animations/decision-correcta.json',
+                        path: '/assets/images/animations/juego-de-aventuras-finish.json',
                     };
                     this.titleModal.set('¡Pasaste el ultimo nivel!');
                     this.buttonText.set('Finalizar');
@@ -134,10 +134,12 @@ export class ModalSecondChanceComponent implements OnChanges {
             }
 
             if (this.modalData().isSecondChance) {
+                console.log('ojo');
+
                 if (this.modalData().points < 12) {
                     this.options = {
                         ...this.options,
-                        path: '/assets/images/animations/juego-terminado.json',
+                        path: '/assets/images/animations/ojo.json',
                     };
                     this.titleModal.set(
                         '¡Casi desbloqueas el siguiente nivel!'
