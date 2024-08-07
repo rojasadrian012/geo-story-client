@@ -3,21 +3,21 @@
 
     @if (users()?.rankingUsers.length) {
         <p class="text-color-secondary text-2xl my-4">
-            <span class="text-primary font-bold">{{ users()?.currentUser.fullName }}</span> estas en el top
+            <span class="text-primary font-bold">{{ users()?.currentUser.fullName }}</span> estás en el top
             <span class="text-primary font-bold">{{ users()?.currentUser.position }}</span>
         </p>
     }
 
     @if (users()?.rankingUsers) {
-        
+
         @for (user of users().rankingUsers; track user.user_id) {
             <app-ranking-item [user]="user" />
-        } 
-       
+        }
+
         @empty {
             <h2 class="text-color-secondary text-center my-8">
-                Ningun usuario a compleado una categoria.
+                Ningún usuario ha completado una categoría.
             </h2>
-        } 
+        }
     }
 </app-geo-center-container>

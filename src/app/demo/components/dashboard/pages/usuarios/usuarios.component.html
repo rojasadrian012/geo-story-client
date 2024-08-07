@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <app-geo-center-container title="Usuarios">
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
@@ -8,17 +9,14 @@
                 class="mr-2"
                 (onClick)="openNew()"
             />
-            <p-button
-                severity="danger"
-                label="Eliminar"
-                icon="pi pi-trash"
-                (onClick)="deleteSelectedProducts()"
-                [disabled]="!selectedUsers || !selectedUsers.length"
-            />
         </ng-template>
     </p-toolbar>
 
-    <app-table [users]="users()" (onEditUser)="openEdit($event)" />
+    <app-table
+        [users]="users()"
+        (onEditUser)="openEdit($event)"
+        (onDeletedUser)="getUsers()"
+    />
 
     <p-dialog
         [(visible)]="userDialog"
@@ -29,71 +27,74 @@
     >
         <ng-template pTemplate="content">
             <div class="field">
-                <label for="name">Usuario para acceder</label>
+                <label for="nickname">Usuario para acceder</label>
                 <input
                     type="text"
                     pInputText
-                    id="name"
+                    id="nickname"
                     [(ngModel)]="user().nickname"
                     required
                     autofocus
                 />
-                <!-- <small class="p-error" *ngIf="submitted && !product.name">
-                    Name is required.
-                </small> -->
+                <small class="p-error" *ngIf="submitted() && !user().nickname">
+                    Usuario es requerido.
+                </small> <!-- Mensaje de error si el campo está vacío -->
             </div>
 
             <div class="field">
-                <label for="name">Nombre Completo</label>
+                <label for="fullName">Nombre Completo</label>
                 <input
                     type="text"
                     pInputText
-                    id="name"
+                    id="fullName"
                     [(ngModel)]="user().fullName"
                     required
                     autofocus
                 />
-                <!-- <small class="p-error" *ngIf="submitted && !product.name">
-                    Name is required.
-                </small> -->
+                <small class="p-error" *ngIf="submitted() && !user().fullName">
+                    Nombre Completo es requerido.
+                </small> <!-- Mensaje de error si el campo está vacío -->
             </div>
 
-            @if (!isNewUser()) {
-            <div class="field">
-                <label for="inventoryStatus">¿Esta Activo?</label>
+            <div class="field" *ngIf="!isNewUser()">
+                <label for="isActive">¿Está Activo?</label>
                 <p-dropdown
                     [(ngModel)]="user().isActive"
-                    inputId="inventoryStatus"
+                    inputId="isActive"
                     [options]="statuses()"
-                >
-                </p-dropdown>
+                ></p-dropdown>
             </div>
-            }
 
             <div class="field">
-                <label for="name">Roles que posee</label>
+                <label for="roles">Roles que posee</label>
                 <input
                     type="text"
                     pInputText
-                    id="name"
+                    id="roles"
                     [(ngModel)]="user().roles"
                     required
                     autofocus
                 />
+                <small class="p-error" *ngIf="submitted() && !user().roles">
+                    Roles son requeridos.
+                </small> <!-- Mensaje de error si el campo está vacío -->
             </div>
 
             <div class="field">
-                <label for="name">{{
+                <label for="password">{{
                     isNewUser() ? "Contraseña" : "Nueva Contraseña"
                 }}</label>
                 <input
                     type="text"
                     pInputText
-                    id="name"
+                    id="password"
                     [(ngModel)]="user().password"
                     required
                     autofocus
                 />
+                <small class="p-error" *ngIf="submitted() && !user().password">
+                    Contraseña es requerida.
+                </small> <!-- Mensaje de error si el campo está vacío -->
             </div>
         </ng-template>
 
@@ -105,7 +106,7 @@
                 (onClick)="hideDialog()"
             />
             <p-button
-                label="Save"
+                label="Guardar"
                 icon="pi pi-check"
                 [text]="true"
                 (onClick)="saveProduct()"

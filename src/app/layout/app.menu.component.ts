@@ -24,7 +24,7 @@ export class AppMenuComponent implements OnInit {
     updateModel() {
         this.model = [
             {
-                label: 'Menu',
+                label: 'Menú',
                 items: [
                     {
                         label: 'Aprender',

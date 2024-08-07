@@ -25,4 +25,8 @@ export class UserServiceService {
         const user = UserAdapter.toCreateUserDto(userToAdapter);
         return this.http.post(`${this.baseUrl}/new`, user);
     }
+
+    delete(userId: string){
+        return this.http.delete(`${this.baseUrl}/delete/${userId}`);
+    }
 }
