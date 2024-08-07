@@ -3,6 +3,7 @@ export interface ModalData {
     isSecondChance: boolean;
     isPerfectPoint: boolean;
     isPerfectPointUsingHint: boolean;
+    isFinishLevel: boolean
 }
 
 export interface ModalChances {

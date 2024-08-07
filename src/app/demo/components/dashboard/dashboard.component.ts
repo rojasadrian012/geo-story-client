@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
     public levels = signal<LevelByUser[]>([]);
 
     getQuizzes() {
-
         this.http
             .get<LevelByUser[]>(environment.baseUrl + '/quiz/levels-by-user')
             .subscribe((data) => {

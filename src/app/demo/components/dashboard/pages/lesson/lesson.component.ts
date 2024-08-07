@@ -7,9 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import {
-    QuestionListResponse,
-} from '../../interfaces/question-list-response.interface';
+import { QuestionListResponse } from '../../interfaces/question-list-response.interface';
 import { environment } from 'src/environments/environment';
 import { SoundsService } from '../../services/sounds.service';
 import { QuizStatusService } from '../../services/quizStatus.service';
@@ -81,7 +79,7 @@ export class LessonComponent {
         this.lessonService
             .savedPointWinned(points, this.title, this.userQuizId())
             .subscribe({
-                next: (response) => {
+                next: () => {
                     this.getQuestions(this.userQuizId());
                     this.quizStatusService.refresh.set(true);
                     this.questionService.numberOfQuestions.set(

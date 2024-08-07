@@ -1,4 +1,4 @@
-import { NgClass, NgOptimizedImage } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -16,11 +16,13 @@ import { Router } from '@angular/router';
 import { LevelByUser } from '../../interfaces/levels-by-user.interface';
 import { QuizStatusService } from '../../services/quizStatus.service';
 import { environment } from 'src/environments/environment';
+import { CategoryService } from './services/category.service';
 
 @Component({
     selector: 'app-category',
     standalone: true,
-    imports: [NgClass,
+    imports: [
+        NgClass,
         // NgOptimizedImage
     ],
     templateUrl: './category.component.html',
@@ -32,10 +34,10 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
 
     public readonly router = inject(Router);
     public readonly quizStatusService = inject(QuizStatusService);
+    public readonly categoryService = inject(CategoryService);
 
     public lastUnlockedIndex = signal<number>(-1);
     public hostApi = signal<string>(environment.baseUrl + '/files/vehicle/');
-
 
     @ViewChildren('level') levelsElements!: QueryList<ElementRef>;
 
@@ -78,6 +80,11 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
 
     changePath(level: LevelByUser, unlockLevel: boolean) {
         if (!unlockLevel) return;
+        localStorage.removeItem('finishChange')
+
+        if (level.quiz.difficulty == 6) //TODO: Se tendria que poner los numeros en variables.
+            localStorage.setItem('finishChange', '6')
+
         this.quizStatusService.refresh.set(false);
         this.router.navigateByUrl(`lesson/${level.quiz.title}/${level.id}`);
     }

@@ -25,6 +25,7 @@ import { LessonService } from '../../pages/lesson/services/lesson.service';
 import { ModalChances } from '../modal-second-chance/interfaces/modal-data.interface';
 import { LevelStatus } from '../../pages/lesson/interfaces/level-status.enum';
 import { SelectedAnswersService } from '../selected-answer/services/selected-answers.service';
+import { CategoryService } from '../category/services/category.service';
 
 enum pointsQuestion {
     perfectScore = 20,
@@ -67,16 +68,18 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     private readonly messageService = inject(MessageService);
     public readonly lessonService = inject(LessonService);
     public readonly selectedAnswersService = inject(SelectedAnswersService);
-
+    public readonly categoryService = inject(CategoryService);
 
     public isSecondChance = signal(false);
     public isUsedHint = signal(false);
-    private incorrectsQuestionsMap = signal<Map<string, boolean>>(
-        new Map<string, boolean>()
-    );
+    public isFinishChance = signal(false);
     public showModal = false;
     public isPerfectPoint = false;
     public isPerfectPointUsingHint = false;
+
+    private incorrectsQuestionsMap = signal<Map<string, boolean>>(
+        new Map<string, boolean>()
+    );
 
     //TODO: se recomienda que cada efecto solo tenga un signal
     constructor() {
@@ -93,7 +96,8 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
                 if (
                     this.questionService.totalPointsLesson() >=
-                    pointsQuestion.perfectScoreMinUsingHint && this.selectedAnswersService.areAllResponsesCorrect()
+                        pointsQuestion.perfectScoreMinUsingHint &&
+                    this.selectedAnswersService.areAllResponsesCorrect()
                 ) {
                     this.isPerfectPointUsingHint = true;
                     this.showModal = true;
@@ -101,13 +105,15 @@ export class QuestionsAndAnswersComponent implements OnChanges {
                 }
 
                 if (this.isSecondChance()) {
-
                     if (
                         this.questionService.totalPointsLesson() <
                         pointsQuestion.minPointsUnlockNextLevel
                     )
-                        this.lessonService.isUnLockedNextLevel = LevelStatus.LOCKED;
-                    else this.lessonService.isUnLockedNextLevel = LevelStatus.UNLOCKED;
+                        this.lessonService.isUnLockedNextLevel =
+                            LevelStatus.LOCKED;
+                    else
+                        this.lessonService.isUnLockedNextLevel =
+                            LevelStatus.UNLOCKED;
                 }
 
                 this.showModal = true;
@@ -115,13 +121,14 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         });
     }
 
-    private effectNumberOfQuestionResponded = effect(() => {
-
-    })
+    private effectNumberOfQuestionResponded = effect(() => {});
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['questionsAndAnswers']) {
             this.initializeMap();
+            if (localStorage.getItem('finishChange') == '6') {
+                this.isFinishChance.set(true);
+            }
         }
     }
 
@@ -218,7 +225,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     emitAndClearPoints() {
         this.onPointsWinned.emit(this.questionService.totalPointsLesson());
-        this.questionService.clearAllPoints()
+        this.questionService.clearAllPoints();
     }
 
     handleModalEvents(event: ModalChances) {

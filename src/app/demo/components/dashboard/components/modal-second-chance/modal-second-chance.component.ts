@@ -70,8 +70,58 @@ export class ModalSecondChanceComponent implements OnChanges {
         path: '/assets/images/animations/dos.json',
     };
 
+    //TODO: Refactorizar.
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['modalData']) {
+            if (
+                this.modalData().isFinishLevel &&
+                this.modalData().isPerfectPoint
+            ) {
+                this.options = {
+                    ...this.options,
+                    path: '/assets/images/animations/creativo.json',
+                };
+                this.titleModal.set(`¡Pasaste el ultimo nivel como genio!`);
+                this.buttonText.set('¡Finalizar!');
+                return;
+            }
+
+            if (
+                this.modalData().isFinishLevel &&
+                this.modalData().isPerfectPointUsingHint
+            ) {
+                this.options = {
+                    ...this.options,
+                    path: '/assets/images/animations/creativo.json',
+                };
+                this.titleModal.set(
+                    `¡Pasaste el ultimo nivel sin equivocarte!`
+                );
+                this.buttonText.set('¡Finalizar Juego!');
+                return;
+            }
+
+            if (this.modalData().isFinishLevel) {
+                if (this.modalData().isSecondChance) {
+                    if (this.modalData().points < 12) {
+                        this.options = {
+                            ...this.options,
+                            path: '/assets/images/animations/juego-terminado.json',
+                        };
+                        this.titleModal.set('¡Casi, animo es el ulitmo nivel!');
+                        this.buttonText.set('Intentar de nuevo');
+                        return;
+                    }
+                    this.options = {
+                        ...this.options,
+                        path: '/assets/images/animations/decision-correcta.json',
+                    };
+                    this.titleModal.set('¡Pasaste el ultimo nivel!');
+                    this.buttonText.set('Finalizar');
+                    return;
+                }
+            }
+
             if (this.modalData().isPerfectPoint) {
                 this.options = {
                     ...this.options,
@@ -101,6 +151,7 @@ export class ModalSecondChanceComponent implements OnChanges {
                 };
                 this.titleModal.set('¡Buen trabajo!');
                 this.buttonText.set('Finalizar esta segunda oportunidad');
+                return;
             }
 
             if (this.modalData().isPerfectPointUsingHint) {

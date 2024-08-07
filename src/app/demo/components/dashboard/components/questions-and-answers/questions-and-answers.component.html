@@ -24,6 +24,7 @@
     </div>
 
 }@empty{
+    <!-- //TODO: Hacer una animacion de cargando -->
     <pre>Cargando...</pre>
 }
 
@@ -33,7 +34,8 @@
         points: questionService.totalPointsLesson(),
         isSecondChance: isSecondChance(),
         isPerfectPoint: isPerfectPoint,
-        isPerfectPointUsingHint: isPerfectPointUsingHint
+        isPerfectPointUsingHint: isPerfectPointUsingHint,
+        isFinishLevel: isFinishChance()
     }"
     (onModalChances)="handleModalEvents($event)"
 />

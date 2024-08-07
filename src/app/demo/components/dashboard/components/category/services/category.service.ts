@@ -1,10 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
-export class CategoryService {
-
-  constructor() { }
-
-}
+export class CategoryService {}
