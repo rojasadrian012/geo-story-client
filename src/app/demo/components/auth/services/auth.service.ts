@@ -27,6 +27,9 @@ export class AuthService {
 
     private setAuthentication(user: User, token: string): boolean {
 
+        if(user.fullName !== localStorage.getItem('currentUserName'))
+            localStorage.clear()
+
         localStorage.setItem('token', token)
         localStorage.setItem('currentUserName', user.fullName)
         this._authStatus.set(AuthStatus.authenticated)

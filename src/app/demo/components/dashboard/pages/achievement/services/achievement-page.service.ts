@@ -120,7 +120,7 @@ export class AchievementPageService {
         return this.http.get<AchievementListResponse>(this.baseUrl);
     }
 
-    saveAchievement(code: string) {
+    saveAchievement(code: AchievementCode) {
         return this.http.post(this.baseUrl + '/save', { code });
     }
 

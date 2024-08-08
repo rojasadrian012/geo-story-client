@@ -26,6 +26,7 @@ import { ModalChances } from '../modal-second-chance/interfaces/modal-data.inter
 import { LevelStatus } from '../../pages/lesson/interfaces/level-status.enum';
 import { SelectedAnswersService } from '../selected-answer/services/selected-answers.service';
 import { CategoryService } from '../category/services/category.service';
+import { AchievementCode, AchievementPageService } from '../../pages/achievement/services/achievement-page.service';
 
 enum pointsQuestion {
     perfectScore = 20,
@@ -69,6 +70,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     public readonly lessonService = inject(LessonService);
     public readonly selectedAnswersService = inject(SelectedAnswersService);
     public readonly categoryService = inject(CategoryService);
+    public readonly achievementService = inject(AchievementPageService);
 
     public isSecondChance = signal(false);
     public isUsedHint = signal(false);
@@ -96,7 +98,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
                 if (
                     this.questionService.totalPointsLesson() >=
-                        pointsQuestion.perfectScoreMinUsingHint &&
+                    pointsQuestion.perfectScoreMinUsingHint &&
                     this.selectedAnswersService.areAllResponsesCorrect()
                 ) {
                     this.isPerfectPointUsingHint = true;
@@ -207,6 +209,19 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
     goToSecondChance(initSecondChance: boolean) {
         if (this.isPerfectPoint || this.isPerfectPointUsingHint) {
+
+            if (this.isPerfectPoint)
+                this.achievementService.saveAchievement(AchievementCode.MAESTRO).subscribe({
+                    next: (res) => console.log(res),
+                    error: (err) => console.error(err)
+                });
+
+            if (this.isPerfectPointUsingHint)
+                this.achievementService.saveAchievement(AchievementCode.PERFECCIONISTA).subscribe({
+                    next: (res) => console.log(res),
+                    error: (err) => console.error(err)
+                });
+
             this.emitAndClearPoints();
             this.selectedAnswersService.clearAllPoints();
             return;
