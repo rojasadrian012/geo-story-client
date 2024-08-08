@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { effect, inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AchievementListResponse } from '../interfaces/achievement-list-response.interface';
-import { SelectedAnswersService } from '../../../components/selected-answer/services/selected-answers.service';
 
 export enum AchievementCode {
     // Respuestas
@@ -35,11 +34,14 @@ export class AchievementPageService {
     baseUrl = `${environment.baseUrl}/quiz/achievements`
 
     private readonly http = inject(HttpClient)
-    verifyNumberResponsesAndSave(number: number) {
 
-        if (number < 10) return
+    public showNewAchievement = signal<boolean>(false)
 
-        if (number === 10) {
+    verifyNumberResponsesAndSave(numberOfResponses: number) {
+
+        if (numberOfResponses < 10 || numberOfResponses > 20) return;
+
+        if (numberOfResponses === 10) {
             this.saveAchievement(AchievementCode.RESPONDER_10).subscribe({
                 next: (res) => console.log('Mostrar Pop up logro 10'),
                 error: (err) => console.error(err),
@@ -47,7 +49,7 @@ export class AchievementPageService {
             return
         }
 
-        if (number === 15) {
+        if (numberOfResponses === 15) {
             this.saveAchievement(AchievementCode.RESPONDER_15).subscribe({
                 next: (res) => console.log('Mostrar Pop up logro 15'),
                 error: (err) => console.error(err),
@@ -55,9 +57,59 @@ export class AchievementPageService {
             return
         }
 
-        if (number === 20) {
+        if (numberOfResponses === 20) {
             this.saveAchievement(AchievementCode.RESPONDER_20).subscribe({
                 next: (res) => console.log('Mostrar Pop up logro 20'),
+                error: (err) => console.error(err),
+            })
+            return
+        }
+    }
+
+    verifyStreakAndSave(numberOfStreaks: number) {
+
+        if (numberOfStreaks < 5 || numberOfStreaks > 10) return
+
+        if (numberOfStreaks === 5) {
+            this.saveAchievement(AchievementCode.RACHA_5).subscribe({
+                next: (res) => console.log('Setear Un signal para el logro: ', AchievementCode.RACHA_5),
+                error: (err) => console.error(err),
+            })
+            return
+        }
+
+        if (numberOfStreaks === 10) {
+            this.saveAchievement(AchievementCode.RACHA_10).subscribe({
+                next: (res) => console.log('Setear Un signal para el logro: ', AchievementCode.RACHA_10),
+                error: (err) => console.error(err),
+            })
+            return
+        }
+    }
+
+    verifyCorrectsAndSave(numberOfCorrects: number) {
+
+        if (numberOfCorrects < 5 || numberOfCorrects > 15) return
+
+        if (numberOfCorrects === 5) {
+            this.saveAchievement(AchievementCode.PRECISION_5).subscribe({
+                next: (res) => console.log('Setear Un signal para el logro: ', AchievementCode.PRECISION_5),
+                error: (err) => console.error(err),
+            })
+            return
+        }
+
+        if (numberOfCorrects === 10) {
+            this.saveAchievement(AchievementCode.PRECISION_10).subscribe({
+                next: (res) => console.log('Setear Un signal para el logro: ', AchievementCode.PRECISION_10),
+                error: (err) => console.error(err),
+            })
+            return
+        }
+
+        if (numberOfCorrects === 15) {
+            this.saveAchievement(AchievementCode.PRECISION_15).subscribe({
+                next: (res) => console.log('Setear Un signal para el logro: ', AchievementCode.PRECISION_15),
                 error: (err) => console.error(err),
             })
             return

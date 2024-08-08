@@ -14,19 +14,28 @@ export class SelectedAnswersService {
     private readonly achievementService = inject(AchievementPageService);
 
     public setedValue = signal<boolean>(false);
-    public streakOfCorrectQuestions = signal<number>(0);
+    public streakOfCorrectQuestions = signal<number>(+localStorage.getItem('streak') || 0);
     public numberResponses = signal<number>(+localStorage.getItem('numberResponses') || 0);
+    public numberCorrectsResponses = signal<number>(+localStorage.getItem('numberCorrects') || 0);
 
     addResponseInMap(answerId: string, isCorrect: boolean): void {
 
         this.numberResponses.update((value) => (value + 1));
         localStorage.setItem('numberResponses', this.numberResponses().toString());
-
         this.achievementService.verifyNumberResponsesAndSave(this.numberResponses())
 
-        isCorrect ?
-            this.streakOfCorrectQuestions.update((value) => (value + 1)) :
-            this.streakOfCorrectQuestions.set(0);
+        if (isCorrect) {
+            this.numberCorrectsResponses.update((value) => (value + 1))
+            localStorage.setItem('numberCorrects', this.numberCorrectsResponses().toString());
+            this.achievementService.verifyCorrectsAndSave(this.numberCorrectsResponses())
+
+            this.streakOfCorrectQuestions.update((value) => (value + 1))
+            localStorage.setItem('streak', this.streakOfCorrectQuestions().toString());
+            this.achievementService.verifyStreakAndSave(this.streakOfCorrectQuestions())
+        } else {
+            this.streakOfCorrectQuestions.set(0)
+            localStorage.setItem('streak', this.streakOfCorrectQuestions().toString());
+        }
 
         this.responsesTheUser().set(answerId, isCorrect);
         this.setedValue.set(true);
