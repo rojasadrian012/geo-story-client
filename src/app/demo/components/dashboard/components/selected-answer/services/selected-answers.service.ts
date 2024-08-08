@@ -1,5 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { AchievementPageService } from '../../../pages/achievement/services/achievement-page.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,14 +11,22 @@ export class SelectedAnswersService {
         new Map<string, boolean>()
     );
 
+    private readonly achievementService = inject(AchievementPageService);
+
     public setedValue = signal<boolean>(false);
     public streakOfCorrectQuestions = signal<number>(0);
-    public numberOfTimesResponsed = signal<number>(0);
+    public numberResponses = signal<number>(+localStorage.getItem('numberResponses') || 0);
 
     addResponseInMap(answerId: string, isCorrect: boolean): void {
 
-        this.numberOfTimesResponsed.update((value) => (value + 1));
-        isCorrect ? this.streakOfCorrectQuestions.update((value) => (value + 1)) : this.streakOfCorrectQuestions.set(0);
+        this.numberResponses.update((value) => (value + 1));
+        localStorage.setItem('numberResponses', this.numberResponses().toString());
+
+        this.achievementService.verifyNumberResponsesAndSave(this.numberResponses())
+
+        isCorrect ?
+            this.streakOfCorrectQuestions.update((value) => (value + 1)) :
+            this.streakOfCorrectQuestions.set(0);
 
         this.responsesTheUser().set(answerId, isCorrect);
         this.setedValue.set(true);

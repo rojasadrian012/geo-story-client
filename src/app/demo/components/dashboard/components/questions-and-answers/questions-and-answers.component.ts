@@ -121,8 +121,6 @@ export class QuestionsAndAnswersComponent implements OnChanges {
         });
     }
 
-    private effectNumberOfQuestionResponded = effect(() => {});
-
     ngOnChanges(changes: SimpleChanges) {
         if (changes['questionsAndAnswers']) {
             this.initializeMap();
