@@ -14,12 +14,15 @@ import { QuizStatusService } from '../../services/quizStatus.service';
 import { QuestionService } from '../../services/question.service';
 import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
 import { QuestionsAndAnswersComponent } from '../../components/questions-and-answers/questions-and-answers.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { LessonService } from './services/lesson.service';
 import { AchievementPopUpComponent } from '../../components/achievement-pop-up/achievement-pop-up.component';
-import { AchievementPageService } from '../achievement/services/achievement-page.service';
 import { PopUpService } from '../../components/achievement-pop-up/services/pop-up.service';
+import { CanDeactivateType } from '../../../auth/guards/change-path.guard';
+import { CategoryService } from '../../components/category/services/category.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-lesson',
@@ -34,7 +37,9 @@ import { PopUpService } from '../../components/achievement-pop-up/services/pop-u
         ToastModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [MessageService],
+    providers: [
+        MessageService,
+    ],
 })
 export class LessonComponent {
     private readonly route = inject(ActivatedRoute);
@@ -43,8 +48,9 @@ export class LessonComponent {
     private readonly questionService = inject(QuestionService);
     private readonly lessonService = inject(LessonService);
     private readonly routerService = inject(Router);
-    public popUpService = inject(PopUpService);
-
+    public readonly popUpService = inject(PopUpService);
+    private readonly categoryService = inject(CategoryService);
+    private readonly messageService = inject(MessageService);
 
     userQuizId = signal<string>('noId012');
     questions = signal<QuestionListResponse[]>([]);
@@ -62,6 +68,7 @@ export class LessonComponent {
             this.userQuizId.set(params.get('id'));
             this.getQuestions(this.userQuizId());
         });
+        this.categoryService.enableRouteChange = false;
     }
 
     getQuestions(id: string) {
@@ -98,5 +105,18 @@ export class LessonComponent {
                     console.error('Error al guardar los puntos:', error);
                 },
             });
+    }
+
+    canDeactivate(): CanDeactivateType {
+        if (this.categoryService.enableRouteChange) {
+            return true;
+        }
+
+        this.messageService.add({
+            severity: 'warn',
+            summary: 'Aviso',
+            detail: 'Completa la lección antes de salir.',
+        })
+        return false
     }
 }

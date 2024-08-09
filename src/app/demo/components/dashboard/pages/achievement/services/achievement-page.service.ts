@@ -41,8 +41,6 @@ export class AchievementPageService {
     }
 
     verifyStreakAndSave(numberOfStreaks: number) {
-        console.log(numberOfStreaks);
-
         if (numberOfStreaks < 3 || numberOfStreaks > 9) return
 
         if (numberOfStreaks === 3) {

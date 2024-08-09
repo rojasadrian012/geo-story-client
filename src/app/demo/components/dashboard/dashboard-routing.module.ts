@@ -7,6 +7,7 @@ import { RankingComponent } from './pages/ranking/ranking.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { ArcheivementComponent } from './pages/achievement/achievement.component';
+import { changePathGuard } from '../auth/guards/change-path.guard';
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import { ArcheivementComponent } from './pages/achievement/achievement.component
             {
                 path: 'lesson/:level/:id',
                 canActivate: [isAuthenticatedGuard],
+                canDeactivate: [changePathGuard],
                 component: LessonComponent,
             },
             {
@@ -45,4 +47,4 @@ import { ArcheivementComponent } from './pages/achievement/achievement.component
     ],
     exports: [RouterModule],
 })
-export class DashboardsRoutingModule {}
+export class DashboardsRoutingModule { }

@@ -94,6 +94,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
                 ) {
                     this.isPerfectPoint = true;
                     this.showModal = true;
+                    this.categoryService.enableRouteChange = true
                     return;
                 }
 
@@ -104,6 +105,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
                 ) {
                     this.isPerfectPointUsingHint = true;
                     this.showModal = true;
+                    this.categoryService.enableRouteChange = true
                     return;
                 }
 
@@ -120,6 +122,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
                 }
 
                 this.showModal = true;
+                this.categoryService.enableRouteChange = true
             }
         });
     }
@@ -233,6 +236,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             this.incorrectsQuestionsMap()
         );
         this.showModal = false;
+        this.categoryService.enableRouteChange = false
         this.onIncorrectsCuestions.emit(this.incorrectsQuestionsMap());
         return;
     }
