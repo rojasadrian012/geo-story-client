@@ -2,7 +2,7 @@
     width: 100%;
     height: auto;
     display: flex;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
     position: fixed;
     bottom: 7rem; /* Posiciona el popup en la parte inferior */
@@ -19,12 +19,22 @@
 }
 
 .content {
-    margin-right: 25%;
-    width: 30%;
+    width: 100%;
     max-width: 500px; /* Limita el ancho del contenido */
     background-color: white;
     padding: 0.5rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 10px gold;
     border-radius: 10px;
     text-align: center;
 }
+
+@media (max-width: 768px) {
+    .content {
+        width: 70%;
+    }
+
+    .popup{
+        bottom: 10rem
+    }
+}
+

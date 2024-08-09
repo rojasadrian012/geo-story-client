@@ -2,81 +2,90 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Achievement, AchievementListResponse } from '../interfaces/achievement-list-response.interface';
+import {
+    Achievement,
+    AchievementListResponse,
+} from '../interfaces/achievement-list-response.interface';
 import { PopUpService } from '../../../components/achievement-pop-up/services/pop-up.service';
 import { AchievementCode } from '../interfaces/achievement-code.enum';
 
-
-
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AchievementPageService {
+    baseUrl = `${environment.baseUrl}/quiz/achievements`;
 
-    baseUrl = `${environment.baseUrl}/quiz/achievements`
+    private readonly http = inject(HttpClient);
+    private readonly popUpService = inject(PopUpService);
 
-    private readonly http = inject(HttpClient)
-    private readonly popUpService = inject(PopUpService)
-
-    public showNewAchievement = signal<boolean>(false)
+    public showNewAchievement = signal<boolean>(false);
 
     verifyNumberResponsesAndSave(numberOfResponses: number) {
-
         if (numberOfResponses < 10 || numberOfResponses > 20) return;
 
         if (numberOfResponses === 10) {
-            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RESPONDER_10)
-            return
+            this.saveAchievementAlreadyUseSubscribe(
+                AchievementCode.RESPONDER_10
+            );
+            return;
         }
 
         if (numberOfResponses === 15) {
-            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RESPONDER_15)
-            return
+            this.saveAchievementAlreadyUseSubscribe(
+                AchievementCode.RESPONDER_15
+            );
+            return;
         }
 
         if (numberOfResponses === 20) {
-            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RESPONDER_20)
-            return
+            this.saveAchievementAlreadyUseSubscribe(
+                AchievementCode.RESPONDER_20
+            );
+            return;
         }
     }
 
     verifyStreakAndSave(numberOfStreaks: number) {
-        if (numberOfStreaks < 3 || numberOfStreaks > 9) return
+        if (numberOfStreaks < 3 || numberOfStreaks > 9) return;
 
         if (numberOfStreaks === 3) {
-            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_3)
-            return
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_3);
+            return;
         }
 
         if (numberOfStreaks === 6) {
-            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_6)
-            return
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_6);
+            return;
         }
 
-
         if (numberOfStreaks === 9) {
-            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_9)
-            return
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_9);
+            return;
         }
     }
 
     verifyCorrectsAndSave(numberOfCorrects: number) {
-
-        if (numberOfCorrects < 5 || numberOfCorrects > 15) return
+        if (numberOfCorrects < 5 || numberOfCorrects > 15) return;
 
         if (numberOfCorrects === 5) {
-            this.saveAchievementAlreadyUseSubscribe(AchievementCode.PRECISION_5)
-            return
+            this.saveAchievementAlreadyUseSubscribe(
+                AchievementCode.PRECISION_5
+            );
+            return;
         }
 
         if (numberOfCorrects === 10) {
-            this.saveAchievementAlreadyUseSubscribe(AchievementCode.PRECISION_10)
-            return
+            this.saveAchievementAlreadyUseSubscribe(
+                AchievementCode.PRECISION_10
+            );
+            return;
         }
 
         if (numberOfCorrects === 15) {
-            this.saveAchievementAlreadyUseSubscribe((AchievementCode.PRECISION_15))
-            return
+            this.saveAchievementAlreadyUseSubscribe(
+                AchievementCode.PRECISION_15
+            );
+            return;
         }
     }
 
@@ -91,22 +100,24 @@ export class AchievementPageService {
     saveAchievementAlreadyUseSubscribe(code: AchievementCode) {
         this.saveAchievement(code).subscribe({
             next: (res) => {
-                this.handleResponse(res.name, res.description)
+                this.handleResponse(res.name, res.description);
             },
             error: (err) => console.log(err),
-        })
+        });
     }
 
     showAchievementAndReset() {
-        this.popUpService.showNewAchievement.set(true)
+        this.popUpService.showNewAchievement.set(true);
         setTimeout(() => {
-            this.popUpService.showNewAchievement.set(false)
-        }, 3000)
+            this.popUpService.showNewAchievement.set(false);
+        }, 3000);
     }
 
-    handleResponse(namaAchievement: string, descriptionAchievement) {
-        this.popUpService.text.set(namaAchievement + ' ' + descriptionAchievement)
-        this.showAchievementAndReset()
+    handleResponse(nameAchievement: string, descriptionAchievement) {
+        this.popUpService.text.update(() => ({
+            title: nameAchievement,
+            description: descriptionAchievement,
+        }));
+        this.showAchievementAndReset();
     }
-
 }

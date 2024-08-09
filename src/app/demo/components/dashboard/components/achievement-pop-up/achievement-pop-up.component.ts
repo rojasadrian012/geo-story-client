@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgIf } from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
 import { style } from '@angular/animations';
 import { PopUpService } from "./services/pop-up.service";
@@ -7,7 +7,7 @@ import { PopUpService } from "./services/pop-up.service";
     selector: 'app-achievement-pop-up',
     standalone: true,
     imports: [
-        CommonModule,
+        NgIf,
     ],
     templateUrl: './achievement-pop-up.component.html',
     styleUrl: './achievement-pop-up.component.scss',
