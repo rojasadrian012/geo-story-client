@@ -17,6 +17,9 @@ import { QuestionsAndAnswersComponent } from '../../components/questions-and-ans
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { LessonService } from './services/lesson.service';
+import { AchievementPopUpComponent } from '../../components/achievement-pop-up/achievement-pop-up.component';
+import { AchievementPageService } from '../achievement/services/achievement-page.service';
+import { PopUpService } from '../../components/achievement-pop-up/services/pop-up.service';
 
 @Component({
     selector: 'app-lesson',
@@ -26,6 +29,8 @@ import { LessonService } from './services/lesson.service';
     imports: [
         GeoCenterContainerComponent,
         QuestionsAndAnswersComponent,
+        AchievementPopUpComponent,
+
         ToastModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,6 +43,8 @@ export class LessonComponent {
     private readonly questionService = inject(QuestionService);
     private readonly lessonService = inject(LessonService);
     private readonly routerService = inject(Router);
+    public popUpService = inject(PopUpService);
+
 
     userQuizId = signal<string>('noId012');
     questions = signal<QuestionListResponse[]>([]);

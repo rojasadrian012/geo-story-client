@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AchievementListResponse } from '../interfaces/achievement-list-response.interface';
+import { Achievement, AchievementListResponse } from '../interfaces/achievement-list-response.interface';
+import { PopUpService } from '../../../components/achievement-pop-up/services/pop-up.service';
 
 export enum AchievementCode {
     // Respuestas
@@ -34,6 +35,7 @@ export class AchievementPageService {
     baseUrl = `${environment.baseUrl}/quiz/achievements`
 
     private readonly http = inject(HttpClient)
+    private readonly popUpService = inject(PopUpService)
 
     public showNewAchievement = signal<boolean>(false)
 
@@ -42,26 +44,17 @@ export class AchievementPageService {
         if (numberOfResponses < 10 || numberOfResponses > 20) return;
 
         if (numberOfResponses === 10) {
-            this.saveAchievement(AchievementCode.RESPONDER_10).subscribe({
-                next: (res) => console.log('Mostrar Pop up logro 10'),
-                error: (err) => console.error(err),
-            })
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RESPONDER_10)
             return
         }
 
         if (numberOfResponses === 15) {
-            this.saveAchievement(AchievementCode.RESPONDER_15).subscribe({
-                next: (res) => console.log('Mostrar Pop up logro 15'),
-                error: (err) => console.error(err),
-            })
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RESPONDER_15)
             return
         }
 
         if (numberOfResponses === 20) {
-            this.saveAchievement(AchievementCode.RESPONDER_20).subscribe({
-                next: (res) => console.log('Mostrar Pop up logro 20'),
-                error: (err) => console.error(err),
-            })
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RESPONDER_20)
             return
         }
     }
@@ -71,18 +64,12 @@ export class AchievementPageService {
         if (numberOfStreaks < 5 || numberOfStreaks > 10) return
 
         if (numberOfStreaks === 5) {
-            this.saveAchievement(AchievementCode.RACHA_5).subscribe({
-                next: (res) => console.log('Setear Un signal para el logro: ', AchievementCode.RACHA_5),
-                error: (err) => console.error(err),
-            })
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_5)
             return
         }
 
         if (numberOfStreaks === 10) {
-            this.saveAchievement(AchievementCode.RACHA_10).subscribe({
-                next: (res) => console.log('Setear Un signal para el logro: ', AchievementCode.RACHA_10),
-                error: (err) => console.error(err),
-            })
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_10)
             return
         }
     }
@@ -92,26 +79,17 @@ export class AchievementPageService {
         if (numberOfCorrects < 5 || numberOfCorrects > 15) return
 
         if (numberOfCorrects === 5) {
-            this.saveAchievement(AchievementCode.PRECISION_5).subscribe({
-                next: (res) => console.log('Setear Un signal para el logro: ', AchievementCode.PRECISION_5),
-                error: (err) => console.error(err),
-            })
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.PRECISION_5)
             return
         }
 
         if (numberOfCorrects === 10) {
-            this.saveAchievement(AchievementCode.PRECISION_10).subscribe({
-                next: (res) => console.log('Setear Un signal para el logro: ', AchievementCode.PRECISION_10),
-                error: (err) => console.error(err),
-            })
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.PRECISION_10)
             return
         }
 
         if (numberOfCorrects === 15) {
-            this.saveAchievement(AchievementCode.PRECISION_15).subscribe({
-                next: (res) => console.log('Setear Un signal para el logro: ', AchievementCode.PRECISION_15),
-                error: (err) => console.error(err),
-            })
+            this.saveAchievementAlreadyUseSubscribe((AchievementCode.PRECISION_15))
             return
         }
     }
@@ -120,8 +98,29 @@ export class AchievementPageService {
         return this.http.get<AchievementListResponse>(this.baseUrl);
     }
 
-    saveAchievement(code: AchievementCode) {
-        return this.http.post(this.baseUrl + '/save', { code });
+    saveAchievement(code: AchievementCode): Observable<Achievement> {
+        return this.http.post<Achievement>(this.baseUrl + '/save', { code });
+    }
+
+    saveAchievementAlreadyUseSubscribe(code: AchievementCode) {
+        this.saveAchievement(code).subscribe({
+            next: (res) => {
+                this.handleResponse(res.name, res.description)
+            },
+            error: (err) => console.error(err),
+        })
+    }
+
+    showAchievementAndReset() {
+        this.popUpService.showNewAchievement.set(true)
+        setTimeout(() => {
+            this.popUpService.showNewAchievement.set(false)
+        }, 3000)
+    }
+
+    handleResponse(namaAchievement: string, descriptionAchievement) {
+        this.popUpService.text.set(namaAchievement + ' ' + descriptionAchievement)
+        this.showAchievementAndReset()
     }
 
 }

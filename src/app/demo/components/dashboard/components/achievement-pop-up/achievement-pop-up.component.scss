@@ -1,0 +1,29 @@
+.popup {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 6rem; /* Posiciona el popup en la parte inferior */
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Asegúrate de que el popup esté por encima de otros elementos */
+    opacity: 1;
+    transition: opacity 0.5s, transform 0.5s; /* Transición suave para mostrar/ocultar */
+    transform: translateY(100%); /* Oculta el popup inicialmente */
+}
+
+.popup.show {
+    transform: translateY(0); /* Muestra el popup */
+}
+
+.content {
+    width: 30%;
+    max-width: 500px; /* Limita el ancho del contenido */
+    background-color: white;
+    padding: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    text-align: center;
+}

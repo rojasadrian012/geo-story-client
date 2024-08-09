@@ -9,6 +9,7 @@ export interface Achievement {
     name:        string;
     description: string;
     image:       string;
+    code:        string;
 }
 
 export interface AchievementListResponse {

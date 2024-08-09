@@ -1,0 +1,6 @@
+<div *ngIf="showNewAchievement()" class="popup">
+    <div class="content">
+        <h4 class="mb-0">🏆 ¡Logro Desbloqueado!</h4>
+        <p>{{ popUpService.text() ? popUpService.text() : 'Logro por defecto.'}}</p>
+    </div>
+</div>

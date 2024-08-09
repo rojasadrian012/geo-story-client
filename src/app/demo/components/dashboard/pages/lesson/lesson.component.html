@@ -8,17 +8,19 @@
 
     <div class="mt-2">
         <p-toast
-            [breakpoints]="{
-                '920px': { width: '100%', right: '0', left: '0' }
-            }"
-            [life]="1500"
+        [breakpoints]="{
+            '920px': { width: '100%', right: '0', left: '0' }
+        }"
+        [life]="1500"
         ></p-toast>
 
         <app-questions-and-answers
-            [questionsAndAnswers]="questions()"
-            (onIncorrectsCuestions)="addNewValues($event)"
-            (onPointsWinned)="savePointsWinned($event)"
+        [questionsAndAnswers]="questions()"
+        (onIncorrectsCuestions)="addNewValues($event)"
+        (onPointsWinned)="savePointsWinned($event)"
         ></app-questions-and-answers>
     </div>
+
+    <app-achievement-pop-up [showNewAchievement]="popUpService.showNewAchievement()"/>
 
 </app-geo-center-container>
