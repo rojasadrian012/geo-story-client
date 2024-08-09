@@ -26,7 +26,8 @@ import { ModalChances } from '../modal-second-chance/interfaces/modal-data.inter
 import { LevelStatus } from '../../pages/lesson/interfaces/level-status.enum';
 import { SelectedAnswersService } from '../selected-answer/services/selected-answers.service';
 import { CategoryService } from '../category/services/category.service';
-import { AchievementCode, AchievementPageService } from '../../pages/achievement/services/achievement-page.service';
+import { AchievementPageService } from '../../pages/achievement/services/achievement-page.service';
+import { AchievementCode } from '../../pages/achievement/interfaces/achievement-code.enum';
 
 enum pointsQuestion {
     perfectScore = 20,
