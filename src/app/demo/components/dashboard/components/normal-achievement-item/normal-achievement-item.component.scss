@@ -4,7 +4,7 @@
     text-align: center;
     transition: transform 0.3s, filter 0.3s;
     position: relative;
-    padding: 0 2rem 2rem 2rem;
+    padding: 0 2rem 4rem 2rem;
     width: 100%;
 }
 
@@ -33,8 +33,8 @@
     border-radius: 0.5rem;
     border: 0.35rem solid var(--surface-500);
     position: relative;
-    width: 330px; /* Tamaño fijo */
-    height: 330px; /* Tamaño fijo */
+    width: 20rem;
+    height: 20rem;
 }
 
 .achievement-image {
