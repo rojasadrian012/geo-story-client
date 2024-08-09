@@ -32,7 +32,7 @@ import { NormalAchievementItemComponent } from '../../components/normal-achievem
             display: grid;
             grid-template-columns: 1fr;
             // gap: 3rem;
-            margin: 3rem 0;
+            margin: 1rem 0;
             padding:0;
         }
 

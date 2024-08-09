@@ -1,4 +1,4 @@
-import { CommonModule, NgIf } from "@angular/common";
+import { CommonModule, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
@@ -8,14 +8,15 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     template: `
         <div class="div-container card">
             <main class="main-content">
-                    <div class="col-12 lg:col-12 xl:col-12">
-                        @if (title()) {
-                            <h2 class="font-bold text-color-secondary">{{title()}}</h2>
-                        }
-                        
-                        <ng-content></ng-content>
+                <div class="col-12 lg:col-12 xl:col-12 none-padding">
+                    @if (title()) {
+                    <h2 class="font-bold text-color-secondary">
+                        {{ title() }}
+                    </h2>
+                    }
 
-                    </div>
+                    <ng-content></ng-content>
+                </div>
             </main>
         </div>
     `,
@@ -39,31 +40,26 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
             min-width: 0;
             padding-left: 1.5rem;
             padding-right: 1.5rem;
-            // padding-top: 1.5rem;
             margin: auto;
-            // margin-bottom: 6rem;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            // color: rgb(255, 255, 255);
         }
 
-        @media (min-width: 768px) {
+        @media (max-width: 640px) {
             .main-content {
-                padding-left: 0.75rem;
-                padding-right: 0.75rem;
+                padding:0
             }
+
+            .none-padding{
+                padding:0
+            }
+
         }
 
-        @media (min-width: 1024px) {
-            .main-content {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
-        }
 
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GeoCenterContainerComponent { 
-    public title = input<string>('')
+export class GeoCenterContainerComponent {
+    public title = input<string>('');
 }

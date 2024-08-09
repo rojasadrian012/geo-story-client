@@ -58,6 +58,15 @@ enum pointsQuestion {
             padding: 1rem 2rem;
             margin-bottom: 2rem;
         }
+
+        @media (max-width: 640px) {
+            .question-container {
+                padding: 0.5rem 0.5rem 0.5rem 1rem;
+                margin:1rem
+            }
+
+        }
+
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -94,18 +103,18 @@ export class QuestionsAndAnswersComponent implements OnChanges {
                 ) {
                     this.isPerfectPoint = true;
                     this.showModal = true;
-                    this.categoryService.enableRouteChange = true
+                    this.categoryService.enableRouteChange = true;
                     return;
                 }
 
                 if (
                     this.questionService.totalPointsLesson() >=
-                    pointsQuestion.perfectScoreMinUsingHint &&
+                        pointsQuestion.perfectScoreMinUsingHint &&
                     this.selectedAnswersService.areAllResponsesCorrect()
                 ) {
                     this.isPerfectPointUsingHint = true;
                     this.showModal = true;
-                    this.categoryService.enableRouteChange = true
+                    this.categoryService.enableRouteChange = true;
                     return;
                 }
 
@@ -122,7 +131,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
                 }
 
                 this.showModal = true;
-                this.categoryService.enableRouteChange = true
+                this.categoryService.enableRouteChange = true;
             }
         });
     }
@@ -208,35 +217,53 @@ export class QuestionsAndAnswersComponent implements OnChanges {
     }
 
     messagePoindClaimed(points: number) {
-        this.showMessage('success', '¡Ganaste!', points > 1 ? `${points} puntos.` : `${points} punto.`);
+        this.showMessage(
+            'success',
+            '¡Ganaste!',
+            points > 1 ? `${points} puntos.` : `${points} punto.`
+        );
     }
 
     goToSecondChance(initSecondChance: boolean) {
         if (this.isPerfectPoint || this.isPerfectPointUsingHint) {
-
             if (this.isPerfectPoint)
-                this.achievementService.saveAchievement(AchievementCode.MAESTRO).subscribe({
-                    next: (res) => console.log('perfect point, CODE:' + AchievementCode.MAESTRO),
-                    error: (err) => {
-                        if (err.status === 409) {
-                            console.log('Conflict: User already has this achievement.');
-                        } else {
-                            console.error(err);
-                        }
-                    }
-                });
+                this.achievementService
+                    .saveAchievement(AchievementCode.MAESTRO)
+                    .subscribe({
+                        next: (res) =>
+                            console.log(
+                                'perfect point, CODE:' + AchievementCode.MAESTRO
+                            ),
+                        error: (err) => {
+                            if (err.status === 409) {
+                                console.log(
+                                    'Conflict: User already has this achievement.'
+                                );
+                            } else {
+                                console.error(err);
+                            }
+                        },
+                    });
 
             if (this.isPerfectPointUsingHint)
-                this.achievementService.saveAchievement(AchievementCode.PERFECCIONISTA).subscribe({
-                    next: (res) => console.log('perfect point hint, CODE:' + AchievementCode.PERFECCIONISTA),
-                    error: (err) => {
-                        if (err.status === 409) {
-                            console.log('Conflict: User already has this achievement.');
-                        } else {
-                            console.error(err);
-                        }
-                    }
-                });
+                this.achievementService
+                    .saveAchievement(AchievementCode.PERFECCIONISTA)
+                    .subscribe({
+                        next: (res) =>
+                            console.log(
+                                'perfect point hint, CODE:' +
+                                    AchievementCode.PERFECCIONISTA
+                            ),
+                        error: (err) => {
+                            if (err.status === 409) {
+                                console.log(
+                                    'Conflict: User already has this achievement.'
+                                );
+                            } else {
+                                console.error(err);
+                            }
+                        },
+                    });
 
             this.emitAndClearPoints();
             this.selectedAnswersService.clearAllPoints();
@@ -248,7 +275,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             this.incorrectsQuestionsMap()
         );
         this.showModal = false;
-        this.categoryService.enableRouteChange = false
+        this.categoryService.enableRouteChange = false;
         this.onIncorrectsCuestions.emit(this.incorrectsQuestionsMap());
         return;
     }
@@ -263,7 +290,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             this.goToSecondChance(event.secondChange);
         }
         if (event.fishSecondChange) {
-            this.categoryService.enableRouteChange = true
+            this.categoryService.enableRouteChange = true;
             this.selectedAnswersService.clearAllPoints();
             this.emitAndClearPoints();
         }

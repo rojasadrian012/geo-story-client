@@ -6,9 +6,26 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     standalone: true,
     imports: [],
     template: `
-        <h3 class="text-2xl text-primary mt-0 mb-4 font-bold">
+        <h3 class="title">
             {{ title() }}
         </h3>
+    `,
+    styles:`
+
+        .title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-top: 0;
+            font-weight: 700;
+        }
+
+       @media (max-width: 768px) {
+            .title {
+                font-size: 1.5rem;
+                font-weight: 400;
+            }
+        }
+
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
