@@ -4,28 +4,9 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Achievement, AchievementListResponse } from '../interfaces/achievement-list-response.interface';
 import { PopUpService } from '../../../components/achievement-pop-up/services/pop-up.service';
+import { AchievementCode } from '../interfaces/achievement-code.enum';
 
-export enum AchievementCode {
-    // Respuestas
-    RESPONDER_10 = 'RESPONDER_10',
-    RESPONDER_15 = 'RESPONDER_15',
-    RESPONDER_20 = 'RESPONDER_20',
 
-    // Racha
-    RACHA_5 = 'RACHA_5',
-    RACHA_10 = 'RACHA_10',
-
-    // Precisión
-    PRECISION_5 = 'PRECISION_5',
-    PRECISION_10 = 'PRECISION_10',
-    PRECISION_15 = 'PRECISION_15',
-
-    // Otros
-    PERFECCIONISTA = 'PERFECCIONISTA',
-    MAESTRO = 'MAESTRO',
-    EXPLORADOR = 'EXPLORADOR',
-    COLECCIONISTA = 'COLECCIONISTA',
-}
 
 @Injectable({
     providedIn: 'root'
@@ -60,16 +41,23 @@ export class AchievementPageService {
     }
 
     verifyStreakAndSave(numberOfStreaks: number) {
+        console.log(numberOfStreaks);
 
-        if (numberOfStreaks < 5 || numberOfStreaks > 10) return
+        if (numberOfStreaks < 3 || numberOfStreaks > 9) return
 
-        if (numberOfStreaks === 5) {
-            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_5)
+        if (numberOfStreaks === 3) {
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_3)
             return
         }
 
-        if (numberOfStreaks === 10) {
-            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_10)
+        if (numberOfStreaks === 6) {
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_6)
+            return
+        }
+
+
+        if (numberOfStreaks === 9) {
+            this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_9)
             return
         }
     }
