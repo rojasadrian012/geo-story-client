@@ -2,7 +2,7 @@
     width: 100%;
     height: auto;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     position: fixed;
     bottom: 7rem; /* Posiciona el popup en la parte inferior */
@@ -19,6 +19,7 @@
 }
 
 .content {
+    margin-right: 25%;
     width: 30%;
     max-width: 500px; /* Limita el ancho del contenido */
     background-color: white;
