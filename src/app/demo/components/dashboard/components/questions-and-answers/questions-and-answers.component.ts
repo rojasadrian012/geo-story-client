@@ -216,14 +216,26 @@ export class QuestionsAndAnswersComponent implements OnChanges {
 
             if (this.isPerfectPoint)
                 this.achievementService.saveAchievement(AchievementCode.MAESTRO).subscribe({
-                    next: (res) => console.log(res),
-                    error: (err) => console.error(err)
+                    next: (res) => console.log('perfect point, CODE:' + AchievementCode.MAESTRO),
+                    error: (err) => {
+                        if (err.status === 409) {
+                            console.log('Conflict: User already has this achievement.');
+                        } else {
+                            console.error(err);
+                        }
+                    }
                 });
 
             if (this.isPerfectPointUsingHint)
                 this.achievementService.saveAchievement(AchievementCode.PERFECCIONISTA).subscribe({
-                    next: (res) => console.log(res),
-                    error: (err) => console.error(err)
+                    next: (res) => console.log('perfect point hint, CODE:' + AchievementCode.PERFECCIONISTA),
+                    error: (err) => {
+                        if (err.status === 409) {
+                            console.log('Conflict: User already has this achievement.');
+                        } else {
+                            console.error(err);
+                        }
+                    }
                 });
 
             this.emitAndClearPoints();
@@ -251,6 +263,7 @@ export class QuestionsAndAnswersComponent implements OnChanges {
             this.goToSecondChance(event.secondChange);
         }
         if (event.fishSecondChange) {
+            this.categoryService.enableRouteChange = true
             this.selectedAnswersService.clearAllPoints();
             this.emitAndClearPoints();
         }

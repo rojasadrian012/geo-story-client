@@ -93,7 +93,7 @@ export class AchievementPageService {
             next: (res) => {
                 this.handleResponse(res.name, res.description)
             },
-            error: (err) => console.error(err),
+            error: (err) => console.log(err),
         })
     }
 
