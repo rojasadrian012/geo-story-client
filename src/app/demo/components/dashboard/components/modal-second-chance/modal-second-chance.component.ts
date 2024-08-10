@@ -64,9 +64,9 @@ export class ModalSecondChanceComponent implements OnChanges {
     public readonly lessonService = inject(LessonService);
 
     public titleModal = signal<string>(
-        'No es un buen trabajo Estefy'
+        '¡Vaya! Te has equivocado en algunas de las preguntas'
     );
-    public buttonText = signal<string>('NDOIKOI VERA');
+    public buttonText = signal<string>('¡Iniciemos una segunda oportunidad!');
     public options: AnimationOptions = {
         path: '/assets/images/animations/dos.json',
     };
