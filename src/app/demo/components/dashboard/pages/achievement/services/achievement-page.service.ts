@@ -32,7 +32,6 @@ export class AchievementPageService {
         }
 
         if (numberOfResponses === 15) {
-            localStorage.setItem('swResponder', 'true');
             this.saveAchievementAlreadyUseSubscribe(
                 AchievementCode.RESPONDER_15
             );
@@ -40,6 +39,7 @@ export class AchievementPageService {
         }
 
         if (numberOfResponses === 20) {
+            localStorage.setItem('swResponder', 'true');
             this.saveAchievementAlreadyUseSubscribe(
                 AchievementCode.RESPONDER_20
             );
