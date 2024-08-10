@@ -21,6 +21,7 @@ export class AchievementPageService {
     public showNewAchievement = signal<boolean>(false);
 
     verifyNumberResponsesAndSave(numberOfResponses: number) {
+        if(localStorage.getItem('swResponder') === 'true') return;
         if (numberOfResponses < 10 || numberOfResponses > 20) return;
 
         if (numberOfResponses === 10) {
@@ -31,6 +32,7 @@ export class AchievementPageService {
         }
 
         if (numberOfResponses === 15) {
+            localStorage.setItem('swResponder', 'true');
             this.saveAchievementAlreadyUseSubscribe(
                 AchievementCode.RESPONDER_15
             );
@@ -46,6 +48,8 @@ export class AchievementPageService {
     }
 
     verifyStreakAndSave(numberOfStreaks: number) {
+        if(localStorage.getItem('swStreak') === 'true') return;
+
         if (numberOfStreaks < 3 || numberOfStreaks > 9) return;
 
         if (numberOfStreaks === 3) {
@@ -60,11 +64,13 @@ export class AchievementPageService {
 
         if (numberOfStreaks === 9) {
             this.saveAchievementAlreadyUseSubscribe(AchievementCode.RACHA_9);
+            localStorage.setItem('swStreak', 'true');
             return;
         }
     }
 
     verifyCorrectsAndSave(numberOfCorrects: number) {
+        if(localStorage.getItem('swPrecision') === 'true') return;
         if (numberOfCorrects < 5 || numberOfCorrects > 15) return;
 
         if (numberOfCorrects === 5) {
@@ -82,6 +88,7 @@ export class AchievementPageService {
         }
 
         if (numberOfCorrects === 15) {
+            localStorage.setItem('swPrecision', 'true');
             this.saveAchievementAlreadyUseSubscribe(
                 AchievementCode.PRECISION_15
             );
