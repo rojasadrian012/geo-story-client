@@ -18,6 +18,7 @@ import { DialogModule } from 'primeng/dialog';
 import { LessonService } from '../../pages/lesson/services/lesson.service';
 import { ModalChances, ModalData } from './interfaces/modal-data.interface';
 import { LevelStatus } from '../../pages/lesson/interfaces/level-status.enum';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-modal-second-chance',
@@ -63,9 +64,9 @@ export class ModalSecondChanceComponent implements OnChanges {
     public readonly lessonService = inject(LessonService);
 
     public titleModal = signal<string>(
-        '¡Vaya! Te has equivocado en algunas de las preguntas'
+        'No es un buen trabajo Estefy'
     );
-    public buttonText = signal<string>('¡Iniciemos una segunda oportunidad!');
+    public buttonText = signal<string>('NDOIKOI VERA');
     public options: AnimationOptions = {
         path: '/assets/images/animations/dos.json',
     };
@@ -77,6 +78,9 @@ export class ModalSecondChanceComponent implements OnChanges {
                 this.modalData().isFinishLevel &&
                 this.modalData().isPerfectPoint
             ) {
+                if (this.show)
+                    this.showModalWithDelay()
+
                 this.options = {
                     ...this.options,
                     path: '/assets/images/animations/control-de-juego-perfect.json',
@@ -90,6 +94,10 @@ export class ModalSecondChanceComponent implements OnChanges {
                 this.modalData().isFinishLevel &&
                 this.modalData().isPerfectPointUsingHint
             ) {
+
+                if (this.show)
+                    this.showModalWithDelay()
+
                 this.options = {
                     ...this.options,
                     path: '/assets/images/animations/control-de-juego-hint.json',
@@ -103,6 +111,9 @@ export class ModalSecondChanceComponent implements OnChanges {
 
             if (this.modalData().isFinishLevel) {
                 if (this.modalData().isSecondChance) {
+                    if (this.show)
+                        this.showModalWithDelay()
+
                     if (this.modalData().points < 12) {
                         this.options = {
                             ...this.options,
@@ -123,6 +134,9 @@ export class ModalSecondChanceComponent implements OnChanges {
             }
 
             if (this.modalData().isPerfectPoint) {
+                if (this.show)
+                    this.showModalWithDelay()
+
                 this.options = {
                     ...this.options,
                     path: '/assets/images/animations/creativo.json',
@@ -134,7 +148,11 @@ export class ModalSecondChanceComponent implements OnChanges {
             }
 
             if (this.modalData().isSecondChance) {
+
                 console.log('ojo');
+
+                if (this.show)
+                    this.showModalWithDelay()
 
                 if (this.modalData().points < 12) {
                     this.options = {
@@ -157,6 +175,9 @@ export class ModalSecondChanceComponent implements OnChanges {
             }
 
             if (this.modalData().isPerfectPointUsingHint) {
+                if (this.show)
+                    this.showModalWithDelay()
+
                 this.options = {
                     ...this.options,
                     path: '/assets/images/animations/foco.json',
@@ -166,14 +187,16 @@ export class ModalSecondChanceComponent implements OnChanges {
             }
         }
 
-        // if (changes['show']) this.showModalWithDelay();
+        if (changes['show']) {
+            this.showModalWithDelay();
+        }
     }
 
     showModalWithDelay() {
         if (this.show) {
             setTimeout(() => {
                 this.isVisible.set(true);
-            }, 2000);
+            }, environment.timeModal);
         } else {
             this.isVisible.set(false);
         }
@@ -190,5 +213,6 @@ export class ModalSecondChanceComponent implements OnChanges {
         }
 
         this.show = false;
+        this.isVisible.set(false);
     }
 }
