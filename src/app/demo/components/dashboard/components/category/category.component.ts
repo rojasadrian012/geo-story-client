@@ -17,13 +17,14 @@ import { LevelByUser } from '../../interfaces/levels-by-user.interface';
 import { QuizStatusService } from '../../services/quizStatus.service';
 import { environment } from 'src/environments/environment';
 import { CategoryService } from './services/category.service';
+import { GeoLoadingComponent } from '../core/geo-loading/geo-loading.component';
 
 @Component({
     selector: 'app-category',
     standalone: true,
     imports: [
         NgClass,
-        // NgOptimizedImage
+        GeoLoadingComponent,
     ],
     templateUrl: './category.component.html',
     styleUrl: './category.component.scss',
