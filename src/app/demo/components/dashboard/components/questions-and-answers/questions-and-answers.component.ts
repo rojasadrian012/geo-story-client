@@ -28,6 +28,7 @@ import { SelectedAnswersService } from '../selected-answer/services/selected-ans
 import { CategoryService } from '../category/services/category.service';
 import { AchievementPageService } from '../../pages/achievement/services/achievement-page.service';
 import { AchievementCode } from '../../pages/achievement/interfaces/achievement-code.enum';
+import { GeoLoadingComponent } from '../core/geo-loading/geo-loading.component';
 
 enum pointsQuestion {
     perfectScore = 20,
@@ -47,6 +48,7 @@ enum pointsQuestion {
         SelectedAnswerComponent,
         HintComponent,
         ModalSecondChanceComponent,
+        GeoLoadingComponent,
     ],
     templateUrl: './questions-and-answers.component.html',
     styles: `
