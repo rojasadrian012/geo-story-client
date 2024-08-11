@@ -15,6 +15,7 @@ import {
     AchievementCurrentUser,
 } from './interfaces/achievement-list-response.interface';
 import { NormalAchievementItemComponent } from '../../components/normal-achievement-item/normal-achievement-item.component';
+import { GeoLoadingComponent } from '../../components/core/geo-loading/geo-loading.component';
 
 @Component({
     selector: 'app-archeivement',
@@ -25,6 +26,7 @@ import { NormalAchievementItemComponent } from '../../components/normal-achievem
         GeoCenterContainerComponent,
         AchievementItemComponent,
         NormalAchievementItemComponent,
+        GeoLoadingComponent
     ],
     templateUrl: './achievement.component.html',
     styles: `

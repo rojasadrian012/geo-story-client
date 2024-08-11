@@ -1,23 +1,35 @@
-<app-geo-center-container>
-    <h2 class="font-bold text-color-secondary">Top de Jugadores</h2>
+<app-geo-center-container title="Top de Jugadores">
 
-    @if (users()?.rankingUsers.length) {
-        <p class="text-color-secondary text-2xl my-4">
-            <span class="text-primary font-bold">{{ users()?.currentUser.fullName }}</span> estás en el top
-            <span class="text-primary font-bold">{{ users()?.currentUser.position }}</span>
-        </p>
+    @defer (on viewport) {
+        @if (users()?.rankingUsers.length) {
+            <p class="text-color-secondary text-2xl my-4">
+                <span class="text-primary font-bold">{{ users()?.currentUser.fullName }}</span>
+
+                {{ users()?.currentUser.position === 0 ? 'no estás en el top aún.' : 'estás en el top' }}
+
+                @if(users()?.currentUser.position !== 0){
+                    <span class="text-primary font-bold">{{ users()?.currentUser.position }}</span>
+                }
+            </p>
+        }
+
+        @if (users()?.rankingUsers) {
+
+            @for (user of users().rankingUsers; track user.user_id) {
+                <app-ranking-item [user]="user" />
+            }
+
+            @empty {
+                <h2 class="text-color-secondary text-center my-8">
+                    Ningún usuario ha completado una categoría.
+                </h2>
+            }
+        }
     }
-
-    @if (users()?.rankingUsers) {
-
-        @for (user of users().rankingUsers; track user.user_id) {
-            <app-ranking-item [user]="user" />
-        }
-
-        @empty {
-            <h2 class="text-color-secondary text-center my-8">
-                Ningún usuario ha completado una categoría.
-            </h2>
-        }
+    @loading {
+        <geo-loading />
+    }
+    @placeholder {
+        <geo-loading />
     }
 </app-geo-center-container>
