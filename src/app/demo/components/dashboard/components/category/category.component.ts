@@ -18,6 +18,8 @@ import { QuizStatusService } from '../../services/quizStatus.service';
 import { environment } from 'src/environments/environment';
 import { CategoryService } from './services/category.service';
 import { GeoLoadingComponent } from '../core/geo-loading/geo-loading.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-category',
@@ -25,10 +27,15 @@ import { GeoLoadingComponent } from '../core/geo-loading/geo-loading.component';
     imports: [
         NgClass,
         GeoLoadingComponent,
+
+        ToastModule,
     ],
     templateUrl: './category.component.html',
     styleUrl: './category.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers:[
+        MessageService
+    ]
 })
 export class CategoryComponent implements AfterViewInit, OnChanges {
     public levels = input.required<LevelByUser[]>();
@@ -36,6 +43,8 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
     public readonly router = inject(Router);
     public readonly quizStatusService = inject(QuizStatusService);
     public readonly categoryService = inject(CategoryService);
+    public readonly messageService = inject(MessageService);
+
 
     public lastUnlockedIndex = signal<number>(-1);
     public hostApi = signal<string>(environment.baseUrl + '/files/vehicle/');
@@ -53,7 +62,7 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
     }
 
     private delayedScrollToLastUnlockedLevel(): void {
-        // Usamos setTimeout para retrasar la ejecución y dar tiempo a Angular para renderizar los elementos
+        //TODO: Ver si el uso de setTimeout para retrasar la ejecución y dar tiempo a Angular para renderizar los elementos es realmente necesario.
         setTimeout(() => {
             this.scrollToLastUnlockedLevel();
         }, 500); // Ajusta el tiempo según sea necesario
@@ -81,6 +90,17 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
 
     changePath(level: LevelByUser, unlockLevel: boolean) {
         if (!unlockLevel) return;
+
+        if (level.completed){
+            this.messageService.add({
+                severity: 'warn',
+                summary: 'Aviso',
+                detail: 'Ya completaste esta lección',
+            });
+
+            return
+        }
+
         localStorage.removeItem('finishChange')
 
         if (level.quiz.difficulty == 6) //TODO: Se tendria que poner los numeros en variables.

@@ -7,22 +7,22 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { QuestionListResponse } from '../../interfaces/question-list-response.interface';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+
 import { environment } from 'src/environments/environment';
+
+import { QuestionListResponse } from '../../interfaces/question-list-response.interface';
 import { SoundsService } from '../../services/sounds.service';
 import { QuizStatusService } from '../../services/quizStatus.service';
 import { QuestionService } from '../../services/question.service';
 import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
 import { QuestionsAndAnswersComponent } from '../../components/questions-and-answers/questions-and-answers.component';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { LessonService } from './services/lesson.service';
 import { AchievementPopUpComponent } from '../../components/achievement-pop-up/achievement-pop-up.component';
 import { PopUpService } from '../../components/achievement-pop-up/services/pop-up.service';
 import { CanDeactivateType } from '../../../auth/guards/change-path.guard';
 import { CategoryService } from '../../components/category/services/category.service';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-lesson',
