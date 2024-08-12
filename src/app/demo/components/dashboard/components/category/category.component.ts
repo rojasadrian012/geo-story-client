@@ -33,7 +33,7 @@ import { MessageService } from 'primeng/api';
     templateUrl: './category.component.html',
     styleUrl: './category.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers:[
+    providers: [
         MessageService
     ]
 })
@@ -88,16 +88,23 @@ export class CategoryComponent implements AfterViewInit, OnChanges {
         }
     }
 
-    changePath(level: LevelByUser, unlockLevel: boolean) {
+    changePath(level: LevelByUser, unlockLevel: boolean, last: boolean) {
         if (!unlockLevel) return;
 
-        if (level.completed){
-            this.messageService.add({
-                severity: 'warn',
-                summary: 'Aviso',
-                detail: 'Ya completaste esta lección',
-            });
-
+        if (level.completed) {
+            !last
+                ?
+                this.messageService.add({
+                    severity: 'warn',
+                    summary: 'Aviso',
+                    detail: 'Ya completaste esta lección',
+                })
+                :
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Aviso',
+                    detail: '¡Ya completaste todos los niveles!',
+                });
             return
         }
 

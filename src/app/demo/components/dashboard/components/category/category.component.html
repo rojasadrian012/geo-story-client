@@ -9,7 +9,7 @@
                     [ngClass]="{
                         'to-animate': i === lastUnlockedIndex()
                     }"
-                    (click)="changePath(level, level.unlockLevel)"
+                    (click)="changePath(level, level.unlockLevel, last)"
                 >
                     @if(!level.unlockLevel){
                         <img
