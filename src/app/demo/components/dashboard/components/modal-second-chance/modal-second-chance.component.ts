@@ -85,7 +85,7 @@ export class ModalSecondChanceComponent implements OnChanges {
                     ...this.options,
                     path: '/assets/images/animations/control-de-juego-perfect.json',
                 };
-                this.titleModal.set(`¡Pasaste el ultimo nivel como genio!`);
+                this.titleModal.set(`¡Pasaste el último nivel como genio!`);
                 this.buttonText.set('¡Finalizar!');
                 return;
             }
@@ -103,7 +103,7 @@ export class ModalSecondChanceComponent implements OnChanges {
                     path: '/assets/images/animations/control-de-juego-hint.json',
                 };
                 this.titleModal.set(
-                    `¡Pasaste el ultimo nivel sin equivocarte!`
+                    `¡Pasaste el último nivel sin equivocarte!`
                 );
                 this.buttonText.set('¡Finalizar Juego!');
                 return;
@@ -127,7 +127,7 @@ export class ModalSecondChanceComponent implements OnChanges {
                         ...this.options,
                         path: '/assets/images/animations/juego-de-aventuras-finish.json',
                     };
-                    this.titleModal.set('¡Pasaste el ultimo nivel!');
+                    this.titleModal.set('¡Pasaste el último nivel!');
                     this.buttonText.set('Finalizar');
                     return;
                 }
