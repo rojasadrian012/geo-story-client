@@ -19,35 +19,40 @@ export class AppMenuComponent implements OnInit {
         this.updateModel();
     }
 
-    updateModel() {
+    updateModel(): void {
         this.model = [
             {
                 label: 'Menú',
                 items: [
                     {
-                        label: 'Aprender',
+                        label: 'Lecciones',
                         icon: 'pi pi-fw pi-book',
                         routerLink: ['/'],
                     },
                     {
-                        label: 'Ranking',
+                        label: 'Clasificación',
                         icon: 'pi pi-fw pi-chart-bar',
                         routerLink: ['/ranking'],
                     },
                     {
-                        label: 'Logros',
+                        label: 'Mis Logros',
                         icon: 'pi pi-fw pi-star',
                         routerLink: ['/logros'],
                     },
                     {
-                        label: 'Mi usuario',
+                        label: 'Perfil',
                         icon: 'pi pi-fw pi-user',
                         routerLink: ['/configuracion'],
                     },
                     {
-                        label: 'Administrar usuarios',
-                        icon: 'pi pi-fw pi-users',
-                        routerLink: ['/usuarios'],
+                        label: 'Panel de Administración',
+                        items: [
+                            {
+                                label: 'Gestión de Usuarios',
+                                icon: 'pi pi-fw pi-users',
+                                routerLink: ['/usuarios'],
+                            },
+                        ],
                     },
                 ],
             },
