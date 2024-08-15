@@ -1,27 +1,36 @@
-<app-geo-center-container title="Elija un tema">
-    
+<app-geo-center-container title="Mi Usuario">
+    <h3 class="text-2xl text-color-secondary font-bold">Usuario actual</h3>
+
+    <p class="text-xl mb-0">
+        Nombre Completo:
+        <span class="font-italic">{{ currenUser().fullName }}</span>
+    </p>
+    <p class="text-xl mb-0">
+        Usuario para entrar:
+        <span class="font-italic">{{ currenUser().nickname }}</span>
+    </p>
+    <p class="text-xl mb-0">
+        Activo:
+        <span class="font-italic">{{
+            currenUser().isActive ? "Si" : "No"
+        }}</span>
+    </p>
+    <p class="text-xl mb-0">
+        Rol de usuario:
+        <span class="font-italic">{{ currenUser().roles[0] }}</span>
+    </p>
+
+    <h3 class="text-2xl text-color-secondary font-bold">Temas</h3>
+
     <app-select-theme></app-select-theme>
 
-    <p class="text-2xl font-bold text-color-secondary mt-3 mb-0">
-        Reestablecer base de datos
-    </p>
-    <p class="text-sm mt-0 mb-2 text-color-secondary">
-        Borrará toda la información actual y cargará los valores por
-        defecto de la semilla.
-    </p>
+    <h3 class="text-2xl text-color-secondary font-bold">Opciones</h3>
 
     <button
-        (click)="executeSeed()"
-        [class]="
-            textButton() === 'Ejecutar Semilla'
-                ? 'bg-primary-reverse border-round-xl text-xl border-dotted border-primary p-3'
-                : 'transparent-background text-red-500 font-bold border-round-xl text-xl border-dotted border-red-500 p-3'
-        "
+        (click)="authService.logout()"
+        style="min-height: 3rem"
+        class="w-full text-red-500 font-bold surface-card border-round-xl text-xl border-solid border-red-500"
     >
-        {{ textButton() }}
+        Cerrar Sesión
     </button>
-
 </app-geo-center-container>
-
-
-

@@ -1,22 +1,21 @@
-@for (titleAndThemes of titleAndThemes(); track $index) {
+<h5 class="text-xl text-color-secondary mb-1">Tema Actual</h5>
+<button class="p-link w-5rem h-5rem m-1">
+    <img
+        [src]="getCurrentThemeImage()"
+        class="w-5rem h-5rem"
+        alt="Tema Actual"
+    />
+</button>
 
-    <h5 class="text-xl text-color-secondary mb-4">{{ titleAndThemes.title }}</h5>
+<h5 class="text-xl text-color-secondary mb-1">{{ titleAndThemes().title }}</h5>
 
-    <div class="grid">
-        
-        @for (theme of titleAndThemes.themes; track $index) {
+@for (theme of titleAndThemes().themes; track $index) {
 
-            <button
-                class="p-link w-5rem h-5rem m-1"
-                (click)="changeTheme(theme.theme, theme.colorScheme)"
-            >
-                <img
-                    [src]="theme.image"
-                    class="w-5rem h-5rem"
-                    alt="Lara Light Indigo"
-                />
-            </button>
+    <button
+        class="p-link w-5rem h-5rem m-1"
+        (click)="changeTheme(theme.theme, theme.colorScheme)"
+    >
+        <img [src]="theme.image" class="w-5rem h-5rem" alt="Lara Light Indigo" />
+    </button>
 
-        }
-    </div>
 }

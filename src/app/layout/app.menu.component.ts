@@ -15,8 +15,6 @@ export class AppMenuComponent implements OnInit {
 
     constructor(public layoutService: LayoutService) {}
 
-    private authService = inject(AuthService);
-
     ngOnInit() {
         this.updateModel();
     }
@@ -28,38 +26,28 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     {
                         label: 'Aprender',
-                        icon: 'pi pi-fw pi-home',
+                        icon: 'pi pi-fw pi-book',
                         routerLink: ['/'],
                     },
                     {
                         label: 'Ranking',
-                        icon: 'pi pi-fw pi-chart-line',
+                        icon: 'pi pi-fw pi-chart-bar',
                         routerLink: ['/ranking'],
                     },
-                    // {
-                    //     label: 'Usuarios',
-                    //     icon: 'pi pi-fw pi-users',
-                    //     routerLink: ['/usuarios'],
-                    // },
-                    // {
-                    //     label: 'Perfil',
-                    //     icon: 'pi pi-fw pi-user',
-                    //     routerLink: ['/perfil'],
-                    // },
                     {
                         label: 'Logros',
                         icon: 'pi pi-fw pi-star',
                         routerLink: ['/logros'],
                     },
                     {
-                        label: 'Configuración',
-                        icon: 'pi pi-fw pi-cog',
+                        label: 'Mi usuario',
+                        icon: 'pi pi-fw pi-user',
                         routerLink: ['/configuracion'],
                     },
                     {
-                        label: 'Cerrar Sesión',
-                        icon: 'pi pi-fw pi-sign-out',
-                        command: () => this.authService.logout(),
+                        label: 'Administrar usuarios',
+                        icon: 'pi pi-fw pi-users',
+                        routerLink: ['/usuarios'],
                     },
                 ],
             },
