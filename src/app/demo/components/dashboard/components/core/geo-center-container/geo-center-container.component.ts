@@ -47,11 +47,16 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
         @media (max-width: 640px) {
             .main-content {
-                padding:0
+                padding:0;
             }
 
             .none-padding{
-                padding:0
+                padding:0;
+            }
+
+            .card{
+                padding-left:1.5rem;
+                padding-right:1.5rem;
             }
 
         }
