@@ -1,106 +1,161 @@
 <p-toast></p-toast>
-<app-geo-center-container title="Usuarios">
-    <p-toolbar styleClass="mb-4 gap-2">
-        <ng-template pTemplate="left">
-            <p-button
-                severity="success"
-                label="Nuevo"
-                icon="pi pi-plus"
-                class="mr-2"
-                (onClick)="openNew()"
-            />
-        </ng-template>
-    </p-toolbar>
 
-    <app-table
-        [users]="users()"
-        (onEditUser)="openEdit($event)"
-        (onDeletedUser)="getUsers()"
-    />
+<app-geo-center-container title="Gestión de usuarios">
+    <p-table
+        #dt
+        [value]="users()"
+        dataKey="id"
+        [rows]="10"
+        [loading]="loading()"
+        [paginator]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <p-button
+                    severity="success"
+                    label="Nuevo"
+                    icon="pi pi-plus"
+                    class="mr-2 responsive-button"
+                    (onClick)="openNew()"
+                />
+
+                <div>
+                    <input
+                        pInputText
+                        type="text"
+                        placeholder="Buscar..."
+                        class="responsive-search"
+                        [(ngModel)]="textSearch"
+                    />
+                    <p-button
+                        class="ml-1"
+                        icon="pi pi-search"
+                        (click)="searchUsers()"
+                    />
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="nickname" style="min-width: 15rem">
+                    Usuario <p-sortIcon field="nickname" />
+                </th>
+                <th>Nombre Completo</th>
+                <th>¿Activo?</th>
+                <th>Rol</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>
+                    {{ user.nickname }}
+                </td>
+                <td>
+                    {{ user.fullName }}
+                </td>
+                <td>
+                    {{ user.isActive ? "Si" : "No" }}
+                </td>
+                <td>
+                    {{ user.roles }}
+                </td>
+                <td>
+                    <p-button
+                        icon="pi pi-pencil"
+                        class="mr-2"
+                        [rounded]="true"
+                        [outlined]="true"
+                        severity="success"
+                        (onClick)="editUser(user)"
+                    />
+                    <p-button
+                        icon="pi pi-trash"
+                        severity="danger"
+                        [rounded]="true"
+                        [outlined]="true"
+                        (onClick)="deleteUser(user)"
+                    />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 
     <p-dialog
         [(visible)]="userDialog"
         [style]="{ width: '450px' }"
-        [header]="isNewUser() ? 'Crear Usuario:' : 'Editar Usuario:'"
+        [header]="isNewUser() ? 'Nuevo Usuario' : 'Editar Usuario'"
         [modal]="true"
         styleClass="p-fluid"
+        [closable]="false"
     >
         <ng-template pTemplate="content">
             <div class="field">
-                <label for="nickname">Usuario para acceder</label>
+                <label for="isActive">¿Activo?</label>
+                <p-dropdown
+                    [(ngModel)]="userSelected().isActive"
+                    inputId="isActive"
+                    [options]="isActiveValues()"
+                >
+                </p-dropdown>
+            </div>
+
+            <div class="field">
+                <label for="roles">Roles</label>
+                <p-multiSelect
+                    [(ngModel)]="userSelected().roles"
+                    inputId="roles"
+                    [options]="userRols()"
+                    optionLabel="label"
+                    optionValue="value"
+                    placeholder="Seleccione los roles"
+                >
+                </p-multiSelect>
+            </div>
+
+            <div class="field">
+                <label for="nickname">Nombre de usuario</label>
                 <input
                     type="text"
                     pInputText
                     id="nickname"
-                    [(ngModel)]="user().nickname"
+                    [(ngModel)]="userSelected().nickname"
                     required
                     autofocus
                 />
-                <small class="p-error" *ngIf="submitted() && !user().nickname">
-                    Usuario es requerido.
-                </small> <!-- Mensaje de error si el campo está vacío -->
+                @if (submitted() && !userSelected().nickname) {
+                <small class="p-error"> Nombre de usuario es requerido </small>
+                }
             </div>
-
             <div class="field">
                 <label for="fullName">Nombre Completo</label>
                 <input
-                    type="text"
+                    id="description"
                     pInputText
-                    id="fullName"
-                    [(ngModel)]="user().fullName"
+                    [(ngModel)]="userSelected().fullName"
                     required
-                    autofocus
                 />
-                <small class="p-error" *ngIf="submitted() && !user().fullName">
-                    Nombre Completo es requerido.
-                </small> <!-- Mensaje de error si el campo está vacío -->
+                @if (submitted() && !userSelected().fullName) {
+                <small class="p-error"> Nombre Completo es requerido </small>
+                }
             </div>
-
-            <div class="field" *ngIf="!isNewUser()">
-                <label for="isActive">¿Está Activo?</label>
-                <p-dropdown
-                    [(ngModel)]="user().isActive"
-                    inputId="isActive"
-                    [options]="statuses()"
-                ></p-dropdown>
-            </div>
-
             <div class="field">
-                <label for="roles">Roles que posee</label>
+                <label for="password">Contraseña</label>
                 <input
-                    type="text"
-                    pInputText
-                    id="roles"
-                    [(ngModel)]="user().roles"
-                    required
-                    autofocus
-                />
-                <small class="p-error" *ngIf="submitted() && !user().roles">
-                    Roles son requeridos.
-                </small> <!-- Mensaje de error si el campo está vacío -->
-            </div>
-
-            <div class="field">
-                <label for="password">{{
-                    isNewUser() ? "Contraseña" : "Nueva Contraseña"
-                }}</label>
-                <input
-                    type="text"
-                    pInputText
                     id="password"
-                    [(ngModel)]="user().password"
+                    pInputText
+                    [(ngModel)]="userSelected().password"
                     required
-                    autofocus
                 />
-                <small class="p-error" *ngIf="submitted() && !user().password">
-                    Contraseña es requerida.
-                </small> <!-- Mensaje de error si el campo está vacío -->
+                <!-- @if (submitted() && !userSelected().password) {
+                <small class="p-error"> La contraseña es requerida </small>
+                } -->
             </div>
         </ng-template>
 
         <ng-template pTemplate="footer">
             <p-button
-                label="Cancel"
+                label="Cancelar"
                 icon="pi pi-times"
                 [text]="true"
                 (onClick)="hideDialog()"
@@ -113,4 +168,6 @@
             />
         </ng-template>
     </p-dialog>
+
+    <p-confirmDialog [style]="{ width: '450px' }" />
 </app-geo-center-container>

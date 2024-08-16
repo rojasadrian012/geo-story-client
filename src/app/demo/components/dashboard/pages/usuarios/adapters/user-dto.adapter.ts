@@ -6,7 +6,8 @@ export class UserAdapter {
             nickname: user.nickname,
             password: user.password,
             fullName: user.fullName,
-            roles: Array.isArray(user.roles) ? user.roles : [user.roles],
+            roles: user.roles,
+            isActive: user.isActive,
         };
     }
 }

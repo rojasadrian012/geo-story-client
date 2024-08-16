@@ -1,0 +1,16 @@
+td {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+@media (max-width: 768px) {
+    .responsive-button::ng-deep .p-button-label {
+        display: none;
+    }
+    .responsive-button::ng-deep .p-button-icon {
+        margin-right: 0;
+    }
+    .responsive-search{
+        max-width: 10rem;
+    }
+}

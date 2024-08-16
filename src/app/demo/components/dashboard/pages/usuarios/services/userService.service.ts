@@ -13,7 +13,7 @@ export class UserServiceService {
 
     private readonly baseUrl = `${environment.baseUrl}/auth/user`;
 
-    getList(): Observable<UserListResponse[]> {
+    getUsers(): Observable<UserListResponse[]> {
         return this.http.get<UserListResponse[]>(this.baseUrl + '/list');
     }
 
@@ -26,7 +26,13 @@ export class UserServiceService {
         return this.http.post(`${this.baseUrl}/new`, user);
     }
 
-    delete(userId: string){
+    delete(userId: string) {
         return this.http.delete(`${this.baseUrl}/delete/${userId}`);
+    }
+
+    search(parameters: string) {
+        return this.http.post<UserListResponse[]>(this.baseUrl + '/search', {
+            parameters,
+        });
     }
 }

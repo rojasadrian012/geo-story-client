@@ -10,58 +10,55 @@ import {
 import { GeoCenterContainerComponent } from '../../components/core/geo-center-container/geo-center-container.component';
 import { UserServiceService } from './services/userService.service';
 import { UserListResponse } from './interface/user-list-response.interface';
-import { CommonModule, NgIf } from '@angular/common';
-import { ToolbarModule } from 'primeng/toolbar';
-import { TableComponent } from './components/table/table.component';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmationService, MessageService } from 'primeng/api';
+
+import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { NgIf } from '@angular/common';
+import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
     selector: 'app-usuarios',
     standalone: true,
     imports: [
         GeoCenterContainerComponent,
-        TableComponent,
 
-        NgIf,
         FormsModule,
-        CommonModule,
+        NgIf,
 
         ToastModule,
-
-
-
-        ToolbarModule,
-        // ButtonModule,
-        DialogModule,
-        DropdownModule,
+        TableModule,
+        ButtonModule,
         InputTextModule,
+        DialogModule,
         ConfirmDialogModule,
-        InputTextareaModule,
-        RadioButtonModule,
-        InputNumberModule,
+        DropdownModule,
+        MultiSelectModule,
     ],
     templateUrl: './usuarios.component.html',
     styleUrl: './usuarios.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [MessageService],
+    providers: [MessageService, ConfirmationService],
 })
 export class UsuariosComponent implements OnInit {
     private readonly userService = inject(UserServiceService);
-
-    //TODO: optimizar el codigo, cuando se edite no debe ser obligatoria la contraseña, usar nuevo control flow, eliminar imports innecesario.
-    constructor(private messageService: MessageService) { }
+    private readonly confirmationService = inject(ConfirmationService);
+    private readonly messageService = inject(MessageService);
 
     public users = signal<UserListResponse[]>([]);
-    public statuses = signal([
+    public loading = signal(false); //Para mostrar el cargando en la tabla
+    public textSearch = model('');
+    public userDialog = model<boolean>(false);
+    public userSelected = model<UserListResponse>(this.emptyUser());
+    public isNewUser = signal<boolean>(false);
+    public submitted = signal(false);
+    public isActiveValues = signal([
         {
             label: 'SI',
             value: true,
@@ -81,24 +78,24 @@ export class UsuariosComponent implements OnInit {
             value: 'user',
         },
     ]);
-    public user = model<UserListResponse>({
-        id: '',
-        nickname: '',
-        fullName: '',
-        isActive: true,
-        roles: [],
-        password: '',
-    });
-    public userDialog = model<boolean>(false);
-    public isNewUser = signal<boolean>(false);
-    public submitted = signal<boolean>(false); // Indica si el formulario ha sido enviado
 
     ngOnInit(): void {
         this.getUsers();
     }
 
+    emptyUser() {
+        return {
+            id: '',
+            nickname: '',
+            fullName: '',
+            isActive: true,
+            roles: [],
+            password: '',
+        };
+    }
+
     getUsers() {
-        this.userService.getList().subscribe({
+        this.userService.getUsers().subscribe({
             next: (response) => {
                 this.users.set(response);
             },
@@ -106,90 +103,93 @@ export class UsuariosComponent implements OnInit {
         });
     }
 
-    openNew() {
-        this.userDialog.set(true);
-        this.isNewUser.set(true);
-        this.submitted.set(false); // Resetea el estado de submitted
-    }
-
-    openEdit(user: UserListResponse) {
-        this.isNewUser.set(false);
-        this.userDialog.set(true);
-        this.user.set(user);
-        this.submitted.set(false); // Resetea el estado de submitted
-    }
-
-    resetUser() {
-        this.user.set({
-            id: '',
-            nickname: '',
-            fullName: '',
-            isActive: false,
-            roles: [],
-        });
-    }
-
-    hideDialog() {
-        this.userDialog.set(false);
-        this.resetUser();
-    }
-
-    saveProduct() {
-        if (!this.validateUser()) {
-            return; // Si la validación falla, no guarda el producto
-        }
-
-        if (this.isNewUser()) {
-            this.saveNewUser();
-            this.hideDialog();
+    searchUsers() {
+        if (this.textSearch() === '') {
+            this.getUsers();
             return;
         }
-        this.saveUserEdited();
-        this.hideDialog();
-    }
-    saveUserEdited() {
-        this.userService.edit(this.user()).subscribe({
-            next: () => {
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Usuario editado',
-                    detail: 'Usuario editado exitosamente.',
-                });
-                this.getUsers()
-            },
-            error: (e) => console.error({ e }),
-        });
-    }
-
-    saveNewUser() {
-        this.userService.create(this.user()).subscribe({
-            next: () => {
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Usuario creado',
-                    detail: 'Usuario creado exitosamente.',
-                });
-                this.getUsers()
+        this.userService.search(this.textSearch()).subscribe({
+            next: (response) => {
+                this.users.set(response);
             },
             error: (err) => console.error(err),
         });
     }
 
-    validateUser(): boolean {
-        this.submitted.set(true); // Marca el formulario como enviado
-        if (
-            !this.user().nickname ||
-            !this.user().fullName ||
-            !this.user().roles.length ||
-            !this.user().password
-        ) {
-            this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Por favor complete todos los campos.',
-            });
-            return false;
+    editUser(user: UserListResponse) {
+        this.isNewUser.set(false);
+        this.userSelected.update(() => ({
+            ...user,
+        }));
+        this.userDialog.set(true);
+    }
+
+    deleteUser(user: UserListResponse) {
+        this.confirmationService.confirm({
+            message: '¿Seguro que quieres eliminar a ' + user.fullName + '?',
+            header: 'Confirmar',
+            icon: 'pi pi-trash',
+            accept: () => {
+                this.userService.delete(user.id).subscribe({
+                    next: () => {
+                        this.getUsers();
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Eliminado',
+                            detail: 'Usuario eliminado exitosamente.',
+                            life: 3000,
+                        });
+                    },
+                });
+            },
+        });
+    }
+
+    hideDialog() {
+        this.userDialog.set(false);
+        this.submitted.set(false);
+    }
+
+    saveProduct() {
+        this.submitted.set(true);
+
+        if (this.userSelected().nickname?.trim()) {
+            if (this.userSelected().id) {
+                this.userService.edit(this.userSelected()).subscribe({
+                    next: () => {
+                        this.getUsers();
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Editado',
+                            detail: 'Usuario actualizado correctamente.',
+                            life: 3000,
+                        });
+                    },
+                    error: (err) => console.error(err),
+                });
+            } else {
+                this.userService.create(this.userSelected()).subscribe({
+                    next: () => {
+                        this.getUsers();
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Creado',
+                            detail: 'Usuario Creado correctamente.',
+                            life: 3000,
+                        });
+                    },
+                    error: (err) => console.error(err),
+                });
+            }
+
+            this.userDialog.set(false);
+            this.userSelected.set(this.emptyUser());
         }
-        return true;
+    }
+
+    openNew() {
+        this.userSelected.set(this.emptyUser());
+        this.submitted.set(false);
+        this.userDialog.set(true);
     }
 }
