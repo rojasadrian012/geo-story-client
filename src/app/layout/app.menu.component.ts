@@ -1,26 +1,33 @@
-import { OnInit, inject } from '@angular/core';
+import { OnInit, inject, signal } from '@angular/core';
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { LayoutService } from './service/app.layout.service';
-import { AuthService } from '../demo/components/auth/services/auth.service';
-import { environment } from 'src/environments/environment';
+import { User } from '../demo/components/auth/interfaces/user.interface.interface';
 
 @Component({
     selector: 'app-menu',
     templateUrl: './app.menu.component.html',
 })
 export class AppMenuComponent implements OnInit {
-    model: any[] = [];
+    public layoutService = inject(LayoutService);
 
-    constructor(public layoutService: LayoutService) {}
+    public model = signal<any[]>([]);
+    public currentUser = signal<User | null>(this.getCurrentUser());
 
     ngOnInit() {
         this.updateModel();
     }
 
+    getCurrentUser(): User {
+        return localStorage.getItem('currenUser')
+            ? JSON.parse(localStorage.getItem('currenUser'))
+            : null;
+    }
+
     updateModel(): void {
-        this.model = [
+        const isAdmin = this.currentUser()?.roles.includes('admin');
+
+        this.model.update(() => [
             {
                 label: 'Menú',
                 items: [
@@ -44,18 +51,22 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-user',
                         routerLink: ['/configuracion'],
                     },
-                    {
-                        label: 'Panel de Administración',
-                        items: [
-                            {
-                                label: 'Gestión de Usuarios',
-                                icon: 'pi pi-fw pi-users',
-                                routerLink: ['/usuarios'],
-                            },
-                        ],
-                    },
+                    ...(isAdmin
+                        ? [
+                              {
+                                  label: 'Panel de Administración',
+                                  items: [
+                                      {
+                                          label: 'Gestión de Usuarios',
+                                          icon: 'pi pi-fw pi-users',
+                                          routerLink: ['/usuarios'],
+                                      },
+                                  ],
+                              },
+                          ]
+                        : []),
                 ],
             },
-        ];
+        ]);
     }
 }
