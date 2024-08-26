@@ -8,6 +8,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { ArcheivementComponent } from './pages/achievement/achievement.component';
 import { changePathGuard } from '../auth/guards/change-path.guard';
+import { SurveyComponent } from './pages/survey/survey.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,11 @@ import { changePathGuard } from '../auth/guards/change-path.guard';
                 path: 'usuarios',
                 canActivate: [isAuthenticatedGuard],
                 component: UsuariosComponent,
+            },
+            {
+                path: 'encuesta',
+                canActivate: [isAuthenticatedGuard],
+                component: SurveyComponent,
             },
         ]),
     ],

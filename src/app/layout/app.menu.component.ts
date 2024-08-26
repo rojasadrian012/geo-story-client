@@ -51,6 +51,11 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-user',
                         routerLink: ['/configuracion'],
                     },
+                    {
+                        label: 'Encuesta',
+                        icon: 'pi pi-fw pi-pencil',
+                        routerLink: ['/encuesta'],
+                    },
                     ...(isAdmin
                         ? [
                               {

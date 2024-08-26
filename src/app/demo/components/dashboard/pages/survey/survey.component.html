@@ -1,0 +1,32 @@
+<app-geo-center-container 
+    [title]="isFirstSurvey() ? 'Primera Encuesta':'Segunda Encuesta'"
+>
+
+    <p-toast/>
+
+    @if (showForm()) {
+
+        <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+            @for (survey of surveys(); track $index; let i = $index) {
+                <div [formGroupName]="survey.id">
+                    <p class="my-2">{{ survey.question }}</p>
+                    <p-dropdown 
+                        [options]="survey.surveyOptions" 
+                        formControlName="answer" 
+                        optionLabel="name" 
+                        placeholder="Selecciona una opción."
+                        styleClass="w-full"
+                    ></p-dropdown>
+                </div>
+            }
+            
+            <p-button 
+                type="submit"
+                severity="success"
+                styleClass="w-full my-3"
+                label="Guardar"
+                [disabled]="surveyForm.invalid"
+            ></p-button>
+        </form>
+    }
+</app-geo-center-container>
