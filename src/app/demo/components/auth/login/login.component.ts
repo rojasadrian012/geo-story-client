@@ -72,4 +72,10 @@ export class LoginComponent {
                 }
             });
     }
+
+    formatNickname() {
+        this.nickname = this.nickname
+            .toLowerCase()
+            .replace(/[^a-z]/g, '');
+    }
 }
