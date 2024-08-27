@@ -57,19 +57,18 @@ export class SurveyComponent implements OnInit {
     private readonly configService = inject(ConfigService);
 
     public surveys = signal<Survey[] | null>(null); // Las preguntas de la encuesta
-    public isFirstSurvey = signal(true);
+    public isFirstSurvey = signal(false);
     public surveyForm: FormGroup;
     public showForm = signal(false);
 
     ngOnInit(): void {
-        this.getSurveyList();
         this.getFirstSurveyConfig();
     }
 
     getSurveyList() {
         this.surveyService.getSurveys(this.isFirstSurvey()).subscribe({
             next: (res) => {
-                this.surveys.set(res);
+                this.surveys.set(res);                
                 this.configForm();
             },
             error: (err) => console.log(err),
@@ -123,13 +122,16 @@ export class SurveyComponent implements OnInit {
     getFirstSurveyConfig() {
         this.configService.getConfigs().subscribe({
             next: (res) => {
-                const firstSurveyConfig = res.find((config) =>
-                    config.hasOwnProperty('firstSurvey')
+                                
+                const firstSurveyConfig = res.find(
+                    (config) => config.name === 'firstSurvey'
                 );
-
+                
                 this.isFirstSurvey.set(
-                    firstSurveyConfig ? firstSurveyConfig.firstSurvey : false
-                );
+                    firstSurveyConfig ? firstSurveyConfig.value : false
+                );                
+
+                this.getSurveyList();
             },
             error: (err) => console.log(err),
         });

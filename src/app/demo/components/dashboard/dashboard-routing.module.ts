@@ -9,6 +9,7 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { ArcheivementComponent } from './pages/achievement/achievement.component';
 import { changePathGuard } from '../auth/guards/change-path.guard';
 import { SurveyComponent } from './pages/survey/survey.component';
+import { ConfigComponent } from './pages/config/config.component';
 
 @NgModule({
     imports: [
@@ -35,7 +36,7 @@ import { SurveyComponent } from './pages/survey/survey.component';
                 component: RankingComponent,
             },
             {
-                path: 'configuracion',
+                path: 'mi-perfil',
                 canActivate: [isAuthenticatedGuard],
                 component: SettingsComponent,
             },
@@ -49,8 +50,13 @@ import { SurveyComponent } from './pages/survey/survey.component';
                 canActivate: [isAuthenticatedGuard],
                 component: SurveyComponent,
             },
+            {
+                path: 'configuracion',
+                canActivate: [isAuthenticatedGuard],
+                component: ConfigComponent,
+            },
         ]),
     ],
     exports: [RouterModule],
 })
-export class DashboardsRoutingModule { }
+export class DashboardsRoutingModule {}

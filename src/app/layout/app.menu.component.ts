@@ -1,8 +1,10 @@
-import { OnInit, inject, signal } from '@angular/core';
+import { OnInit, inject, signal, effect } from '@angular/core';
 import { Component } from '@angular/core';
 
 import { LayoutService } from './service/app.layout.service';
 import { User } from '../demo/components/auth/interfaces/user.interface.interface';
+import { MenuService } from './app.menu.service';
+import { ConfigService } from '../demo/service/config.service';
 
 @Component({
     selector: 'app-menu',
@@ -10,68 +12,27 @@ import { User } from '../demo/components/auth/interfaces/user.interface.interfac
 })
 export class AppMenuComponent implements OnInit {
     public layoutService = inject(LayoutService);
-
-    public model = signal<any[]>([]);
-    public currentUser = signal<User | null>(this.getCurrentUser());
+    public readonly menuService = inject(MenuService);
+    private readonly configService = inject(ConfigService);
 
     ngOnInit() {
-        this.updateModel();
+        this.getConfigs();
     }
 
-    getCurrentUser(): User {
-        return localStorage.getItem('currenUser')
-            ? JSON.parse(localStorage.getItem('currenUser'))
-            : null;
-    }
+    getConfigs() {
+        this.configService.getConfigs().subscribe({
+            next: (res) => {
+                const showSurveyInMenu = res.find(
+                    (config) => config.name === 'showSurveyInMenu'
+                );
 
-    updateModel(): void {
-        const isAdmin = this.currentUser()?.roles.includes('admin');
+                this.menuService.showSurveyInMenu.set(
+                    showSurveyInMenu ? showSurveyInMenu.value : false
+                );
 
-        this.model.update(() => [
-            {
-                label: 'Menú',
-                items: [
-                    {
-                        label: 'Lecciones',
-                        icon: 'pi pi-fw pi-book',
-                        routerLink: ['/'],
-                    },
-                    {
-                        label: 'Clasificación',
-                        icon: 'pi pi-fw pi-chart-bar',
-                        routerLink: ['/ranking'],
-                    },
-                    {
-                        label: 'Mis Logros',
-                        icon: 'pi pi-fw pi-star',
-                        routerLink: ['/logros'],
-                    },
-                    {
-                        label: 'Perfil',
-                        icon: 'pi pi-fw pi-user',
-                        routerLink: ['/configuracion'],
-                    },
-                    {
-                        label: 'Encuesta',
-                        icon: 'pi pi-fw pi-pencil',
-                        routerLink: ['/encuesta'],
-                    },
-                    ...(isAdmin
-                        ? [
-                              {
-                                  label: 'Panel de Administración',
-                                  items: [
-                                      {
-                                          label: 'Gestión de Usuarios',
-                                          icon: 'pi pi-fw pi-users',
-                                          routerLink: ['/usuarios'],
-                                      },
-                                  ],
-                              },
-                          ]
-                        : []),
-                ],
+                this.menuService.updateModel();
             },
-        ]);
+            error: (err) => console.log(err),
+        });
     }
 }

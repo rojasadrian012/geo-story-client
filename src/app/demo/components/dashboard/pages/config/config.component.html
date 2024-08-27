@@ -1,0 +1,20 @@
+<app-geo-center-container title="Configuraciones">
+    <p-toast></p-toast>
+
+    @if(configs()){
+        <form class="flex flex-column gap-2" [formGroup]="formGroup">
+            @for (config of configs(); track $index) {
+                <div class="flex align-items-center gap-2">
+                    <p-checkbox
+                        
+                        [formControlName]="config.name"
+                        [inputId]="config.id"
+                        [binary]="true"
+                        (onChange)="save(config.name, $event.checked)"
+                    ></p-checkbox>
+                    <label [for]="config.id">{{ config.description }}</label>
+                </div>
+            }
+        </form>
+    }
+</app-geo-center-container>

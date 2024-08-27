@@ -13,4 +13,8 @@ export class ConfigService {
     getConfigs(): Observable<any> {
         return this.http.get<any>(this.baseUrl());
     }
+
+    saveConfig(name: string, value: boolean) {
+        return this.http.put(this.baseUrl(), { name, value });
+    }
 }
