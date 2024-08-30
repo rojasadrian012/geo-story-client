@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     effect,
+    HostListener,
     inject,
     signal,
 } from '@angular/core';
@@ -37,9 +38,7 @@ import { CategoryService } from '../../components/category/services/category.ser
         ToastModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        MessageService,
-    ],
+    providers: [MessageService],
 })
 export class LessonComponent {
     private readonly route = inject(ActivatedRoute);
@@ -116,7 +115,14 @@ export class LessonComponent {
             severity: 'warn',
             summary: 'Aviso',
             detail: 'Completa la lección antes de salir.',
-        })
-        return false
+        });
+        return false;
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    unloadNotification($event: any): void {
+      if (!this.categoryService.enableRouteChange) {
+        $event.returnValue = '¿Estás seguro de que quieres salir? Los cambios no guardados se perderán.';
+      }
     }
 }
