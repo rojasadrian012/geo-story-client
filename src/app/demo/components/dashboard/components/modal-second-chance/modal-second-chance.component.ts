@@ -149,7 +149,7 @@ export class ModalSecondChanceComponent implements OnChanges {
 
             if (this.modalData().isSecondChance) {
 
-                console.log('ojo');
+                // console.log('ojo');
 
                 if (this.show)
                     this.showModalWithDelay()
