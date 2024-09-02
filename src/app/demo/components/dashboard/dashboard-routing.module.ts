@@ -10,6 +10,7 @@ import { ArcheivementComponent } from './pages/achievement/achievement.component
 import { changePathGuard } from '../auth/guards/change-path.guard';
 import { SurveyComponent } from './pages/survey/survey.component';
 import { ConfigComponent } from './pages/config/config.component';
+import { UsersSurveyComponent } from './pages/users-survey/users-survey.component';
 
 @NgModule({
     imports: [
@@ -54,6 +55,11 @@ import { ConfigComponent } from './pages/config/config.component';
                 path: 'configuracion',
                 canActivate: [isAuthenticatedGuard],
                 component: ConfigComponent,
+            },
+            {
+                path: 'encuesta-usuarios',
+                canActivate: [isAuthenticatedGuard],
+                component: UsersSurveyComponent,
             },
         ]),
     ],
