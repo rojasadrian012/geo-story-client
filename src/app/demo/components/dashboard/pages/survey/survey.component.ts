@@ -21,6 +21,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { FormatNewSurve as FormatNewSurvey } from './interfaces/format-new-survey.interface';
 import { ConfigService } from 'src/app/demo/service/config.service';
+import { SurveyType } from './interfaces/survey-type.emun';
 
 interface SurveyResponse {
     [key: string]: {
@@ -68,7 +69,7 @@ export class SurveyComponent implements OnInit {
     getSurveyList() {
         this.surveyService.getSurveys(this.isFirstSurvey()).subscribe({
             next: (res) => {
-                this.surveys.set(res);                
+                this.surveys.set(res);
                 this.configForm();
             },
             error: (err) => console.log(err),
@@ -95,6 +96,9 @@ export class SurveyComponent implements OnInit {
                 (surveyId) => ({
                     surveyId: surveyId,
                     response: formValue[surveyId].answer.value,
+                    type: this.isFirstSurvey()
+                        ? SurveyType.FIRST
+                        : SurveyType.SECOND,
                 })
             );
 
@@ -122,14 +126,13 @@ export class SurveyComponent implements OnInit {
     getFirstSurveyConfig() {
         this.configService.getConfigs().subscribe({
             next: (res) => {
-                                
                 const firstSurveyConfig = res.find(
                     (config) => config.name === 'firstSurvey'
                 );
-                
+
                 this.isFirstSurvey.set(
                     firstSurveyConfig ? firstSurveyConfig.value : false
-                );                
+                );
 
                 this.getSurveyList();
             },
