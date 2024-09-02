@@ -67,6 +67,11 @@ export class MenuService {
                                   routerLink: ['/usuarios'],
                               },
                               {
+                                  label: 'Encuetas de Usuarios',
+                                  icon: 'pi pi-fw pi-chart-line',
+                                  routerLink: ['/encuesta-usuarios'],
+                              },
+                              {
                                   label: 'Configuraciones',
                                   icon: 'pi pi-fw pi-cog',
                                   routerLink: ['/configuracion'],

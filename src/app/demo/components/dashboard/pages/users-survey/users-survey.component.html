@@ -1,0 +1,130 @@
+<app-geo-center-container title="Encuestas de los Usuarios">
+
+    @if (userSurveys()) {
+        
+        <p class="title">Primera encuesta</p>
+        
+        <p class="sub-title">Completado</p>
+
+        @if (userSurveys().firstSurvey.completed.length) {
+            <p-table 
+                [value]="userSurveys().firstSurvey.completed" 
+                [tableStyle]="{ 'min-width': '50rem' }"
+                styleClass="p-datatable-striped" 
+                [scrollable]="true" 
+                scrollHeight="200px" 
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Id de Usuario</th>
+                        <th>Usuario</th>
+                        <th>Nombre Completo</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.nickname }}</td>
+                        <td>{{ user.fullName }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        }
+        @else {
+            <p class="else">Ningún usuario a completado la primera encuesta.</p>
+        }
+
+        <p class="sub-title">No completado</p>
+        
+        @if (userSurveys().firstSurvey.notCompleted.length){
+            <p-table 
+                [value]="userSurveys().firstSurvey.notCompleted" 
+                [tableStyle]="{ 'min-width': '50rem' }"
+                styleClass="p-datatable-striped" 
+                [scrollable]="true" 
+                scrollHeight="200px" 
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Id de Usuario</th>
+                        <th>Usuario</th>
+                        <th>Nombre Completo</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.nickname }}</td>
+                        <td>{{ user.fullName }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        }
+        @else {
+            <p class="else">Todos los usuarios a completado la primera encuesta.</p>
+        }
+        
+        <p class="title">Segunda encuesta</p>
+
+        <p class="sub-title">Completado</p>
+
+        @if (userSurveys().secondSurvey.completed.length) {
+            <p-table 
+                [value]="userSurveys().secondSurvey.completed" 
+                [tableStyle]="{ 'min-width': '50rem' }"
+                styleClass="p-datatable-striped" 
+                [scrollable]="true" 
+                scrollHeight="200px" 
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Id de Usuario</th>
+                        <th>Usuario</th>
+                        <th>Nombre Completo</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.nickname }}</td>
+                        <td>{{ user.fullName }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        }
+        @else {
+            <p class="else">Ningún usuario a completado la segunda encuesta.</p>
+        }
+
+        <p class="sub-title">No completado</p>
+
+        @if (userSurveys().secondSurvey.notCompleted.length) {
+            <p-table 
+                [value]="userSurveys().secondSurvey.notCompleted" 
+                [tableStyle]="{ 'min-width': '50rem' }"
+                styleClass="p-datatable-striped" 
+                [scrollable]="true" 
+                scrollHeight="200px" 
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Id de Usuario</th>
+                        <th>Usuario</th>
+                        <th>Nombre Completo</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.nickname }}</td>
+                        <td>{{ user.fullName }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        }
+        @else {
+            <p class="else">Todos los usuarios a completado la segunda encuesta.</p>
+        }
+    }
+    
+</app-geo-center-container>

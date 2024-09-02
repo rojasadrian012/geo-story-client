@@ -25,11 +25,7 @@ import { SurveyType } from './interfaces/survey-type.emun';
 
 interface SurveyResponse {
     [key: string]: {
-        answer: {
-            id: string;
-            name: string;
-            value: string;
-        };
+        answer: string;
     };
 }
 
@@ -48,6 +44,46 @@ interface SurveyResponse {
         ToastModule,
     ],
     templateUrl: './survey.component.html',
+    styles: `
+        
+        label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="radio"] {
+            margin-right: 1rem;
+            margin-left: 2rem;
+            margin-top: 0;
+            accent-color: var(--primary-color); /* Esto cambia el color del radio button */
+            border: 2px solid transparent; /* Elimina el borde predeterminado */
+            outline: none; /* Elimina el borde al enfocar */
+            appearance: none; /* Elimina el estilo predeterminado del radio button */
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 2px var(--primary-color); /* Añade un borde personalizado */
+            display: grid;
+            place-content: center;
+        }
+
+        input[type="radio"]:checked::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--primary-color); /* Color del punto interior */
+        }
+
+        label:hover {
+            color: var(--primary-color); 
+        }
+
+
+    `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [MessageService],
 })
@@ -59,8 +95,9 @@ export class SurveyComponent implements OnInit {
 
     public surveys = signal<Survey[] | null>(null); // Las preguntas de la encuesta
     public isFirstSurvey = signal(false);
-    public surveyForm: FormGroup;
     public showForm = signal(false);
+
+    public surveyForm: FormGroup;
 
     ngOnInit(): void {
         this.getFirstSurveyConfig();
@@ -95,7 +132,7 @@ export class SurveyComponent implements OnInit {
             const responses: FormatNewSurvey[] = Object.keys(formValue).map(
                 (surveyId) => ({
                     surveyId: surveyId,
-                    response: formValue[surveyId].answer.value,
+                    response: formValue[surveyId].answer,
                     type: this.isFirstSurvey()
                         ? SurveyType.FIRST
                         : SurveyType.SECOND,
@@ -115,9 +152,8 @@ export class SurveyComponent implements OnInit {
                 error: (err) =>
                     this.messageService.add({
                         severity: 'error',
-                        detail: 'Error.',
-                        summary:
-                            'Ocurrió un error al guardar la encuesta' + err,
+                        detail: err.error.message,
+                        summary: 'Ocurrió un error al guardar la encuesta',
                     }),
             });
         }
@@ -138,5 +174,12 @@ export class SurveyComponent implements OnInit {
             },
             error: (err) => console.log(err),
         });
+    }
+
+    selected(surveyId: string, value: string) {
+        const control = this.surveyForm.get([surveyId, 'answer']);
+        if (control) {
+            control.setValue(value); // Actualizamos el valor seleccionado en el FormControl
+        }
     }
 }
