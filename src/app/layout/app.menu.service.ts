@@ -3,11 +3,19 @@ import { Subject } from 'rxjs';
 import { MenuChangeEvent } from './api/menuchangeevent';
 import { User } from '../demo/components/auth/interfaces/user.interface.interface';
 
+interface MenuItem {
+    label: string;
+    icon?: string;
+    routerLink?: string[];
+    items?: MenuItem[];
+}
+
+
 @Injectable({
     providedIn: 'root',
 })
 export class MenuService {
-    public model = signal<any[]>([]);
+    public model = signal<MenuItem[]>([]);
     public currentUser = signal<User | null>(this.getCurrentUser());
 
     private menuSource = new Subject<MenuChangeEvent>();
@@ -27,6 +35,9 @@ export class MenuService {
 
     updateModel(): void {
         const isAdmin = this.currentUser()?.roles.includes('admin');
+
+        console.log(this.showSurveyInMenu());
+
 
         const items = [
             {
@@ -51,36 +62,36 @@ export class MenuService {
             },
             this.showSurveyInMenu()
                 ? {
-                      label: 'Encuesta',
-                      icon: 'pi pi-fw pi-pencil',
-                      routerLink: ['/encuesta'],
-                  }
+                    label: 'Encuesta',
+                    icon: 'pi pi-fw pi-pencil',
+                    routerLink: ['/encuesta'],
+                }
                 : null,
             ...(isAdmin
                 ? [
-                      {
-                          label: 'Panel de Administración',
-                          items: [
-                              {
-                                  label: 'Gestión de Usuarios',
-                                  icon: 'pi pi-fw pi-users',
-                                  routerLink: ['/usuarios'],
-                              },
-                              {
-                                  label: 'Encuetas de Usuarios',
-                                  icon: 'pi pi-fw pi-chart-line',
-                                  routerLink: ['/encuesta-usuarios'],
-                              },
-                              {
-                                  label: 'Configuraciones',
-                                  icon: 'pi pi-fw pi-cog',
-                                  routerLink: ['/configuracion'],
-                              },
-                          ],
-                      },
-                  ]
+                    {
+                        label: 'Panel de Administración',
+                        items: [
+                            {
+                                label: 'Gestión de Usuarios',
+                                icon: 'pi pi-fw pi-users',
+                                routerLink: ['/usuarios'],
+                            },
+                            {
+                                label: 'Encuetas de Usuarios',
+                                icon: 'pi pi-fw pi-chart-line',
+                                routerLink: ['/encuesta-usuarios'],
+                            },
+                            {
+                                label: 'Configuraciones',
+                                icon: 'pi pi-fw pi-cog',
+                                routerLink: ['/configuracion'],
+                            },
+                        ],
+                    },
+                ]
                 : []),
-        ].filter((item) => item !== null); // Filtrar los elementos nulos
+        ].filter((item) => item !== null) as MenuItem[];
 
         this.model.set([
             {
@@ -88,6 +99,9 @@ export class MenuService {
                 items: items,
             },
         ]);
+
+        console.log(this.model());
+
     }
 
     getCurrentUser(): User {
