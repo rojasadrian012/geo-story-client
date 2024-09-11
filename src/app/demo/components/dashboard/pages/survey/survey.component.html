@@ -9,8 +9,8 @@
         <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
             @for (survey of surveys(); track $index; let i = $index) {
                 <div [formGroupName]="survey.id">
-                    <p class="font-semibold text-color-secondary my-2">{{ survey.question }}</p>
-                    @for (option of survey.surveyOptions; track $index) {
+                    <p class="font-semibold text-color-secondary my-2">{{ i + 1 }} - {{ survey.question }}</p> 
+                    @for (option of survey.surveyOptions; track $index;) {
                         <label>
                             <input 
                                 type="radio" 
