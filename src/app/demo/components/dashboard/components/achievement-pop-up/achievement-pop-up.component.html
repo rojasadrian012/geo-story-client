@@ -1,6 +1,9 @@
 @if (showNewAchievement()) {
     <div class="popup">
-        <div class="content">
+        <div
+            class="content"
+            [class]='isDark() ? "dark" : "white"'
+            >
             <h4 class="mb-0">
                 🏆 ¡Logro <span class="font-bold">{{ popUpService.text().title }}</span> desbloqueado!
             </h4>

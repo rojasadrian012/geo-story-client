@@ -50,10 +50,7 @@ export class UsersSurveyComponent implements OnInit {
 
     getFisrtAndSecondSurveys() {
         this.userSurveyService.getFirtsAndSecondSurvey().subscribe({
-            next: (res) => {
-                this.userSurveys.set(res);
-                console.log(this.userSurveys());
-            },
+            next: (res) => this.userSurveys.set(res),
             error: (err) => console.log(err),
         });
     }
