@@ -16,7 +16,9 @@
         @if (users()?.rankingUsers) {
 
             @for (user of users().rankingUsers; track user.user_id) {
-                <app-ranking-item [user]="user" />
+                @if (!(user.user_nickname ==='admin')) {
+                    <app-ranking-item [user]="user" />
+                }
             }
 
             @empty {

@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -42,6 +42,8 @@ export class RankingComponent implements OnInit {
                 `${environment.baseUrl}/quiz/ranking`
             )
             .subscribe((data) => {
+                console.log(data);
+                
                 this.users.set(data);
                 this.showRanking.set(
                     data.rankingUsers.some(
