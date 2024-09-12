@@ -11,6 +11,7 @@ import { changePathGuard } from '../auth/guards/change-path.guard';
 import { SurveyComponent } from './pages/survey/survey.component';
 import { ConfigComponent } from './pages/config/config.component';
 import { UsersSurveyComponent } from './pages/users-survey/users-survey.component';
+import { ResultsComponent } from './pages/results/results.component';
 
 @NgModule({
     imports: [
@@ -61,6 +62,11 @@ import { UsersSurveyComponent } from './pages/users-survey/users-survey.componen
                 canActivate: [isAuthenticatedGuard],
                 component: UsersSurveyComponent,
             },
+            {
+                path: 'resultados',
+                canActivate: [isAuthenticatedGuard],
+                component: ResultsComponent
+            }
         ]),
     ],
     exports: [RouterModule],
