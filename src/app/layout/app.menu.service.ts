@@ -36,9 +36,6 @@ export class MenuService {
     updateModel(): void {
         const isAdmin = this.currentUser()?.roles.includes('admin');
 
-        console.log(this.showSurveyInMenu());
-
-
         const items = [
             {
                 label: 'Lecciones',
@@ -99,8 +96,6 @@ export class MenuService {
                 items: items,
             },
         ]);
-
-        console.log(this.model());
 
     }
 
