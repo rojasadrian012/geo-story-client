@@ -10,7 +10,6 @@ interface MenuItem {
     items?: MenuItem[];
 }
 
-
 @Injectable({
     providedIn: 'root',
 })
@@ -57,36 +56,41 @@ export class MenuService {
                 icon: 'pi pi-fw pi-user',
                 routerLink: ['/mi-perfil'],
             },
+            {
+                label: 'Resultados',
+                icon: 'pi pi-fw pi-bitcoin',
+                routerLink: ['/resultados'],
+            },
             this.showSurveyInMenu()
                 ? {
-                    label: 'Encuesta',
-                    icon: 'pi pi-fw pi-pencil',
-                    routerLink: ['/encuesta'],
-                }
+                      label: 'Encuesta',
+                      icon: 'pi pi-fw pi-pencil',
+                      routerLink: ['/encuesta'],
+                  }
                 : null,
             ...(isAdmin
                 ? [
-                    {
-                        label: 'Panel de Administración',
-                        items: [
-                            {
-                                label: 'Gestión de Usuarios',
-                                icon: 'pi pi-fw pi-users',
-                                routerLink: ['/usuarios'],
-                            },
-                            {
-                                label: 'Encuetas de Usuarios',
-                                icon: 'pi pi-fw pi-chart-line',
-                                routerLink: ['/encuesta-usuarios'],
-                            },
-                            {
-                                label: 'Configuraciones',
-                                icon: 'pi pi-fw pi-cog',
-                                routerLink: ['/configuracion'],
-                            },
-                        ],
-                    },
-                ]
+                      {
+                          label: 'Panel de Administración',
+                          items: [
+                              {
+                                  label: 'Gestión de Usuarios',
+                                  icon: 'pi pi-fw pi-users',
+                                  routerLink: ['/usuarios'],
+                              },
+                              {
+                                  label: 'Encuetas de Usuarios',
+                                  icon: 'pi pi-fw pi-chart-line',
+                                  routerLink: ['/encuesta-usuarios'],
+                              },
+                              {
+                                  label: 'Configuraciones',
+                                  icon: 'pi pi-fw pi-cog',
+                                  routerLink: ['/configuracion'],
+                              },
+                          ],
+                      },
+                  ]
                 : []),
         ].filter((item) => item !== null) as MenuItem[];
 
@@ -96,7 +100,6 @@ export class MenuService {
                 items: items,
             },
         ]);
-
     }
 
     getCurrentUser(): User {
