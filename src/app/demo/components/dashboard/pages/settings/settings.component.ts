@@ -19,7 +19,7 @@ import { AuthService } from '../../../auth/services/auth.service';
     templateUrl: './settings.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsComponent {
+export default class SettingsComponent {
     public authService = inject(AuthService);
 
     public currenUser = signal<User | null>(

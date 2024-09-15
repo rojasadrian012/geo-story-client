@@ -46,7 +46,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [MessageService, ConfirmationService],
 })
-export class UsuariosComponent implements OnInit {
+export default class UsuariosComponent implements OnInit {
     private readonly userService = inject(UserServiceService);
     private readonly confirmationService = inject(ConfirmationService);
     private readonly messageService = inject(MessageService);

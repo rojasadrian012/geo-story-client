@@ -40,7 +40,7 @@ import { TableModule } from 'primeng/table';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersSurveyComponent implements OnInit {
+export default class UsersSurveyComponent implements OnInit {
     private readonly userSurveyService = inject(UserSurveyService);
     public userSurveys = signal<null | UserSurveyResponse>(null);
 

@@ -40,7 +40,7 @@ import { CategoryService } from '../../components/category/services/category.ser
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [MessageService],
 })
-export class LessonComponent {
+export default class LessonComponent {
     private readonly route = inject(ActivatedRoute);
     private readonly soundsService = inject(SoundsService);
     private readonly quizStatusService = inject(QuizStatusService);

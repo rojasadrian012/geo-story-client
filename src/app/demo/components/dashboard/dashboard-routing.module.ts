@@ -1,17 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { LessonComponent } from './pages/lesson/lesson.component';
 import { isAuthenticatedGuard } from '../auth/guards/is-authenticated.guard';
-import { RankingComponent } from './pages/ranking/ranking.component';
-import { SettingsComponent } from './pages/settings/settings.component';
-import { UsuariosComponent } from './pages/usuarios/usuarios.component';
-import { ArcheivementComponent } from './pages/achievement/achievement.component';
 import { changePathGuard } from '../auth/guards/change-path.guard';
-import { SurveyComponent } from './pages/survey/survey.component';
-import { ConfigComponent } from './pages/config/config.component';
-import { UsersSurveyComponent } from './pages/users-survey/users-survey.component';
-import { ResultsComponent } from './pages/results/results.component';
 
 @NgModule({
     imports: [
@@ -25,48 +16,60 @@ import { ResultsComponent } from './pages/results/results.component';
                 path: 'lesson/:level/:id',
                 canActivate: [isAuthenticatedGuard],
                 canDeactivate: [changePathGuard],
-                component: LessonComponent,
+                loadComponent: () => import('./pages/lesson/lesson.component'),
             },
             {
                 path: 'logros',
                 canActivate: [isAuthenticatedGuard],
-                component: ArcheivementComponent,
+                loadComponent: () =>
+                    import('./pages/achievement/achievement.component'),
             },
             {
                 path: 'ranking',
                 canActivate: [isAuthenticatedGuard],
-                component: RankingComponent,
+                loadComponent: () =>
+                    import('./pages/ranking/ranking.component'),
             },
             {
                 path: 'mi-perfil',
                 canActivate: [isAuthenticatedGuard],
-                component: SettingsComponent,
+                loadComponent: () =>
+                    import('./pages/settings/settings.component'),
             },
             {
                 path: 'usuarios',
                 canActivate: [isAuthenticatedGuard],
-                component: UsuariosComponent,
+                loadComponent: () =>
+                    import('./pages/usuarios/usuarios.component'),
             },
             {
                 path: 'encuesta',
                 canActivate: [isAuthenticatedGuard],
-                component: SurveyComponent,
+                loadComponent: () => import('./pages/survey/survey.component'),
             },
             {
                 path: 'configuracion',
                 canActivate: [isAuthenticatedGuard],
-                component: ConfigComponent,
+                loadComponent: () => import('./pages/config/config.component'),
             },
             {
                 path: 'encuesta-usuarios',
                 canActivate: [isAuthenticatedGuard],
-                component: UsersSurveyComponent,
+                loadComponent: () =>
+                    import('./pages/users-survey/users-survey.component'),
             },
             {
                 path: 'resultados',
                 canActivate: [isAuthenticatedGuard],
-                component: ResultsComponent
-            }
+                loadComponent: () =>
+                    import('./pages/results/results.component'),
+            },
+            {
+                path: 'graficos',
+                canActivate: [isAuthenticatedGuard],
+                loadComponent: () =>
+                    import('./pages/graphics/graphics.component'),
+            },
         ]),
     ],
     exports: [RouterModule],

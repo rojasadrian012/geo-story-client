@@ -87,7 +87,7 @@ interface SurveyResponse {
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [MessageService],
 })
-export class SurveyComponent implements OnInit {
+export default class SurveyComponent implements OnInit {
     private fb = inject(FormBuilder);
     private readonly surveyService = inject(SurveyService);
     private readonly messageService = inject(MessageService);

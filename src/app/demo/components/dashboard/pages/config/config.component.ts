@@ -31,7 +31,7 @@ import { MenuService } from '../../../../../layout/app.menu.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [MessageService],
 })
-export class ConfigComponent implements OnInit {
+export default class ConfigComponent implements OnInit {
     private readonly configService = inject(ConfigService);
     private readonly messageService = inject(MessageService);
     private readonly menuService = inject(MenuService);

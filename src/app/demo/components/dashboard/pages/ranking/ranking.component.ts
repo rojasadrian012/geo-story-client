@@ -26,7 +26,7 @@ import { GeoLoadingComponent } from '../../components/core/geo-loading/geo-loadi
     templateUrl: './ranking.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RankingComponent implements OnInit {
+export default class RankingComponent implements OnInit {
     private readonly http = inject(HttpClient);
 
     public users = signal<UsersRankingAndCurrentUser | undefined>(undefined);

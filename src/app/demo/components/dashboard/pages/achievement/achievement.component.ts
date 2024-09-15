@@ -46,7 +46,7 @@ import { GeoLoadingComponent } from '../../components/core/geo-loading/geo-loadi
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArcheivementComponent implements OnInit {
+export default class ArcheivementComponent implements OnInit {
     private readonly achievementsService = inject(AchievementPageService);
 
     public achievementsCurrentUser = signal<AchievementCurrentUser[]>([]);
