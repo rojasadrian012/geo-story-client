@@ -1,0 +1,96 @@
+<app-geo-center-container title="Gráficos">
+    <!-- Componente en pantallas grandes -->
+     @if (!isMobileView()) {
+
+         <div class="flex justify-content-around flex-wrap">
+             <div
+                 class="flex align-items-center justify-content-center h-2rem font-bold border-round m-2"
+             >
+                 Primera Encuesta
+             </div>
+             <div
+                 class="flex align-items-center justify-content-center h-2rem font-bold border-round m-2"
+             >
+                 Segunda Encuesta
+             </div>
+         </div>
+         @for (group of combinedDataChart(); track $index) {
+            @defer (on viewport) {
+                <p-splitter [panelSizes]="[50, 50]" styleClass="mb-3">
+                    <!-- Primer gráfico -->
+                    <ng-template pTemplate>
+                        <div
+                            class="col flex flex-column align-items-center justify-content-start"
+                        >
+                            <p class="text-center">{{ group.firstChart?.question }}</p>
+                            <p-chart
+                                type="pie"
+                                [data]="group.firstChart?.data"
+                                [options]="options()"
+                                responsive="true"
+                            />
+                        </div>
+                    </ng-template>
+                    <!-- Segundo gráfico si existe -->
+                    <ng-template pTemplate *ngIf="group.secondChart">
+                        <div
+                            class="col flex flex-column align-items-center justify-content-start"
+                        >
+                            <p class="text-center">{{ group.secondChart?.question }}</p>
+                            <p-chart
+                                type="pie"
+                                [data]="group.secondChart?.data"
+                                [options]="options()"
+                                responsive="true"
+                            />
+                        </div>
+                    </ng-template>
+                </p-splitter>
+            }
+            @placeholder {
+                <geo-loading></geo-loading>
+            }
+         }
+     }
+     <!-- Componente en pantallas pequeñas -->
+     @else {
+         @for (group of combinedDataChart(); track $index) {
+            <div
+                class="flex align-items-center justify-content-center h-2rem font-bold border-round m-2"
+            >
+                Primera Encuesta
+            </div>
+            <div
+                class="col flex flex-column align-items-center justify-content-start mb-4"
+            >
+                <p class="text-center">{{ group.firstChart?.question }}</p>
+                <p-chart
+                    type="pie"
+                    [data]="group.firstChart?.data"
+                    [options]="options()"
+                    responsive="true"
+                />
+            </div>
+            <div
+                class="col flex flex-column align-items-center justify-content-start mb-4"
+                *ngIf="group.secondChart"
+            >
+                <div
+                    class="flex align-items-center justify-content-center h-2rem font-bold border-round m-2"
+                >
+                    Segunda Encuesta
+                </div>
+                <p class="text-center">{{ group.secondChart?.question }}</p>
+                <p-chart
+                    type="pie"
+                    [data]="group.secondChart?.data"
+                    [options]="options()"
+                    responsive="true"
+                    />
+            </div>
+        }
+            
+    }
+        
+</app-geo-center-container>
+    
