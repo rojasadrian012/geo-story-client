@@ -56,11 +56,6 @@ export class MenuService {
                 icon: 'pi pi-fw pi-user',
                 routerLink: ['/mi-perfil'],
             },
-            {
-                label: 'Resultados',
-                icon: 'pi pi-fw pi-bitcoin',
-                routerLink: ['/resultados'],
-            },
             this.showSurveyInMenu()
                 ? {
                       label: 'Encuesta',
@@ -87,6 +82,16 @@ export class MenuService {
                                   label: 'Configuraciones',
                                   icon: 'pi pi-fw pi-cog',
                                   routerLink: ['/configuracion'],
+                              },
+                              {
+                                  label: 'Resultados',
+                                  icon: 'pi pi-fw pi-list', // Cambié a un ícono más relacionado con resultados.
+                                  routerLink: ['/resultados'],
+                              },
+                              {
+                                  label: 'Gráficos',
+                                  icon: 'pi pi-fw pi-chart-pie', // Cambié a un ícono relacionado con gráficos.
+                                  routerLink: ['/graficos'],
                               },
                           ],
                       },
