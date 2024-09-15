@@ -6,8 +6,7 @@ import { RouterModule } from '@angular/router';
         RouterModule.forChild([
             {
                 path: 'login',
-                loadChildren: () =>
-                    import('./login/login.module').then((m) => m.LoginModule),
+                loadComponent: () => import('./login/login.component'),
             },
             { path: '**', redirectTo: '/notfound' },
         ]),

@@ -1,14 +1,35 @@
-import { Component, inject, model } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    model,
+} from '@angular/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { AuthService } from '../services/auth.service';
 
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { PasswordModule } from 'primeng/password';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
     selector: 'app-login',
+    standalone: true,
+    imports: [
+        FormsModule,
+
+        ToastModule,
+        PasswordModule,
+        InputTextModule,
+        PasswordModule,
+        ButtonModule,
+    ],
     templateUrl: './login.component.html',
-    providers: [MessageService],
     styles: [
         `
             :host ::ng-deep .pi-eye,
@@ -19,8 +40,10 @@ import { Router } from '@angular/router';
             }
         `,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [MessageService],
 })
-export class LoginComponent {
+export default class LoginComponent {
     private messageService = inject(MessageService);
     private authService = inject(AuthService);
     private router = inject(Router);
@@ -31,7 +54,6 @@ export class LoginComponent {
     nickname = model('');
 
     login() {
-        
         this.authService.login(this.nickname(), this.password()).subscribe({
             next: () => {
                 this.router.navigateByUrl('/');
@@ -69,8 +91,10 @@ export class LoginComponent {
 
     formatNickname() {
         this.nickname.set(
-            this.nickname().toLowerCase().replace(/[^a-z0-9]/g, '').trim()
+            this.nickname()
+                .toLowerCase()
+                .replace(/[^a-z0-9]/g, '')
+                .trim()
         );
     }
-    
 }
