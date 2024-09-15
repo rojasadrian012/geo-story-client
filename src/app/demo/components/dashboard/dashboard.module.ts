@@ -6,11 +6,6 @@ import { CategoryComponent } from './components/category/category.component';
 
 @NgModule({
     imports: [
-        // StyleClassModule,
-        // PanelMenuModule,
-        // ToastModule,
-        // HintComponent,
-        // QuestionsAndAnswersComponent,
         CategoryComponent,
         DashboardsRoutingModule,
     ],

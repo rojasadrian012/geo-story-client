@@ -26,13 +26,6 @@ import player from 'lottie-web';
             provide: LocationStrategy,
             useClass: PathLocationStrategy
         },
-        CountryService,
-        CustomerService,
-        EventService,
-        IconService,
-        NodeService,
-        PhotoService,
-        ProductService,
 
         [provideHttpClient(withInterceptors([bearerTokenInterceptor]))],
         provideLottieOptions({ player: () => player }),
