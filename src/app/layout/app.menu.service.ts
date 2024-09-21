@@ -79,11 +79,6 @@ export class MenuService {
                                   routerLink: ['/encuesta-usuarios'],
                               },
                               {
-                                  label: 'Configuraciones',
-                                  icon: 'pi pi-fw pi-cog',
-                                  routerLink: ['/configuracion'],
-                              },
-                              {
                                   label: 'Respuestas',
                                   icon: 'pi pi-fw pi-list', // Cambié a un ícono más relacionado con resultados.
                                   routerLink: ['/resultados'],
@@ -92,6 +87,11 @@ export class MenuService {
                                   label: 'Gráficos',
                                   icon: 'pi pi-fw pi-chart-pie', // Cambié a un ícono relacionado con gráficos.
                                   routerLink: ['/graficos'],
+                              },
+                              {
+                                  label: 'Configuraciones',
+                                  icon: 'pi pi-fw pi-cog',
+                                  routerLink: ['/configuracion'],
                               },
                           ],
                       },
