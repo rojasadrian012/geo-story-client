@@ -23,16 +23,16 @@ import { GeoCenterContainerComponent } from 'src/app/core/geo-center-container/g
 
 import { UserServiceService } from './services/userService.service';
 import { UserListResponse } from './interface/user-list-response.interface';
-
+import { GeoLoadingComponent } from 'src/app/core/geo-loading/geo-loading.component';
 
 @Component({
     selector: 'app-usuarios',
     standalone: true,
     imports: [
         GeoCenterContainerComponent,
+        GeoLoadingComponent,
 
         FormsModule,
-        NgIf,
 
         ToastModule,
         TableModule,
@@ -80,6 +80,7 @@ export default class UsuariosComponent implements OnInit {
             value: 'user',
         },
     ]);
+    public show = signal(false);
 
     ngOnInit(): void {
         this.getUsers();
@@ -100,6 +101,7 @@ export default class UsuariosComponent implements OnInit {
         this.userService.getUsers().subscribe({
             next: (response) => {
                 this.users.set(response);
+                this.show.set(true);
             },
             error: (error) => console.error(error),
         });

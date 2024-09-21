@@ -60,11 +60,11 @@ Chart.register(ChartDataLabels);
 })
 export default class GraphicsComponent {
     private readonly graphicsService = inject(GraphicService);
-    private readonly layoutService = inject(LayoutService);
-
+    
     public chartData = signal<Data[]>([]);
     public combinedDataChart = signal<CombinedData[]>([]);
     public options = signal<any>(null);
+    public show = signal(false)
 
     ngOnInit() {
         this.getData();
@@ -155,6 +155,7 @@ export default class GraphicsComponent {
                 }));
 
                 this.combinedDataChart.set(combinedData);
+                this.show.set(true)
             },
             error: (err) => console.log(err),
         });

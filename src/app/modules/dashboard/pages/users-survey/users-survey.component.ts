@@ -5,18 +5,23 @@ import {
     OnInit,
     signal,
 } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 import { TableModule } from 'primeng/table';
 
 import { UserSurveyService } from './services/user-survey.service';
 import { UserSurveyResponse } from './interfaces/user-survey-response.interface';
 import { GeoCenterContainerComponent } from 'src/app/core/geo-center-container/geo-center-container.component';
+import { GeoLoadingComponent } from 'src/app/core/geo-loading/geo-loading.component';
 
 @Component({
     selector: 'app-users-survey',
     standalone: true,
-    imports: [GeoCenterContainerComponent, NgIf, TableModule],
+    imports: [
+        GeoCenterContainerComponent,
+        GeoLoadingComponent, 
+        
+        TableModule
+    ],
     templateUrl: './users-survey.component.html',
     styles: `
         .title {

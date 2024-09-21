@@ -1,4 +1,4 @@
-import { JsonPipe, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -19,6 +19,7 @@ import { GeoLoadingComponent } from 'src/app/core/geo-loading/geo-loading.compon
     imports: [
         NgIf,
         NgFor,
+
         GeoCenterContainerComponent,
         RankingItemComponent,
         GeoLoadingComponent,
@@ -41,13 +42,11 @@ export default class RankingComponent implements OnInit {
             .get<UsersRankingAndCurrentUser>(
                 `${environment.baseUrl}/quiz/ranking`
             )
-            .subscribe((data) => {
-                this.users.set(data);
-                this.showRanking.set(
-                    data.rankingUsers.some(
-                        (user) => parseInt(user.score, 10) > 0
-                    )
-                );
+            .subscribe({
+                next: (users) => {
+                    this.users.set(users);
+                    this.showRanking.set(true);
+                },
             });
     }
 }

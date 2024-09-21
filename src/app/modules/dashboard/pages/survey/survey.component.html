@@ -4,7 +4,7 @@
 
     <p-toast/>
 
-    @if (showForm()) {
+    @defer (when showForm()) {
 
         <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
             @for (survey of surveys(); track $index; let i = $index) {
@@ -32,5 +32,8 @@
             ></p-button>
         </form>
         
+    }
+    @placeholder {
+        <geo-loading />
     }
 </app-geo-center-container>

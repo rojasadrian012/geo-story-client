@@ -13,16 +13,18 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { MenuService } from '../../../../layout/app.menu.service';
+import { GeoLoadingComponent } from 'src/app/core/geo-loading/geo-loading.component';
+import { ResponseConfig } from './interfaces/response-config.interface';
 
 @Component({
     selector: 'app-config',
     standalone: true,
     imports: [
         GeoCenterContainerComponent,
+        GeoLoadingComponent,
 
         ReactiveFormsModule,
         NgFor,
-        NgIf,
 
         CheckboxModule,
         ToastModule,
@@ -36,8 +38,9 @@ export default class ConfigComponent implements OnInit {
     private readonly messageService = inject(MessageService);
     private readonly menuService = inject(MenuService);
 
-    public configs = signal<undefined>(undefined);
+    public configs = signal<ResponseConfig[]>([]);
     public formGroup: FormGroup;
+    public show = signal(false);
 
     ngOnInit() {
         this.getConfigs();
@@ -59,6 +62,7 @@ export default class ConfigComponent implements OnInit {
             return acc;
         }, {});
         this.formGroup = new FormGroup(formControls);
+        this.show.set(true);
     }
 
     save(configName: string, checked: boolean) {

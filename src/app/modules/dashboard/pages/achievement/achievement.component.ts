@@ -26,7 +26,7 @@ import { GeoLoadingComponent } from 'src/app/core/geo-loading/geo-loading.compon
         GeoCenterContainerComponent,
         AchievementItemComponent,
         NormalAchievementItemComponent,
-        GeoLoadingComponent
+        GeoLoadingComponent,
     ],
     templateUrl: './achievement.component.html',
     styles: `
@@ -52,6 +52,7 @@ export default class ArcheivementComponent implements OnInit {
     public achievementsCurrentUser = signal<AchievementCurrentUser[]>([]);
     public allAchievements = signal<Achievement[]>([]);
     public currentUserName = signal<string | null>(null);
+    public show = signal(false);
 
     ngOnInit(): void {
         this.getAchievements();
@@ -72,6 +73,7 @@ export default class ArcheivementComponent implements OnInit {
                     response.achievementsCurrentUser
                 );
                 this.allAchievements.set(response.achievementsNoUnlocked);
+                this.show.set(true);
             },
             error: (error) => console.error(error),
         });

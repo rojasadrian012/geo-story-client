@@ -1,7 +1,7 @@
 <app-geo-center-container title="Configuraciones">
     <p-toast></p-toast>
 
-    @if(configs()){
+    @defer(when configs().length){
         <form class="flex flex-column gap-2" [formGroup]="formGroup">
             @for (config of configs(); track $index) {
                 <div class="flex align-items-center gap-2">
@@ -16,5 +16,8 @@
                 </div>
             }
         </form>
+    }
+    @placeholder {
+        <geo-loading />
     }
 </app-geo-center-container>

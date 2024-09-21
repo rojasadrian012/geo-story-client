@@ -1,5 +1,5 @@
 <app-geo-center-container title="Logros">
-    @defer (on viewport) {
+    @defer (when show()) {
         <ul class="ul-container">
             @for (achievementCurrentUser of achievementsCurrentUser(); track $index) {
                 <app-achievement-item [achievement]="achievementCurrentUser" />

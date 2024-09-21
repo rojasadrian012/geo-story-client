@@ -1,6 +1,5 @@
 <app-geo-center-container title="Top de Jugadores">
-
-    @defer (on viewport) {
+    @defer (when showRanking()) {
         @if (users()?.rankingUsers.length) {
             <p class="text-color-secondary text-2xl my-4">
                 <span class="text-primary font-bold">{{ users()?.currentUser.fullName }}</span>
@@ -27,9 +26,6 @@
                 </h2>
             }
         }
-    }
-    @loading {
-        <geo-loading />
     }
     @placeholder {
         <geo-loading />

@@ -24,6 +24,7 @@ import { FormatNewSurve as FormatNewSurvey } from './interfaces/format-new-surve
 import { GeoCenterContainerComponent } from 'src/app/core/geo-center-container/geo-center-container.component';
 import { SurveyType } from './interfaces/survey-type.emun';
 import { ConfigService } from 'src/app/shared/service/config.service';
+import { GeoLoadingComponent } from 'src/app/core/geo-loading/geo-loading.component';
 
 interface SurveyResponse {
     [key: string]: {
@@ -36,6 +37,7 @@ interface SurveyResponse {
     standalone: true,
     imports: [
         GeoCenterContainerComponent,
+        GeoLoadingComponent,
 
         NgFor,
         NgIf,

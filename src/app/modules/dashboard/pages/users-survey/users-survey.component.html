@@ -1,6 +1,6 @@
 <app-geo-center-container title="Encuestas de los Usuarios">
 
-    @if (userSurveys()) {
+    @defer (when userSurveys()) {
 
         <p class="title">Primera encuesta</p>
 
@@ -126,5 +126,7 @@
             <p class="else">Todos los usuarios a completado la segunda encuesta.</p>
         }
     }
-
+    @placeholder {
+        <geo-loading />
+    }
 </app-geo-center-container>
