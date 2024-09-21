@@ -2,9 +2,8 @@ import { OnInit, inject, signal, effect } from '@angular/core';
 import { Component } from '@angular/core';
 
 import { LayoutService } from './service/app.layout.service';
-import { User } from '../demo/components/auth/interfaces/user.interface.interface';
 import { MenuService } from './app.menu.service';
-import { ConfigService } from '../demo/service/config.service';
+import { ConfigService } from '../shared/service/config.service';
 
 @Component({
     selector: 'app-menu',

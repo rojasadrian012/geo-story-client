@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Subject } from 'rxjs';
 import { MenuChangeEvent } from './api/menuchangeevent';
-import { User } from '../demo/components/auth/interfaces/user.interface.interface';
+import { User } from '../modules/auth/interfaces/user.interface.interface';
 
 interface MenuItem {
     label: string;
