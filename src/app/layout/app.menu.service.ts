@@ -84,7 +84,7 @@ export class MenuService {
                                   routerLink: ['/configuracion'],
                               },
                               {
-                                  label: 'Resultados',
+                                  label: 'Respuestas',
                                   icon: 'pi pi-fw pi-list', // Cambié a un ícono más relacionado con resultados.
                                   routerLink: ['/resultados'],
                               },
