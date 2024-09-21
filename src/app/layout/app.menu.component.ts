@@ -1,4 +1,4 @@
-import { OnInit, inject, signal, effect } from '@angular/core';
+import { OnInit, inject } from '@angular/core';
 import { Component } from '@angular/core';
 
 import { LayoutService } from './service/app.layout.service';
