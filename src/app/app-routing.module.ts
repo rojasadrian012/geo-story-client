@@ -1,8 +1,8 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { NotfoundComponent } from './demo/components/notfound/notfound.component';
+import { NotfoundComponent } from './modules/notfound/notfound.component';
 import { AppLayoutComponent } from './layout/app.layout.component';
-import { isAuthenticatedGuard } from './demo/components/auth/guards/is-authenticated.guard';
+import { isAuthenticatedGuard } from './modules/auth/guards/is-authenticated.guard';
 
 @NgModule({
     imports: [
@@ -17,7 +17,7 @@ import { isAuthenticatedGuard } from './demo/components/auth/guards/is-authentic
                             path: '',
                             loadChildren: () =>
                                 import(
-                                    './demo/components/dashboard/dashboard.module'
+                                    './modules/dashboard/dashboard.module'
                                 ).then((m) => m.DashboardModule),
                         },
                     ],
@@ -25,7 +25,7 @@ import { isAuthenticatedGuard } from './demo/components/auth/guards/is-authentic
                 {
                     path: 'auth',
                     loadChildren: () =>
-                        import('./demo/components/auth/auth.module').then(
+                        import('./modules/auth/auth.module').then(
                             (m) => m.AuthModule
                         ),
                 },

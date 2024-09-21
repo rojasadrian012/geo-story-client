@@ -1,8 +1,8 @@
 import { Component, OnInit, computed, effect, inject } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 
-import { AuthService } from './demo/components/auth/services/auth.service';
-import { AuthStatus } from './demo/components/auth/interfaces/auth-status.enum';
+import { AuthService } from './modules/auth/services/auth.service';
+import { AuthStatus } from './modules/auth/interfaces/auth-status.enum';
 import { Router } from '@angular/router';
 
 @Component({

@@ -5,10 +5,13 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
-import { NotfoundComponent } from './demo/components/notfound/notfound.component';
-import { bearerTokenInterceptor } from './demo/interceptor/bearer-token.interceptor';
+import { NotfoundComponent } from './modules/notfound/notfound.component';
+import { bearerTokenInterceptor } from './shared/interceptor/bearer-token.interceptor';
 
-import { provideCacheableAnimationLoader, provideLottieOptions } from 'ngx-lottie';
+import {
+    provideCacheableAnimationLoader,
+    provideLottieOptions,
+} from 'ngx-lottie';
 import player from 'lottie-web';
 
 @NgModule({
@@ -17,7 +20,7 @@ import player from 'lottie-web';
     providers: [
         {
             provide: LocationStrategy,
-            useClass: PathLocationStrategy
+            useClass: PathLocationStrategy,
         },
 
         [provideHttpClient(withInterceptors([bearerTokenInterceptor]))],
@@ -26,4 +29,4 @@ import player from 'lottie-web';
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
