@@ -19,8 +19,10 @@ export class AppMenuComponent implements OnInit {
     }
 
     getConfigs() {
+        this.menuService.updateModel();
         this.configService.getConfigs().subscribe({
             next: (res) => {
+                                
                 const showSurveyInMenu = res.find(
                     (config) => config.name === 'showSurveyInMenu'
                 );
@@ -29,8 +31,6 @@ export class AppMenuComponent implements OnInit {
                     showSurveyInMenu ? showSurveyInMenu.value : false
                 );
 
-                this.menuService.updateModel();
-                console.log(this.menuService.model());
             },
             error: (err) => console.log(err),
         });
