@@ -30,6 +30,7 @@ export class AppMenuComponent implements OnInit {
                 );
 
                 this.menuService.updateModel();
+                console.log(this.menuService.model());
             },
             error: (err) => console.log(err),
         });
